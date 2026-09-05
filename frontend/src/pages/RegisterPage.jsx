@@ -99,25 +99,25 @@ export const RegisterPage = () => {
 
   return (
     <div className="max-w-2xl mx-auto py-8 px-4">
-      <div className="glass-panel p-8 md:p-10 border border-stone-800 shadow-2xl">
+      <div className="mission-card p-8 md:p-10 border border-[#4F3100] shadow-2xl">
         <div className="text-center mb-8">
-          <span className="text-xs font-mono uppercase tracking-wider text-amber-400 font-semibold">Account Onboarding</span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-cream-50 mt-1">Register for HeatHealthAI</h2>
-          <p className="text-xs text-stone-400 mt-2">
+          <span className="text-xs font-mono uppercase tracking-wider text-[#F5A900] font-bold">Account Onboarding</span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#F5F0E8] mt-1">Register for HeatHealthAI</h2>
+          <p className="text-xs text-[#A59F95] mt-2">
             Create an account to monitor localized human thermal stress and configure early warning alerts.
           </p>
         </div>
 
         {error && (
-          <div className="mb-6 p-4 rounded-xl bg-red-950/60 border border-red-500/40 text-red-200 text-xs flex items-start gap-2.5">
-            <AlertTriangle className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
+          <div className="mb-6 p-4 rounded-xl bg-[#14110F] border border-[#EF4444] text-[#FECACA] text-xs flex items-start gap-2.5">
+            <AlertTriangle className="h-4 w-4 text-[#EF4444] flex-shrink-0 mt-0.5" />
             <div className="flex-1">
               <span>{error}</span>
               {!showApiConfig && (
                 <button
                   type="button"
                   onClick={() => setShowApiConfig(true)}
-                  className="mt-1.5 text-amber-400 hover:underline block font-semibold text-[11px]"
+                  className="mt-1.5 text-[#FFD34D] hover:underline block font-semibold text-[11px]"
                 >
                   Configure Backend API URL
                 </button>
@@ -127,8 +127,8 @@ export const RegisterPage = () => {
         )}
 
         {showApiConfig && (
-          <div className="mb-6 p-4 rounded-xl bg-stone-900 border border-amber-500/40 text-xs shadow-sm">
-            <div className="font-semibold text-amber-300 mb-1 flex items-center justify-between">
+          <div className="mb-6 p-4 rounded-xl bg-[#161311] border border-[#4F3100] text-xs shadow-sm">
+            <div className="font-semibold text-[#FFD34D] mb-1 flex items-center justify-between">
               <span className="flex items-center gap-1.5">
                 <Settings className="h-3.5 w-3.5" />
                 Backend API Connection
@@ -136,10 +136,10 @@ export const RegisterPage = () => {
               <button 
                 type="button" 
                 onClick={() => setShowApiConfig(false)}
-                className="text-stone-400 hover:text-white"
+                className="text-[#A59F95] hover:text-[#F5F0E8]"
               >✕</button>
             </div>
-            <p className="text-stone-400 text-[11px] mb-2.5">
+            <p className="text-[#A59F95] text-[11px] mb-2.5">
               If your Render backend Web Service has a unique URL, enter its URL here:
             </p>
             <div className="flex gap-2">
@@ -148,7 +148,7 @@ export const RegisterPage = () => {
                 value={customUrl}
                 onChange={(e) => setCustomUrl(e.target.value)}
                 placeholder="https://your-backend.onrender.com/api"
-                className="flex-1 px-3 py-1.5 rounded-lg bg-stone-950 border border-stone-700 text-cream-100 text-xs font-mono focus:border-amber-500 outline-none"
+                className="flex-1 px-3 py-1.5 rounded-lg bg-[#100E0D] border border-[#4F3100] text-[#F5F0E8] text-xs font-mono focus:border-[#F5A900] outline-none"
               />
               <button
                 type="button"
@@ -157,7 +157,7 @@ export const RegisterPage = () => {
                   setError('');
                   alert(`Backend API URL updated to: ${getApiBaseUrl()}`);
                 }}
-                className="px-3.5 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-stone-950 font-bold text-xs transition"
+                className="btn-primary text-xs py-1.5 px-3"
               >
                 Connect
               </button>
@@ -168,7 +168,7 @@ export const RegisterPage = () => {
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Role Radio Switcher */}
           <div>
-            <label className="block text-xs font-semibold text-stone-300 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-semibold text-[#A59F95] uppercase tracking-wider mb-2 font-mono">
               Select Account Type
             </label>
             <div className="grid grid-cols-2 gap-3">
@@ -177,14 +177,14 @@ export const RegisterPage = () => {
                 onClick={() => setRole('CITIZEN')}
                 className={`p-3.5 rounded-2xl border text-left flex items-start gap-3 transition ${
                   role === 'CITIZEN'
-                    ? 'bg-amber-950/40 border-amber-500/60 shadow-sm shadow-amber-500/20'
-                    : 'bg-stone-900/60 border-stone-800 hover:border-stone-700'
+                    ? 'bg-[#161311] border-[#F5A900] shadow-sm'
+                    : 'bg-[#14110F] border-[#4F3100] hover:border-[#F5A900]/60'
                 }`}
               >
-                <User className={`h-5 w-5 mt-0.5 ${role === 'CITIZEN' ? 'text-amber-400' : 'text-stone-500'}`} />
+                <User className={`h-5 w-5 mt-0.5 ${role === 'CITIZEN' ? 'text-[#F5A900]' : 'text-[#706A62]'}`} />
                 <div>
-                  <div className="text-xs font-bold text-cream-50">Citizen Account</div>
-                  <div className="text-[11px] text-stone-400 mt-0.5">Personal GPS thermal alerts & forecasts</div>
+                  <div className="text-xs font-bold text-[#F5F0E8]">Citizen Account</div>
+                  <div className="text-[11px] text-[#A59F95] mt-0.5">Personal GPS thermal alerts & forecasts</div>
                 </div>
               </button>
 
@@ -193,14 +193,14 @@ export const RegisterPage = () => {
                 onClick={() => setRole('GOVERNMENT_AUTHORITY')}
                 className={`p-3.5 rounded-2xl border text-left flex items-start gap-3 transition ${
                   role === 'GOVERNMENT_AUTHORITY'
-                    ? 'bg-amber-950/60 border-amber-500/80 shadow-sm shadow-amber-500/20'
-                    : 'bg-stone-900/60 border-stone-800 hover:border-stone-700'
+                    ? 'bg-[#161311] border-[#F5A900] shadow-sm'
+                    : 'bg-[#14110F] border-[#4F3100] hover:border-[#F5A900]/60'
                 }`}
               >
-                <ShieldCheck className={`h-5 w-5 mt-0.5 ${role === 'GOVERNMENT_AUTHORITY' ? 'text-amber-400' : 'text-stone-500'}`} />
+                <ShieldCheck className={`h-5 w-5 mt-0.5 ${role === 'GOVERNMENT_AUTHORITY' ? 'text-[#F5A900]' : 'text-[#706A62]'}`} />
                 <div>
-                  <div className="text-xs font-bold text-cream-50">Government Authority</div>
-                  <div className="text-[11px] text-stone-400 mt-0.5">Municipal hotspots & intervention triggers</div>
+                  <div className="text-xs font-bold text-[#F5F0E8]">Government Authority</div>
+                  <div className="text-[11px] text-[#A59F95] mt-0.5">Municipal hotspots & intervention triggers</div>
                 </div>
               </button>
             </div>
@@ -209,7 +209,7 @@ export const RegisterPage = () => {
           {/* Standard Fields */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-stone-300 mb-1">Full Name</label>
+              <label className="block text-xs font-medium text-[#A59F95] mb-1">Full Name</label>
               <input
                 type="text"
                 name="full_name"
@@ -217,12 +217,12 @@ export const RegisterPage = () => {
                 value={formData.full_name}
                 onChange={handleChange}
                 placeholder="e.g. Dr. Rajesh Naidu"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#100E0D] border border-[#4F3100] text-[#F5F0E8] placeholder:text-[#706A62] text-xs focus:outline-none focus:border-[#F5A900] focus:ring-1 focus:ring-[#F5A900]/40 transition"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-stone-300 mb-1">Email Address</label>
+              <label className="block text-xs font-medium text-[#A59F95] mb-1">Email Address</label>
               <input
                 type="email"
                 name="email"
@@ -230,35 +230,35 @@ export const RegisterPage = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder={role === 'GOVERNMENT_AUTHORITY' ? 'officer@ap.gov.in' : 'user@example.com'}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#100E0D] border border-[#4F3100] text-[#F5F0E8] placeholder:text-[#706A62] text-xs focus:outline-none focus:border-[#F5A900] focus:ring-1 focus:ring-[#F5A900]/40 transition"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-stone-300 mb-1">Phone Number (Optional)</label>
+            <label className="block text-xs font-medium text-[#A59F95] mb-1">Phone Number (Optional)</label>
             <input
               type="tel"
               name="phone"
               value={formData.phone}
               onChange={handleChange}
               placeholder="+91 98480 12345"
-              className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-[#100E0D] border border-[#4F3100] text-[#F5F0E8] placeholder:text-[#706A62] text-xs focus:outline-none focus:border-[#F5A900] focus:ring-1 focus:ring-[#F5A900]/40 transition"
             />
           </div>
 
           {/* Government Authority Special Fields */}
           {role === 'GOVERNMENT_AUTHORITY' && (
-            <div className="p-4 rounded-2xl bg-amber-950/20 border border-amber-500/30 space-y-4">
-              <div className="flex items-start gap-2.5 text-xs text-amber-300">
-                <BadgeCheck className="h-4 w-4 flex-shrink-0 mt-0.5" />
+            <div className="p-4 rounded-2xl bg-[#161311] border border-[#4F3100] space-y-4">
+              <div className="flex items-start gap-2.5 text-xs text-[#FFD34D]">
+                <BadgeCheck className="h-4 w-4 flex-shrink-0 mt-0.5 text-[#F5A900]" />
                 <span>
                   <strong>Government Verification Notice:</strong> Authority access requires email domain verification (.gov.in, .nic.in, .ap.gov.in) followed by administrative review. Selecting this account type does not automatically grant privileges.
                 </span>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-stone-300 mb-1">Official Government Email</label>
+                <label className="block text-xs font-medium text-[#A59F95] mb-1">Official Government Email</label>
                 <input
                   type="email"
                   name="official_email"
@@ -266,13 +266,13 @@ export const RegisterPage = () => {
                   value={formData.official_email}
                   onChange={handleChange}
                   placeholder="name@ap.gov.in or name@nic.in"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#100E0D] border border-[#4F3100] text-[#F5F0E8] placeholder:text-[#706A62] text-xs focus:outline-none focus:border-[#F5A900] focus:ring-1 focus:ring-[#F5A900]/40 transition"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-stone-300 mb-1">Department / Ministry</label>
+                  <label className="block text-xs font-medium text-[#A59F95] mb-1">Department / Ministry</label>
                   <input
                     type="text"
                     name="department"
@@ -280,12 +280,12 @@ export const RegisterPage = () => {
                     value={formData.department}
                     onChange={handleChange}
                     placeholder="e.g. GVMC Disaster Management"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#100E0D] border border-[#4F3100] text-[#F5F0E8] placeholder:text-[#706A62] text-xs focus:outline-none focus:border-[#F5A900] focus:ring-1 focus:ring-[#F5A900]/40 transition"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-stone-300 mb-1">Designation / Title</label>
+                  <label className="block text-xs font-medium text-[#A59F95] mb-1">Designation / Title</label>
                   <input
                     type="text"
                     name="designation"
@@ -293,20 +293,20 @@ export const RegisterPage = () => {
                     value={formData.designation}
                     onChange={handleChange}
                     placeholder="e.g. Deputy Commissioner"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#100E0D] border border-[#4F3100] text-[#F5F0E8] placeholder:text-[#706A62] text-xs focus:outline-none focus:border-[#F5A900] focus:ring-1 focus:ring-[#F5A900]/40 transition"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-stone-300 mb-1">Officer / Employee ID (Optional)</label>
+                <label className="block text-xs font-medium text-[#A59F95] mb-1">Officer / Employee ID (Optional)</label>
                 <input
                   type="text"
                   name="employee_id"
                   value={formData.employee_id}
                   onChange={handleChange}
                   placeholder="e.g. AP-GOV-2026-881"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#100E0D] border border-[#4F3100] text-[#F5F0E8] placeholder:text-[#706A62] text-xs focus:outline-none focus:border-[#F5A900] focus:ring-1 focus:ring-[#F5A900]/40 transition"
                 />
               </div>
             </div>
@@ -315,7 +315,7 @@ export const RegisterPage = () => {
           {/* Password Fields */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-stone-300 mb-1">Password</label>
+              <label className="block text-xs font-medium text-[#A59F95] mb-1">Password</label>
               <input
                 type="password"
                 name="password"
@@ -324,12 +324,12 @@ export const RegisterPage = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Minimum 8 characters"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#100E0D] border border-[#4F3100] text-[#F5F0E8] placeholder:text-[#706A62] text-xs focus:outline-none focus:border-[#F5A900] focus:ring-1 focus:ring-[#F5A900]/40 transition"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-stone-300 mb-1">Confirm Password</label>
+              <label className="block text-xs font-medium text-[#A59F95] mb-1">Confirm Password</label>
               <input
                 type="password"
                 name="confirm_password"
@@ -337,7 +337,7 @@ export const RegisterPage = () => {
                 value={formData.confirm_password}
                 onChange={handleChange}
                 placeholder="Re-enter password"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#100E0D] border border-[#4F3100] text-[#F5F0E8] placeholder:text-[#706A62] text-xs focus:outline-none focus:border-[#F5A900] focus:ring-1 focus:ring-[#F5A900]/40 transition"
               />
             </div>
           </div>
@@ -345,16 +345,16 @@ export const RegisterPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-stone-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 transition disabled:opacity-50"
+            className="w-full py-3 rounded-xl btn-primary font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition disabled:opacity-50"
           >
             {loading ? 'Creating Account...' : 'Create Account & Sign In'}
             <ArrowRight className="h-4 w-4" />
           </button>
         </form>
 
-        <div className="mt-6 text-center text-xs text-stone-400">
+        <div className="mt-6 text-center text-xs text-[#A59F95]">
           Already have an account?{' '}
-          <Link to="/login" className="text-amber-400 font-semibold hover:underline">
+          <Link to="/login" className="text-[#FFD34D] font-semibold hover:underline">
             Sign In
           </Link>
         </div>

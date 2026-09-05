@@ -10,6 +10,7 @@ import { ForecastChart } from '../charts/ForecastChart';
 import { HourlyHeatChart } from '../charts/HourlyHeatChart';
 import { LocationSearch } from '../components/LocationSearch';
 import { RiskBadge } from '../components/StatusBadge';
+import { THEME } from '../theme';
 
 const demoLocation = { latitude: 17.6868, longitude: 83.2185 };
 
@@ -142,32 +143,34 @@ export function DashboardPage({ authority = false }) {
       {/* Header Bar */}
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 mb-1.5">
-            <span className="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold">
+          <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+            <span className="text-xs font-mono uppercase tracking-wider text-[#F5A900] font-bold">
               {authority ? 'Verified Authority Portal' : 'Citizen Climate Command Center'}
             </span>
-            <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-[#1C1714] text-stone-300 border border-stone-800">
+            <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-[#161311] text-[#A59F95] border border-[#4F3100]">
               {activeLocationMeta.name}, {activeLocationMeta.state}
             </span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#FFFBEB]">Localized Thermal Intelligence</h1>
-          <p className="mt-1 text-sm text-stone-400 font-mono">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#F5F0E8] tracking-tight">
+            Localized Thermal Intelligence
+          </h1>
+          <p className="mt-1 text-xs sm:text-sm text-[#A59F95] font-mono">
             GPS: {location.latitude.toFixed(4)}, {location.longitude.toFixed(4)}{' '}
-            <span className="text-amber-400 font-semibold">· {weather.is_live ? 'LIVE WEATHER SYNC' : 'DEMO DATA'}</span>
+            <span className="text-[#FFD34D] font-semibold">· {weather.is_live ? 'LIVE SATELLITE SYNC' : 'DEMO DATA'}</span>
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <button onClick={detectLocation} className="action-button">
-            <LocateFixed size={16} /> Detect GPS
+          <button onClick={detectLocation} className="btn-primary text-xs py-2 px-3.5 flex items-center gap-1.5">
+            <LocateFixed size={15} /> Detect GPS
           </button>
           <button
             onClick={() => loadDashboard()}
-            className="icon-button"
+            className="icon-button p-2.5"
             title="Refresh dashboard"
             aria-label="Refresh dashboard"
           >
-            <RefreshCw size={17} className={loading ? 'animate-spin text-amber-400' : ''} />
+            <RefreshCw size={16} className={loading ? 'animate-spin text-[#F5A900]' : ''} />
           </button>
         </div>
       </header>
@@ -182,36 +185,36 @@ export function DashboardPage({ authority = false }) {
 
       {/* Demographic & Population Metrics Card */}
       {activeLocationMeta.populationFormatted && (
-        <div className="p-4 px-5 rounded-2xl bg-[#161311] border border-amber-500/20 flex flex-wrap items-center justify-between gap-3 text-xs shadow-lg">
+        <div className="mission-card p-4 px-5 border border-[#4F3100] flex flex-wrap items-center justify-between gap-3 text-xs shadow-md">
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 text-amber-300 font-mono font-semibold">
-              <Users className="h-4 w-4 text-amber-400" />
-              <span>Target Population: <strong className="text-[#FFFBEB]">{activeLocationMeta.populationFormatted}</strong></span>
+            <div className="flex items-center gap-2 text-[#FFD34D] font-mono font-semibold">
+              <Users className="h-4 w-4 text-[#F5A900]" />
+              <span>Target Population: <strong className="text-[#F5F0E8]">{activeLocationMeta.populationFormatted}</strong></span>
             </div>
             {activeLocationMeta.density && (
-              <span className="text-[11px] font-mono text-stone-400 border-l border-stone-800 pl-3">
-                Density: <strong className="text-amber-200">{activeLocationMeta.density}</strong>
+              <span className="text-[11px] font-mono text-[#A59F95] border-l border-[#4F3100] pl-3">
+                Density: <strong className="text-[#FFD34D]">{activeLocationMeta.density}</strong>
               </span>
             )}
           </div>
           {activeLocationMeta.exposure && (
-            <div className="text-[11px] text-stone-400">
-              <span className="text-amber-400 font-bold uppercase font-mono mr-1">Exposure:</span>
-              <span className="text-stone-300">{activeLocationMeta.exposure}</span>
+            <div className="text-[11px] text-[#A59F95]">
+              <span className="text-[#F5A900] font-bold uppercase font-mono mr-1">Exposure:</span>
+              <span className="text-[#F5F0E8]">{activeLocationMeta.exposure}</span>
             </div>
           )}
         </div>
       )}
 
       {error && (
-        <div className="glass-panel border-amber-500/40 p-3.5 text-sm text-amber-200">
+        <div className="mission-card border-[#EF4444] p-4 text-sm text-[#FECACA]">
           {error}
         </div>
       )}
 
       {loading && (
-        <div className="glass-panel p-6 text-sm text-stone-400 flex items-center justify-center gap-2">
-          <RefreshCw className="h-4 w-4 animate-spin text-amber-400" />
+        <div className="mission-card p-8 text-sm text-[#A59F95] flex items-center justify-center gap-2">
+          <RefreshCw className="h-5 w-5 animate-spin text-[#F5A900]" />
           <span>Synchronizing localized meteorological intelligence...</span>
         </div>
       )}
@@ -223,7 +226,7 @@ export function DashboardPage({ authority = false }) {
           {/* Core Gauge & Weather Overview */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
             <WeatherCard weather={weather} location={location} />
-            <div className="glass-panel p-5 lg:col-span-2">
+            <div className="lg:col-span-2">
               <HtsiGauge
                 htsi={thermal.htsi ?? 0}
                 riskLevel={thermal.risk_level || 'UNAVAILABLE'}
@@ -232,7 +235,7 @@ export function DashboardPage({ authority = false }) {
             </div>
           </div>
 
-          {/* Interactive GIS Risk Map with Zoom */}
+          {/* Interactive GIS Risk Map */}
           <RiskMap
             geojsonData={isCloseToVizag ? geojson : null}
             userLocation={location}
@@ -267,18 +270,24 @@ export function DashboardPage({ authority = false }) {
 
           {/* Forecast Charts directly in the Page */}
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
-            <section className="glass-panel p-5">
-              <div className="section-heading mb-4">
-                <Activity size={17} className="text-orange-400" />
-                <h2 className="text-base font-bold text-[#FFFBEB]">5-Day Heat Danger & Outlook Forecast</h2>
+            <section className="mission-card p-5 border border-[#4F3100]">
+              <div className="flex items-center gap-2 mb-4">
+                <Activity size={17} className="text-[#FF9F3D]" />
+                <div>
+                  <h2 className="text-base font-bold text-[#F5F0E8]">5-Day Heat Danger & Outlook Forecast</h2>
+                  <span className="text-[11px] font-mono text-[#A59F95]">Multi-Factor HTSI Projections</span>
+                </div>
               </div>
               <ForecastChart dailyData={daily} />
             </section>
 
-            <section className="glass-panel p-5">
-              <div className="section-heading mb-4">
-                <ShieldAlert size={17} className="text-red-400" />
-                <h2 className="text-base font-bold text-[#FFFBEB]">Next 48 Hours Diurnal Trajectory</h2>
+            <section className="mission-card p-5 border border-[#4F3100]">
+              <div className="flex items-center gap-2 mb-4">
+                <ShieldAlert size={17} className="text-[#EF4444]" />
+                <div>
+                  <h2 className="text-base font-bold text-[#F5F0E8]">Next 48 Hours Diurnal Trajectory</h2>
+                  <span className="text-[11px] font-mono text-[#A59F95]">Coupled Solar-Humidity Curve</span>
+                </div>
               </div>
               <HourlyHeatChart hourlyData={hourly} />
             </section>
@@ -287,7 +296,7 @@ export function DashboardPage({ authority = false }) {
           {/* Explainable AI Driver Weights */}
           <ExplainableAiCard drivers={explanation?.drivers} />
 
-          <p className="text-[11px] text-stone-500 font-mono">
+          <p className="text-[11px] text-[#706A62] font-mono">
             {dashboard?.map_scope ||
               'AI-generated decision-support estimate. Prototype model requires validation using historical local meteorological and health data before operational deployment.'}
           </p>

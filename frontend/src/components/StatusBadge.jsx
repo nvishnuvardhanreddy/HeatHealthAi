@@ -1,34 +1,41 @@
 import React from 'react';
+import { THEME, getRiskBadgeStyle } from '../theme';
 
-export const RiskBadge = ({ risk, size = 'md' }) => {
-  const normalized = (risk || 'LOW').toUpperCase();
-
-  const styles = {
-    LOW: 'bg-emerald-950/70 text-emerald-400 border-emerald-500/40 shadow-emerald-500/10',
-    MODERATE: 'bg-amber-950/70 text-amber-400 border-amber-500/40 shadow-amber-500/10',
-    HIGH: 'bg-orange-950/70 text-orange-400 border-orange-500/40 shadow-orange-500/10',
-    'VERY HIGH': 'bg-red-950/70 text-red-400 border-red-500/40 shadow-red-500/10',
-    EXTREME: 'bg-purple-950/80 text-purple-300 border-purple-500/50 shadow-purple-500/20 animate-pulse-slow',
-  };
+/**
+ * Reusable RiskBadge supporting level or risk prop
+ * Low: #16C784, Moderate: #F0B400, High: #FF7518, Very High: #EF4444, Extreme: #7C3AED
+ */
+export const RiskBadge = ({ risk, level, size = 'md', className = '' }) => {
+  const targetLevel = (level || risk || 'LOW').toString().toUpperCase().replace(/_/g, ' ');
+  const style = getRiskBadgeStyle(targetLevel);
 
   const sizeClasses = {
-    sm: 'text-xs px-2 py-0.5',
-    md: 'text-xs px-2.5 py-1 font-semibold',
-    lg: 'text-sm px-3.5 py-1.5 font-bold tracking-wide',
+    xs: 'text-[10px] px-2 py-0.5 font-mono font-bold tracking-wider',
+    sm: 'text-xs px-2.5 py-0.5 font-mono font-bold tracking-wider',
+    md: 'text-xs px-3 py-1 font-mono font-bold tracking-wider',
+    lg: 'text-sm px-4 py-1.5 font-mono font-bold tracking-widest',
   };
 
-  const currentStyle = styles[normalized] || styles.LOW;
   const currentSize = sizeClasses[size] || sizeClasses.md;
 
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full border shadow-sm ${currentStyle} ${currentSize}`}>
-      <span className={`h-1.5 w-1.5 rounded-full ${
-        normalized === 'EXTREME' ? 'bg-purple-400 animate-ping' :
-        normalized === 'VERY HIGH' ? 'bg-red-400' :
-        normalized === 'HIGH' ? 'bg-orange-400' :
-        normalized === 'MODERATE' ? 'bg-amber-400' : 'bg-emerald-400'
-      }`} />
-      {normalized}
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-full border transition-all ${currentSize} ${className}`}
+      style={{
+        backgroundColor: style.bg,
+        borderColor: style.border,
+        color: style.text,
+      }}
+    >
+      <span
+        className={`h-1.5 w-1.5 rounded-full ${
+          targetLevel === 'EXTREME' || targetLevel === 'CRITICAL'
+            ? 'animate-ping-slow'
+            : ''
+        }`}
+        style={{ backgroundColor: style.dot }}
+      />
+      <span>{targetLevel}</span>
     </span>
   );
 };
@@ -39,22 +46,30 @@ export const GovStatusBadge = ({ status }) => {
   const map = {
     VERIFIED: {
       text: 'VERIFIED GOVERNMENT AUTHORITY',
-      classes: 'bg-emerald-950/80 text-emerald-300 border-emerald-500/50',
+      bg: 'rgba(22, 199, 132, 0.15)',
+      border: '#16C784',
+      textCol: '#A7F3D0',
       icon: '✓'
     },
     PENDING: {
       text: 'PENDING ADMINISTRATIVE REVIEW',
-      classes: 'bg-amber-950/80 text-amber-300 border-amber-500/50',
+      bg: 'rgba(240, 180, 0, 0.15)',
+      border: '#F0B400',
+      textCol: '#FEF08A',
       icon: '⏳'
     },
     REJECTED: {
       text: 'VERIFICATION REJECTED',
-      classes: 'bg-red-950/80 text-red-300 border-red-500/50',
+      bg: 'rgba(239, 68, 68, 0.15)',
+      border: '#EF4444',
+      textCol: '#FECACA',
       icon: '✕'
     },
     NOT_APPLICABLE: {
       text: 'CITIZEN ACCOUNT',
-      classes: 'bg-slate-800/80 text-slate-300 border-slate-700',
+      bg: 'rgba(112, 106, 98, 0.15)',
+      border: '#4F3100',
+      textCol: '#A59F95',
       icon: '•'
     }
   };
@@ -62,7 +77,14 @@ export const GovStatusBadge = ({ status }) => {
   const config = map[norm] || map.PENDING;
 
   return (
-    <span className={`inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full border ${config.classes}`}>
+    <span
+      className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-mono font-bold rounded-full border"
+      style={{
+        backgroundColor: config.bg,
+        borderColor: config.border,
+        color: config.textCol,
+      }}
+    >
       <span>{config.icon}</span>
       <span>{config.text}</span>
     </span>
