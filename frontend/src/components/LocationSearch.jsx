@@ -125,12 +125,13 @@ export const LocationSearch = ({ onSelectLocation, selectedLocation, className =
   const [category, setCategory] = useState('all');
   const [highlightIndex, setHighlightIndex] = useState(0);
   const containerRef = useRef(null);
+  const inputRef = useRef(null);
 
   const filteredLocations = ALL_LOCATIONS.filter((item) => {
     const matchesCategory = category === 'all' || item.category === category;
     if (!matchesCategory) return false;
     if (!query.trim()) return true;
-    const q = query.toLowerCase();
+    const q = query.toLowerCase().trim();
     return (
       item.name.toLowerCase().includes(q) ||
       item.state.toLowerCase().includes(q) ||
@@ -139,14 +140,13 @@ export const LocationSearch = ({ onSelectLocation, selectedLocation, className =
     );
   }).slice(0, 20);
 
-  // Show dropdown if: explicitly opened OR a non-default category is selected
-  const showDropdown = isOpen || (category !== 'all');
+  // Strictly open only when focused/query active or category deliberately chosen
+  const showDropdown = isOpen && filteredLocations.length > 0;
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (containerRef.current && !containerRef.current.contains(event.target)) {
         setIsOpen(false);
-        // Also reset category to 'all' when clicking outside so dropdown fully collapses
         setCategory('all');
       }
     };
@@ -156,9 +156,27 @@ export const LocationSearch = ({ onSelectLocation, selectedLocation, className =
 
   const handleSelect = (item) => {
     setIsOpen(false);
+    setCategory('all');
     setQuery('');
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
     if (onSelectLocation) {
       onSelectLocation(item);
+    }
+  };
+
+  const handleCategoryClick = (id) => {
+    if (category === id) {
+      // Toggle off
+      setCategory('all');
+      if (!query.trim()) {
+        setIsOpen(false);
+      }
+    } else {
+      setCategory(id);
+      setIsOpen(true);
+      setHighlightIndex(0);
     }
   };
 
@@ -180,6 +198,7 @@ export const LocationSearch = ({ onSelectLocation, selectedLocation, className =
       }
     } else if (e.key === 'Escape') {
       setIsOpen(false);
+      setCategory('all');
     }
   };
 
@@ -194,12 +213,13 @@ export const LocationSearch = ({ onSelectLocation, selectedLocation, className =
   };
 
   return (
-    <div ref={containerRef} className={`relative z-30 ${className}`}>
+    <div ref={containerRef} className={`relative z-[60] ${className}`}>
       {/* Search Bar Input Container */}
-      <div className="glass-panel p-2.5 rounded-2xl border border-slate-800 shadow-xl bg-slate-950/90 backdrop-blur-xl">
+      <div className="glass-panel p-3 rounded-2xl border border-stone-700/60 shadow-xl bg-stone-950/90 backdrop-blur-xl transition-all focus-within:border-amber-500/50 focus-within:ring-1 focus-within:ring-amber-500/30">
         <div className="flex items-center gap-2.5 px-2.5 py-1">
-          <Search className="h-4 w-4 text-cyan-400 flex-shrink-0" />
+          <Search className="h-4 w-4 text-amber-400 flex-shrink-0" />
           <input
+            ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => {
@@ -210,7 +230,7 @@ export const LocationSearch = ({ onSelectLocation, selectedLocation, className =
             onFocus={() => setIsOpen(true)}
             onKeyDown={handleKeyDown}
             placeholder="Search Indian wards, cities, remote regions with population (e.g. Dharavi, Gajuwaka, Phalodi, Whitefield, Delhi)..."
-            className="w-full bg-transparent text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none"
+            className="w-full bg-transparent text-sm text-cream-100 placeholder:text-stone-500 focus:outline-none"
           />
           {query && (
             <button
@@ -219,7 +239,7 @@ export const LocationSearch = ({ onSelectLocation, selectedLocation, className =
                 setQuery('');
                 setIsOpen(false);
               }}
-              className="p-1 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 transition"
+              className="p-1 rounded-md text-stone-400 hover:text-white hover:bg-stone-800 transition"
               aria-label="Clear search"
             >
               <X className="h-3.5 w-3.5" />
@@ -228,7 +248,7 @@ export const LocationSearch = ({ onSelectLocation, selectedLocation, className =
         </div>
 
         {/* Category Filter Chips */}
-        <div className="flex items-center gap-1.5 px-2 pt-2.5 border-t border-slate-800/80 overflow-x-auto text-[11px] font-mono no-scrollbar">
+        <div className="flex items-center gap-1.5 px-2 pt-2.5 border-t border-stone-800/80 overflow-x-auto text-[11px] font-mono no-scrollbar">
           {[
             { id: 'all', label: 'All India', icon: Compass },
             { id: 'wards', label: 'Municipal Wards (India)', icon: Building2 },
@@ -239,16 +259,11 @@ export const LocationSearch = ({ onSelectLocation, selectedLocation, className =
             <button
               key={id}
               type="button"
-              onClick={() => {
-                const next = id;
-                setCategory(next);
-                setIsOpen(true);
-                setHighlightIndex(0);
-              }}
+              onClick={() => handleCategoryClick(id)}
               className={`px-2.5 py-1 rounded-lg flex items-center gap-1.5 transition whitespace-nowrap ${
                 category === id
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-semibold'
-                  : 'bg-slate-900/60 text-slate-400 hover:text-slate-200 border border-slate-800'
+                  ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 font-semibold shadow-sm'
+                  : 'bg-stone-900/70 text-stone-400 hover:text-stone-200 border border-stone-800 hover:bg-stone-800/80'
               }`}
             >
               <Icon className="h-3 w-3" />
@@ -259,8 +274,8 @@ export const LocationSearch = ({ onSelectLocation, selectedLocation, className =
       </div>
 
       {/* Quick Access Badges Underneath Search with Population Indicator */}
-      <div className="flex items-center gap-2 mt-2 px-1 text-[11px] text-slate-400 overflow-x-auto no-scrollbar">
-        <span className="font-mono uppercase tracking-wider text-[10px] text-slate-500">Popular:</span>
+      <div className="flex items-center gap-2 mt-2 px-1 text-[11px] text-stone-400 overflow-x-auto no-scrollbar">
+        <span className="font-mono uppercase tracking-wider text-[10px] text-amber-400/80 font-semibold">Popular:</span>
         {[
           { name: 'Gajuwaka Ward (72k)', item: ALL_LOCATIONS[0] },
           { name: 'Dharavi Ward (599k)', item: ALL_LOCATIONS.find((l) => l.name.includes('Dharavi')) },
@@ -274,7 +289,7 @@ export const LocationSearch = ({ onSelectLocation, selectedLocation, className =
             key={name}
             type="button"
             onClick={() => handleSelect(item)}
-            className="px-2.5 py-0.5 rounded-full bg-slate-900/80 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 whitespace-nowrap transition flex items-center gap-1"
+            className="px-2.5 py-0.5 rounded-full bg-stone-900/90 hover:bg-amber-950/40 border border-stone-800 hover:border-amber-500/40 text-stone-300 hover:text-amber-200 whitespace-nowrap transition flex items-center gap-1 shadow-sm"
           >
             <span>{name}</span>
           </button>
@@ -282,8 +297,25 @@ export const LocationSearch = ({ onSelectLocation, selectedLocation, className =
       </div>
 
       {/* Autocomplete Dropdown List with Population Metrics */}
-      {showDropdown && filteredLocations.length > 0 && (
-        <div className="absolute top-full left-0 right-0 mt-2 rounded-2xl bg-dark-950/95 border border-slate-800/90 shadow-2xl backdrop-blur-2xl overflow-hidden z-50 max-h-96 overflow-y-auto">
+      {showDropdown && (
+        <div className="absolute top-full left-0 right-0 mt-2 rounded-2xl bg-stone-950/98 border border-amber-500/30 shadow-2xl backdrop-blur-2xl overflow-hidden z-[100] max-h-96 overflow-y-auto ring-1 ring-amber-500/20">
+          <div className="sticky top-0 bg-stone-900/95 px-3.5 py-2 border-b border-stone-800 flex items-center justify-between text-xs text-stone-400 backdrop-blur-md z-10 font-mono">
+            <span>
+              {category !== 'all' ? `Category: ${category.toUpperCase()}` : 'Search Results'} ({filteredLocations.length} locations)
+            </span>
+            <button
+              type="button"
+              onClick={() => {
+                setIsOpen(false);
+                setCategory('all');
+              }}
+              className="text-stone-400 hover:text-amber-300 transition flex items-center gap-1"
+            >
+              <span>Esc to close</span>
+              <X className="h-3.5 w-3.5" />
+            </button>
+          </div>
+
           <div className="p-2 space-y-1.5">
             {filteredLocations.map((loc, idx) => (
               <button
@@ -293,29 +325,29 @@ export const LocationSearch = ({ onSelectLocation, selectedLocation, className =
                 onMouseEnter={() => setHighlightIndex(idx)}
                 className={`w-full text-left p-3 rounded-xl flex items-center justify-between gap-3 transition ${
                   highlightIndex === idx
-                    ? 'bg-slate-850 border border-cyan-500/40 text-white shadow-md'
-                    : 'hover:bg-slate-900/60 text-slate-300 border border-transparent'
+                    ? 'bg-stone-900 border border-amber-500/40 text-white shadow-md'
+                    : 'hover:bg-stone-900/60 text-stone-300 border border-transparent'
                 }`}
               >
                 <div className="flex items-start gap-3 min-w-0">
-                  <div className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-cyan-400 mt-0.5">
+                  <div className="p-2 rounded-lg bg-stone-900 border border-stone-700 text-amber-400 mt-0.5">
                     {loc.isWard ? <Building2 className="h-4 w-4" /> : <MapPin className="h-4 w-4" />}
                   </div>
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="font-bold text-sm text-white truncate">{loc.name}</span>
-                      <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-slate-900 text-slate-400 border border-slate-800">
+                      <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-stone-900 text-stone-400 border border-stone-700">
                         {loc.state}
                       </span>
                       {loc.isWard && (
-                        <span className="text-[9px] font-mono uppercase px-1.5 py-0.2 rounded bg-cyan-950/80 text-cyan-400 border border-cyan-500/30">
+                        <span className="text-[9px] font-mono uppercase px-1.5 py-0.2 rounded bg-amber-950/80 text-amber-400 border border-amber-500/30">
                           Ward
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-slate-400 truncate mt-0.5">{loc.subtext}</p>
+                    <p className="text-xs text-stone-400 truncate mt-0.5">{loc.subtext}</p>
                     {loc.exposure && (
-                      <p className="text-[11px] text-slate-500 truncate mt-0.5 italic">
+                      <p className="text-[11px] text-stone-500 truncate mt-0.5 italic">
                         {loc.exposure}
                       </p>
                     )}
@@ -325,8 +357,8 @@ export const LocationSearch = ({ onSelectLocation, selectedLocation, className =
                 <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
                   {/* Population Display Tag */}
                   {loc.populationFormatted && (
-                    <div className="flex items-center gap-1 text-xs font-mono font-semibold text-cyan-300 bg-cyan-950/60 px-2 py-0.5 rounded-md border border-cyan-500/30">
-                      <Users className="h-3 w-3 text-cyan-400" />
+                    <div className="flex items-center gap-1 text-xs font-mono font-semibold text-amber-300 bg-amber-950/60 px-2 py-0.5 rounded-md border border-amber-500/30">
+                      <Users className="h-3 w-3 text-amber-400" />
                       <span>{loc.populationFormatted} pop</span>
                     </div>
                   )}
@@ -337,7 +369,7 @@ export const LocationSearch = ({ onSelectLocation, selectedLocation, className =
                         {loc.riskTag}
                       </span>
                     )}
-                    <ChevronRight className="h-3.5 w-3.5 text-slate-600" />
+                    <ChevronRight className="h-3.5 w-3.5 text-stone-500" />
                   </div>
                 </div>
               </button>

@@ -12,13 +12,13 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 });
 
-// Custom glowing target pin
+// Custom glowing target pin with amber warmth
 const activeLocationIcon = new L.DivIcon({
   className: 'custom-div-icon',
   html: `
     <div style="position: relative; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;">
-      <div style="position: absolute; width: 28px; height: 28px; border-radius: 50%; background: rgba(6, 182, 212, 0.35); animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>
-      <div style="position: absolute; width: 18px; height: 18px; border-radius: 50%; background: #06B6D4; border: 3px solid #FFFFFF; box-shadow: 0 0 14px #06B6D4;"></div>
+      <div style="position: absolute; width: 28px; height: 28px; border-radius: 50%; background: rgba(245, 158, 11, 0.4); animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>
+      <div style="position: absolute; width: 18px; height: 18px; border-radius: 50%; background: #F59E0B; border: 3px solid #FFFBEB; box-shadow: 0 0 14px #F59E0B;"></div>
     </div>
   `,
   iconSize: [28, 28],
@@ -66,7 +66,7 @@ export const RiskMap = ({ geojsonData, userLocation, locationDetails, selectedWa
       fillColor: color,
       weight: isSelected ? 3 : 1.5,
       opacity: 1,
-      color: isSelected ? '#FFFFFF' : '#0F172A',
+      color: isSelected ? '#FFFBEB' : '#1C1917',
       dashArray: isSelected ? '4' : '',
       fillOpacity: isSelected ? 0.70 : 0.45,
     };
@@ -83,7 +83,7 @@ export const RiskMap = ({ geojsonData, userLocation, locationDetails, selectedWa
         const target = e.target;
         target.setStyle({
           weight: 3,
-          color: '#38BDF8',
+          color: '#FBBF24',
           fillOpacity: 0.65,
         });
       },
@@ -101,19 +101,19 @@ export const RiskMap = ({ geojsonData, userLocation, locationDetails, selectedWa
   };
 
   return (
-    <div className="glass-panel p-4 relative flex flex-col h-[540px] border border-slate-800">
+    <div className="glass-panel p-4 relative flex flex-col h-[540px] border border-stone-800">
       {/* Header bar */}
       <div className="flex flex-wrap items-center justify-between mb-3 gap-2">
         <div className="flex items-center gap-2.5">
-          <div className="p-1.5 rounded-lg bg-cyan-950/80 border border-cyan-500/30 text-cyan-400">
+          <div className="p-1.5 rounded-xl bg-amber-950/80 border border-amber-500/30 text-amber-400 shadow-sm">
             <Navigation className="h-4 w-4" />
           </div>
           <div>
-            <span className="text-[10px] font-mono uppercase tracking-wider text-cyan-400">Spatial Biometeorological Visualizer</span>
-            <h3 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-amber-400">Spatial Biometeorological Visualizer</span>
+            <h3 className="text-sm sm:text-base font-bold text-cream-50 flex items-center gap-2">
               India Heat Stress GIS Map
               {userLocation && (
-                <span className="text-xs font-mono font-normal text-slate-400">
+                <span className="text-xs font-mono font-normal text-stone-400">
                   [{userLocation.latitude.toFixed(3)}, {userLocation.longitude.toFixed(3)}]
                 </span>
               )}
@@ -123,7 +123,7 @@ export const RiskMap = ({ geojsonData, userLocation, locationDetails, selectedWa
 
         {/* Legend & Controls */}
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-2 text-[10px] font-mono bg-slate-900/90 px-3 py-1.5 rounded-xl border border-slate-800">
+          <div className="flex items-center gap-2 text-[10px] font-mono bg-stone-900/90 px-3 py-1.5 rounded-xl border border-stone-800 shadow-sm">
             <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-500"></span>Low</span>
             <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-400"></span>Mod</span>
             <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-orange-500"></span>High</span>
@@ -134,17 +134,17 @@ export const RiskMap = ({ geojsonData, userLocation, locationDetails, selectedWa
           <button
             type="button"
             onClick={resetToIndia}
-            className="px-2.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 text-[11px] font-mono flex items-center gap-1 transition"
+            className="px-2.5 py-1.5 rounded-xl bg-stone-900 hover:bg-stone-850 border border-stone-800 hover:border-amber-500/30 text-stone-300 hover:text-white text-[11px] font-mono flex items-center gap-1 transition shadow-sm"
             title="Zoom out to whole India view"
           >
-            <Crosshair className="h-3 w-3" />
+            <Crosshair className="h-3 w-3 text-amber-400" />
             Pan India
           </button>
         </div>
       </div>
 
       {/* Leaflet Map */}
-      <div className="flex-1 rounded-2xl overflow-hidden relative border border-slate-800/80 shadow-inner">
+      <div className="flex-1 rounded-2xl overflow-hidden relative border border-stone-800/80 shadow-inner">
         <MapContainer
           center={initialCenter}
           zoom={initialZoom}
@@ -172,20 +172,20 @@ export const RiskMap = ({ geojsonData, userLocation, locationDetails, selectedWa
             <>
               <Marker position={[userLocation.latitude, userLocation.longitude]} icon={activeLocationIcon}>
                 <Popup>
-                  <div className="p-2.5 text-xs font-sans text-slate-200 min-w-[180px]">
+                  <div className="p-2.5 text-xs font-sans text-stone-200 min-w-[190px]">
                     <div className="flex items-center justify-between gap-2 mb-1.5">
-                      <span className="font-extrabold text-sm text-cyan-400">
+                      <span className="font-extrabold text-sm text-amber-400">
                         {locationDetails?.city || userLocation.ward || 'Selected Place'}
                       </span>
                       {locationDetails?.risk_level && (
                         <RiskBadge risk={locationDetails.risk_level} size="sm" />
                       )}
                     </div>
-                    <div className="text-[11px] space-y-1 text-slate-300 font-mono">
+                    <div className="text-[11px] space-y-1 text-stone-300 font-mono">
                       <div>Lat: {userLocation.latitude.toFixed(4)}</div>
                       <div>Lon: {userLocation.longitude.toFixed(4)}</div>
                       {locationDetails?.htsi !== undefined && (
-                        <div className="font-bold text-white mt-1 pt-1 border-t border-slate-700">
+                        <div className="font-bold text-cream-100 mt-1 pt-1 border-t border-stone-700">
                           HTSI Score: <span className="text-orange-400">{Number(locationDetails.htsi).toFixed(1)} / 100</span>
                         </div>
                       )}
@@ -193,18 +193,18 @@ export const RiskMap = ({ geojsonData, userLocation, locationDetails, selectedWa
                         <div>Temp: {locationDetails.temperature}°C · RH: {locationDetails.humidity}%</div>
                       )}
                       {locationDetails?.populationFormatted && (
-                        <div className="text-cyan-300 font-semibold pt-1 border-t border-slate-700 flex items-center justify-between gap-1">
+                        <div className="text-amber-300 font-semibold pt-1 border-t border-stone-700 flex items-center justify-between gap-1">
                           <span>Population:</span>
-                          <span className="text-white">{locationDetails.populationFormatted}</span>
+                          <span className="text-cream-50">{locationDetails.populationFormatted}</span>
                         </div>
                       )}
                       {locationDetails?.density && (
-                        <div className="text-[10px] text-slate-400">
+                        <div className="text-[10px] text-stone-400">
                           Density: {locationDetails.density}
                         </div>
                       )}
                       {locationDetails?.exposure && (
-                        <div className="text-[10px] text-slate-400 font-sans italic pt-0.5">
+                        <div className="text-[10px] text-stone-400 font-sans italic pt-0.5">
                           {locationDetails.exposure}
                         </div>
                       )}
@@ -215,7 +215,7 @@ export const RiskMap = ({ geojsonData, userLocation, locationDetails, selectedWa
               <Circle
                 center={[userLocation.latitude, userLocation.longitude]}
                 radius={800}
-                pathOptions={{ color: '#06B6D4', fillColor: '#06B6D4', fillOpacity: 0.12, weight: 1.5 }}
+                pathOptions={{ color: '#F59E0B', fillColor: '#F59E0B', fillOpacity: 0.15, weight: 1.5 }}
               />
             </>
           )}
@@ -223,46 +223,46 @@ export const RiskMap = ({ geojsonData, userLocation, locationDetails, selectedWa
 
         {/* Floating Selected Ward Overlay Panel */}
         {selectedWard && (
-          <div className="absolute bottom-4 left-4 z-[400] max-w-sm glass-panel p-4 bg-dark-950/95 border border-slate-700 shadow-2xl rounded-2xl backdrop-blur-xl">
+          <div className="absolute bottom-4 left-4 z-[400] max-w-sm glass-panel p-4 bg-stone-950/95 border border-amber-500/30 shadow-2xl rounded-2xl backdrop-blur-xl ring-1 ring-amber-500/20">
             <div className="flex items-center justify-between mb-2">
               <div>
-                <h4 className="font-extrabold text-sm text-white">{selectedWard.name}</h4>
-                <span className="text-[10px] font-mono text-cyan-400">{selectedWard.zone || 'Municipal Ward'}</span>
+                <h4 className="font-extrabold text-sm text-cream-50">{selectedWard.name}</h4>
+                <span className="text-[10px] font-mono text-amber-400">{selectedWard.zone || 'Municipal Ward'}</span>
               </div>
               <RiskBadge risk={selectedWard.risk_level} size="sm" />
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-[11px] font-mono mb-2.5">
-              <div className="p-1.5 rounded-lg bg-slate-900 border border-slate-800">
-                <span className="text-slate-400">HTSI Stress:</span>
-                <span className="ml-1 font-bold text-white">{selectedWard.htsi || 87.2}</span>
+              <div className="p-1.5 rounded-lg bg-stone-900 border border-stone-800">
+                <span className="text-stone-400">HTSI Stress:</span>
+                <span className="ml-1 font-bold text-cream-100">{selectedWard.htsi || 87.2}</span>
               </div>
-              <div className="p-1.5 rounded-lg bg-slate-900 border border-slate-800">
-                <span className="text-slate-400">Vulnerability:</span>
-                <span className="ml-1 font-bold text-white">{selectedWard.vulnerability_score || 78}/100</span>
+              <div className="p-1.5 rounded-lg bg-stone-900 border border-stone-800">
+                <span className="text-stone-400">Vulnerability:</span>
+                <span className="ml-1 font-bold text-cream-100">{selectedWard.vulnerability_score || 78}/100</span>
               </div>
-              <div className="p-1.5 rounded-lg bg-slate-900 border border-slate-800">
-                <span className="text-slate-400">Population:</span>
-                <span className="ml-1 font-bold text-white">{selectedWard.population?.toLocaleString() || '72,000'}</span>
+              <div className="p-1.5 rounded-lg bg-stone-900 border border-stone-800">
+                <span className="text-stone-400">Population:</span>
+                <span className="ml-1 font-bold text-cream-100">{selectedWard.population?.toLocaleString() || '72,000'}</span>
               </div>
-              <div className="p-1.5 rounded-lg bg-slate-900 border border-slate-800">
-                <span className="text-slate-400">Density:</span>
-                <span className="ml-1 font-bold text-white">{selectedWard.population_density?.toLocaleString() || '8,500'}/km²</span>
+              <div className="p-1.5 rounded-lg bg-stone-900 border border-stone-800">
+                <span className="text-stone-400">Density:</span>
+                <span className="ml-1 font-bold text-cream-100">{selectedWard.population_density?.toLocaleString() || '8,500'}/km²</span>
               </div>
             </div>
 
             {selectedWard.primary_exposure && (
-              <p className="text-[11px] text-slate-400 mb-2 leading-relaxed">
-                <strong className="text-slate-300">Exposure Profile:</strong> {selectedWard.primary_exposure}
+              <p className="text-[11px] text-stone-400 mb-2 leading-relaxed">
+                <strong className="text-stone-300">Exposure Profile:</strong> {selectedWard.primary_exposure}
               </p>
             )}
 
-            <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-[10px] text-cyan-400 font-medium">
+            <div className="pt-2 border-t border-stone-800 flex items-center justify-between text-[10px] text-amber-400 font-medium">
               <span>Ward polygon selected</span>
               <button
                 type="button"
                 onClick={() => onSelectWard && onSelectWard(null)}
-                className="text-slate-500 hover:text-slate-300 underline"
+                className="text-stone-400 hover:text-cream-200 underline"
               >
                 Dismiss
               </button>

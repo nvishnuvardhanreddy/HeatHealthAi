@@ -83,26 +83,26 @@ export const VerifyEmailPage = () => {
 
   return (
     <div className="max-w-md mx-auto py-12 px-4">
-      <div className="glass-panel p-8 md:p-10 border border-slate-800 text-center shadow-2xl relative overflow-hidden">
+      <div className="glass-panel p-8 md:p-10 border border-stone-800 text-center shadow-2xl relative overflow-hidden">
         {/* Subtle background glow */}
-        <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
 
-        <div className="h-14 w-14 rounded-2xl bg-cyan-950/80 border border-cyan-500/40 text-cyan-400 mx-auto flex items-center justify-center mb-4 shadow-lg shadow-cyan-500/20">
+        <div className="h-14 w-14 rounded-2xl bg-amber-950/80 border border-amber-500/40 text-amber-400 mx-auto flex items-center justify-center mb-4 shadow-lg shadow-amber-500/20">
           <Mail className="h-7 w-7" />
         </div>
 
-        <span className="text-xs font-mono uppercase tracking-wider text-cyan-400">Security Verification</span>
-        <h2 className="text-2xl font-extrabold text-white mt-1">Check Your Email</h2>
-        <p className="text-xs text-slate-400 mt-2 mb-6 leading-relaxed">
+        <span className="text-xs font-mono uppercase tracking-wider text-amber-400 font-semibold">Security Verification</span>
+        <h2 className="text-2xl font-extrabold text-cream-50 mt-1">Check Your Email</h2>
+        <p className="text-xs text-stone-400 mt-2 mb-6 leading-relaxed">
           We have dispatched a 6-digit verification code to <br />
-          <strong className="text-slate-100 font-semibold">{email || 'your registered email'}</strong>
+          <strong className="text-cream-100 font-semibold">{email || 'your registered email'}</strong>
         </p>
 
         {/* Security Notification */}
-        <div className="mb-6 p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-slate-300 text-xs text-left flex items-start gap-2.5">
-          <ShieldCheck className="h-4 w-4 text-cyan-400 flex-shrink-0 mt-0.5" />
+        <div className="mb-6 p-3.5 rounded-xl bg-stone-900/80 border border-stone-800 text-stone-300 text-xs text-left flex items-start gap-2.5 shadow-sm">
+          <ShieldCheck className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
           <div className="leading-relaxed">
-            <span className="font-semibold text-slate-200 block mb-0.5">Code sent via email</span>
+            <span className="font-semibold text-cream-200 block mb-0.5">Code sent via email</span>
             <span>Please check your inbox (and spam or junk folder). For security, codes are not displayed on screen.</span>
           </div>
         </div>
@@ -133,20 +133,20 @@ export const VerifyEmailPage = () => {
         <form onSubmit={handleVerify} className="space-y-4">
           {!location.state?.email && (
             <div className="text-left">
-              <label className="block text-xs font-medium text-slate-300 mb-1">Email Address</label>
+              <label className="block text-xs font-medium text-stone-300 mb-1">Email Address</label>
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 text-xs focus:outline-none focus:border-cyan-500 transition"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500 transition"
               />
             </div>
           )}
 
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1.5 text-left">
+            <label className="block text-xs font-medium text-stone-300 mb-1.5 text-left">
               Enter 6-Digit Code
             </label>
             <input
@@ -156,28 +156,28 @@ export const VerifyEmailPage = () => {
               value={otp}
               onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
               placeholder="••••••"
-              className="w-full text-center tracking-[0.6em] text-2xl font-mono font-extrabold py-3 px-4 rounded-xl bg-slate-900/90 border border-slate-700 text-white placeholder:text-slate-600 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition"
+              className="w-full text-center tracking-[0.6em] text-2xl font-mono font-extrabold py-3 px-4 rounded-xl bg-stone-900/90 border border-stone-700 text-cream-50 placeholder:text-stone-600 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition"
             />
-            <span className="text-[11px] text-slate-500 font-mono mt-1.5 block">Code expires in 10 minutes</span>
+            <span className="text-[11px] text-stone-500 font-mono mt-1.5 block">Code expires in 10 minutes</span>
           </div>
 
           <button
             type="submit"
             disabled={loading || otp.length !== 6}
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-teal-400 hover:from-cyan-300 hover:to-teal-300 text-dark-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 transition disabled:opacity-50"
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-stone-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 transition disabled:opacity-50"
           >
             {loading ? 'Verifying...' : 'Verify Email & Proceed'}
             <ArrowRight className="h-4 w-4" />
           </button>
         </form>
 
-        <div className="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between text-xs">
-          <span className="text-slate-400">Didn't receive the email?</span>
+        <div className="mt-6 pt-5 border-t border-stone-800/80 flex items-center justify-between text-xs">
+          <span className="text-stone-400">Didn't receive the email?</span>
           <button
             type="button"
             onClick={handleResend}
             disabled={cooldown > 0 || resending}
-            className="text-cyan-400 font-semibold hover:underline flex items-center gap-1.5 disabled:text-slate-600 transition"
+            className="text-amber-400 font-semibold hover:underline flex items-center gap-1.5 disabled:text-stone-600 transition"
           >
             <RefreshCw className={`h-3.5 w-3.5 ${resending ? 'animate-spin' : ''}`} />
             {cooldown > 0 ? `Resend in ${cooldown}s` : 'Resend Code'}

@@ -64,11 +64,11 @@ export const LoginPage = () => {
 
   return (
     <div className="max-w-md mx-auto py-12 px-4">
-      <div className="glass-panel p-8 md:p-10 border border-slate-800">
+      <div className="glass-panel p-8 md:p-10 border border-stone-800 shadow-2xl">
         <div className="text-center mb-8">
-          <span className="text-xs font-mono uppercase tracking-wider text-cyan-400">Secure Access</span>
-          <h2 className="text-2xl font-extrabold text-white mt-1">Sign In to HeatHealthAI</h2>
-          <p className="text-xs text-slate-400 mt-2">
+          <span className="text-xs font-mono uppercase tracking-wider text-amber-400 font-semibold">Secure Access</span>
+          <h2 className="text-2xl font-extrabold text-cream-50 mt-1">Sign In to HeatHealthAI</h2>
+          <p className="text-xs text-stone-400 mt-2">
             Access localized thermal stress early warning and emergency monitoring tools.
           </p>
         </div>
@@ -82,7 +82,7 @@ export const LoginPage = () => {
                 <button
                   type="button"
                   onClick={() => setShowApiConfig(true)}
-                  className="mt-1.5 text-cyan-400 hover:underline block font-semibold text-[11px]"
+                  className="mt-1.5 text-amber-400 hover:underline block font-semibold text-[11px]"
                 >
                   Configure Backend API URL
                 </button>
@@ -92,8 +92,8 @@ export const LoginPage = () => {
         )}
 
         {showApiConfig && (
-          <div className="mb-5 p-3.5 rounded-xl bg-slate-900 border border-cyan-500/40 text-xs">
-            <div className="font-semibold text-cyan-300 mb-1 flex items-center justify-between">
+          <div className="mb-5 p-3.5 rounded-xl bg-stone-900 border border-amber-500/40 text-xs shadow-sm">
+            <div className="font-semibold text-amber-300 mb-1 flex items-center justify-between">
               <span className="flex items-center gap-1.5">
                 <Settings className="h-3.5 w-3.5" />
                 Backend API Connection
@@ -101,10 +101,10 @@ export const LoginPage = () => {
               <button 
                 type="button" 
                 onClick={() => setShowApiConfig(false)}
-                className="text-slate-400 hover:text-white"
+                className="text-stone-400 hover:text-white"
               >✕</button>
             </div>
-            <p className="text-slate-400 text-[11px] mb-2.5">
+            <p className="text-stone-400 text-[11px] mb-2.5">
               If your Render backend Web Service has a unique URL, enter it here:
             </p>
             <div className="flex gap-2">
@@ -113,7 +113,7 @@ export const LoginPage = () => {
                 value={customUrl}
                 onChange={(e) => setCustomUrl(e.target.value)}
                 placeholder="https://your-backend.onrender.com/api"
-                className="flex-1 px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white text-xs font-mono focus:border-cyan-500 outline-none"
+                className="flex-1 px-3 py-1.5 rounded-lg bg-stone-950 border border-stone-700 text-cream-100 text-xs font-mono focus:border-amber-500 outline-none"
               />
               <button
                 type="button"
@@ -122,7 +122,7 @@ export const LoginPage = () => {
                   setError('');
                   alert(`Backend API URL updated to: ${getApiBaseUrl()}`);
                 }}
-                className="px-3.5 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold transition"
+                className="px-3.5 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-stone-950 font-bold text-xs transition"
               >
                 Connect
               </button>
@@ -132,7 +132,7 @@ export const LoginPage = () => {
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">Email Address</label>
+            <label className="block text-xs font-medium text-stone-300 mb-1">Email Address</label>
             <div className="relative">
               <input
                 type="email"
@@ -141,16 +141,16 @@ export const LoginPage = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="name@example.com or officer@ap.gov.in"
-                className="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 text-xs focus:outline-none focus:border-cyan-500"
+                className="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
               />
-              <Mail className="h-4 w-4 text-slate-500 absolute left-3 top-3" />
+              <Mail className="h-4 w-4 text-stone-500 absolute left-3 top-3" />
             </div>
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-xs font-medium text-slate-300">Password</label>
-              <Link to="/forgot-password" className="text-[11px] text-cyan-400 hover:underline">
+              <label className="text-xs font-medium text-stone-300">Password</label>
+              <Link to="/forgot-password" className="text-[11px] text-amber-400 hover:underline">
                 Forgot Password?
               </Link>
             </div>
@@ -162,16 +162,16 @@ export const LoginPage = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="••••••••"
-                className="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 text-xs focus:outline-none focus:border-cyan-500"
+                className="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
               />
-              <Lock className="h-4 w-4 text-slate-500 absolute left-3 top-3" />
+              <Lock className="h-4 w-4 text-stone-500 absolute left-3 top-3" />
             </div>
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-teal-400 hover:from-cyan-300 hover:to-teal-300 text-dark-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 transition disabled:opacity-50"
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-stone-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 transition disabled:opacity-50"
           >
             {loading ? 'Authenticating...' : 'Sign In'}
             <ArrowRight className="h-4 w-4" />
@@ -179,49 +179,49 @@ export const LoginPage = () => {
         </form>
 
         {/* Demo Quick Sign-in Shortcuts */}
-        <div className="mt-8 pt-6 border-t border-slate-800/80">
-          <span className="text-[10px] font-mono uppercase text-slate-400 block mb-2 text-center">
+        <div className="mt-8 pt-6 border-t border-stone-800/80">
+          <span className="text-[10px] font-mono uppercase text-stone-400 block mb-2 text-center">
             Demo Credentials (Pre-seeded):
           </span>
           <div className="grid grid-cols-2 gap-2 text-[11px] font-mono">
             <button
               type="button"
               onClick={() => setFormData({ email: 'officer.vizag@ap.gov.in', password: 'Officer123!' })}
-              className="p-2 rounded-lg bg-slate-900/80 border border-amber-500/30 text-amber-300 hover:bg-amber-950/30 text-left transition"
+              className="p-2 rounded-xl bg-stone-900/80 border border-amber-500/30 text-amber-300 hover:bg-amber-950/30 text-left transition"
             >
               <div className="font-bold">Gov Officer</div>
-              <div className="text-[10px] text-slate-400 truncate">officer.vizag@ap.gov.in</div>
+              <div className="text-[10px] text-stone-400 truncate">officer.vizag@ap.gov.in</div>
             </button>
             <button
               type="button"
               onClick={() => setFormData({ email: 'admin@heathealthai.org', password: 'Admin123!' })}
-              className="p-2 rounded-lg bg-slate-900/80 border border-purple-500/30 text-purple-300 hover:bg-purple-950/30 text-left transition"
+              className="p-2 rounded-xl bg-stone-900/80 border border-purple-500/30 text-purple-300 hover:bg-purple-950/30 text-left transition"
             >
               <div className="font-bold">Admin</div>
-              <div className="text-[10px] text-slate-400 truncate">admin@heathealthai.org</div>
+              <div className="text-[10px] text-stone-400 truncate">admin@heathealthai.org</div>
             </button>
             <button
               type="button"
               onClick={() => setFormData({ email: 'commissioner.urban@gov.in', password: 'Pending123!' })}
-              className="p-2 rounded-lg bg-slate-900/80 border border-slate-700 text-slate-300 hover:bg-slate-800 text-left transition"
+              className="p-2 rounded-xl bg-stone-900/80 border border-stone-700 text-stone-300 hover:bg-stone-800 text-left transition"
             >
               <div className="font-bold">Pending Gov</div>
-              <div className="text-[10px] text-slate-400 truncate">commissioner.urban@gov.in</div>
+              <div className="text-[10px] text-stone-400 truncate">commissioner.urban@gov.in</div>
             </button>
             <button
               type="button"
               onClick={() => setFormData({ email: 'citizen@example.com', password: 'Citizen123!' })}
-              className="p-2 rounded-lg bg-slate-900/80 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-950/30 text-left transition"
+              className="p-2 rounded-xl bg-stone-900/80 border border-amber-500/30 text-amber-300 hover:bg-amber-950/30 text-left transition"
             >
               <div className="font-bold">Citizen</div>
-              <div className="text-[10px] text-slate-400 truncate">citizen@example.com</div>
+              <div className="text-[10px] text-stone-400 truncate">citizen@example.com</div>
             </button>
           </div>
         </div>
 
-        <div className="mt-6 text-center text-xs text-slate-400">
+        <div className="mt-6 text-center text-xs text-stone-400">
           Don't have an account?{' '}
-          <Link to="/register" className="text-cyan-400 font-semibold hover:underline">
+          <Link to="/register" className="text-amber-400 font-semibold hover:underline">
             Register Now
           </Link>
         </div>

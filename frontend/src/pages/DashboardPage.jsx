@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Activity, LocateFixed, RefreshCw, ShieldAlert, MapPin, Compass, Flame, Users } from 'lucide-react';
+import { Activity, LocateFixed, RefreshCw, ShieldAlert, MapPin, Compass, Flame, Users, ThermometerSun, Droplets } from 'lucide-react';
 import { gisService, mlService, systemService } from '../services/api';
 import { RiskMap } from '../maps/RiskMap';
 import { WeatherCard } from '../components/WeatherCard';
@@ -9,6 +9,7 @@ import { AlertBanner } from '../components/AlertBanner';
 import { ForecastChart } from '../charts/ForecastChart';
 import { HourlyHeatChart } from '../charts/HourlyHeatChart';
 import { LocationSearch } from '../components/LocationSearch';
+import { RiskBadge } from '../components/StatusBadge';
 
 const demoLocation = { latitude: 17.6868, longitude: 83.2185 };
 
@@ -67,7 +68,7 @@ export function DashboardPage({ authority = false }) {
         loadDashboard(nextLocation);
       },
       () => {
-        // Fall back gracefully to default location without blocking UI
+        // Fall back gracefully to default location
       }
     );
   }, [authority]);
@@ -141,18 +142,18 @@ export function DashboardPage({ authority = false }) {
       {/* Header Bar */}
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-mono uppercase tracking-wider text-cyan-400">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="text-xs font-mono uppercase tracking-wider text-amber-400 font-semibold">
               {authority ? 'Verified Authority Portal' : 'Citizen Climate Command Center'}
             </span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+            <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-stone-900 text-stone-300 border border-stone-800">
               {activeLocationMeta.name}, {activeLocationMeta.state}
             </span>
           </div>
-          <h1 className="text-3xl font-extrabold text-white">Localized Thermal Intelligence</h1>
-          <p className="mt-1 text-sm text-slate-400 font-mono">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-cream-50">Localized Thermal Intelligence</h1>
+          <p className="mt-1 text-sm text-stone-400 font-mono">
             GPS: {location.latitude.toFixed(4)}, {location.longitude.toFixed(4)}{' '}
-            <span className="text-cyan-400 font-semibold">· {weather.is_live ? 'LIVE WEATHER SYNC' : 'DEMO DATA'}</span>
+            <span className="text-amber-400 font-semibold">· {weather.is_live ? 'LIVE WEATHER SYNC' : 'DEMO DATA'}</span>
           </p>
         </div>
 
@@ -166,7 +167,7 @@ export function DashboardPage({ authority = false }) {
             title="Refresh dashboard"
             aria-label="Refresh dashboard"
           >
-            <RefreshCw size={17} />
+            <RefreshCw size={17} className={loading ? 'animate-spin text-amber-400' : ''} />
           </button>
         </div>
       </header>
@@ -181,36 +182,36 @@ export function DashboardPage({ authority = false }) {
 
       {/* Demographic & Population Metrics Card */}
       {activeLocationMeta.populationFormatted && (
-        <div className="p-3 px-4 rounded-xl bg-slate-950/80 border border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div className="p-3.5 px-4 rounded-2xl bg-stone-950/90 border border-stone-800/90 flex flex-wrap items-center justify-between gap-3 text-xs shadow-lg">
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 text-cyan-300 font-mono font-semibold">
-              <Users className="h-4 w-4 text-cyan-400" />
-              <span>Target Population: <strong className="text-white">{activeLocationMeta.populationFormatted}</strong></span>
+            <div className="flex items-center gap-1.5 text-amber-300 font-mono font-semibold">
+              <Users className="h-4 w-4 text-amber-400" />
+              <span>Target Population: <strong className="text-cream-100">{activeLocationMeta.populationFormatted}</strong></span>
             </div>
             {activeLocationMeta.density && (
-              <span className="text-[11px] font-mono text-slate-400 border-l border-slate-800 pl-3">
-                Density: <strong className="text-slate-200">{activeLocationMeta.density}</strong>
+              <span className="text-[11px] font-mono text-stone-400 border-l border-stone-800 pl-3">
+                Density: <strong className="text-cream-200">{activeLocationMeta.density}</strong>
               </span>
             )}
           </div>
           {activeLocationMeta.exposure && (
-            <div className="text-[11px] text-slate-400">
-              <span className="text-slate-500 font-semibold uppercase font-mono mr-1">Exposure:</span>
-              <span className="text-slate-300">{activeLocationMeta.exposure}</span>
+            <div className="text-[11px] text-stone-400">
+              <span className="text-amber-400/80 font-semibold uppercase font-mono mr-1">Exposure:</span>
+              <span className="text-stone-300">{activeLocationMeta.exposure}</span>
             </div>
           )}
         </div>
       )}
 
       {error && (
-        <div className="glass-panel border-amber-500/40 p-3 text-sm text-amber-200">
+        <div className="glass-panel border-amber-500/40 p-3.5 text-sm text-amber-200">
           {error}
         </div>
       )}
 
       {loading && (
-        <div className="glass-panel p-6 text-sm text-slate-400 flex items-center justify-center gap-2">
-          <RefreshCw className="h-4 w-4 animate-spin text-cyan-400" />
+        <div className="glass-panel p-6 text-sm text-stone-400 flex items-center justify-center gap-2">
+          <RefreshCw className="h-4 w-4 animate-spin text-amber-400" />
           <span>Synchronizing localized meteorological intelligence...</span>
         </div>
       )}
@@ -269,7 +270,7 @@ export function DashboardPage({ authority = false }) {
             <section className="glass-panel p-5">
               <div className="section-heading mb-4">
                 <Activity size={17} className="text-orange-400" />
-                <h2 className="text-base font-bold text-white">5-Day Heat Danger & Outlook Forecast</h2>
+                <h2 className="text-base font-bold text-cream-50">5-Day Heat Danger & Outlook Forecast</h2>
               </div>
               <ForecastChart dailyData={daily} />
             </section>
@@ -277,7 +278,7 @@ export function DashboardPage({ authority = false }) {
             <section className="glass-panel p-5">
               <div className="section-heading mb-4">
                 <ShieldAlert size={17} className="text-red-400" />
-                <h2 className="text-base font-bold text-white">Next 48 Hours Diurnal Trajectory</h2>
+                <h2 className="text-base font-bold text-cream-50">Next 48 Hours Diurnal Trajectory</h2>
               </div>
               <HourlyHeatChart hourlyData={hourly} />
             </section>
@@ -286,7 +287,7 @@ export function DashboardPage({ authority = false }) {
           {/* Explainable AI Driver Weights */}
           <ExplainableAiCard drivers={explanation?.drivers} />
 
-          <p className="text-[11px] text-slate-500 font-mono">
+          <p className="text-[11px] text-stone-500 font-mono">
             {dashboard?.map_scope ||
               'AI-generated decision-support estimate. Prototype model requires validation using historical local meteorological and health data before operational deployment.'}
           </p>

@@ -15,7 +15,7 @@ export const HtsiGauge = ({ htsi = 87.2, riskLevel = 'EXTREME', previousHtsi = 8
   // Determine accent color
   const getColor = (val) => {
     if (val <= 20) return '#10B981'; // green
-    if (val <= 40) return '#FBBF24'; // yellow
+    if (val <= 40) return '#FBBF24'; // amber yellow
     if (val <= 60) return '#F97316'; // orange
     if (val <= 80) return '#EF4444'; // red
     return '#A855F7'; // purple
@@ -33,8 +33,8 @@ export const HtsiGauge = ({ htsi = 87.2, riskLevel = 'EXTREME', previousHtsi = 8
 
       <div className="flex items-center justify-between mb-4">
         <div>
-          <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400">Core Biometeorological Metric</span>
-          <h3 className="text-base font-bold text-white flex items-center gap-2">
+          <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400">Core Biometeorological Metric</span>
+          <h3 className="text-base font-bold text-cream-50 flex items-center gap-2">
             Human Thermal Stress Index (HTSI)
           </h3>
         </div>
@@ -50,7 +50,7 @@ export const HtsiGauge = ({ htsi = 87.2, riskLevel = 'EXTREME', previousHtsi = 8
               cx="96"
               cy="96"
               r={radius}
-              stroke="#1E293B"
+              stroke="#292524"
               strokeWidth="14"
               fill="transparent"
             />
@@ -71,13 +71,13 @@ export const HtsiGauge = ({ htsi = 87.2, riskLevel = 'EXTREME', previousHtsi = 8
 
           {/* Center Digital Reading */}
           <div className="absolute text-center flex flex-col items-center">
-            <span className="text-4xl font-extrabold font-mono tracking-tight text-white">
+            <span className="text-4xl font-extrabold font-mono tracking-tight text-cream-50">
               {htsi.toFixed(1)}
             </span>
-            <span className="text-xs font-semibold text-slate-400 font-mono">/ 100</span>
+            <span className="text-xs font-semibold text-stone-400 font-mono">/ 100</span>
             <div className="mt-1">
               <span
-                className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full"
+                className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full"
                 style={{ backgroundColor: `${activeColor}25`, color: activeColor }}
               >
                 {riskLevel}
@@ -88,8 +88,8 @@ export const HtsiGauge = ({ htsi = 87.2, riskLevel = 'EXTREME', previousHtsi = 8
 
         {/* Breakdown of Secondary Metrics */}
         <div className="w-full sm:w-auto flex-1 space-y-2.5">
-          <div className="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800 flex items-center justify-between">
-            <span className="text-xs text-slate-400">Trend vs Prev Reading</span>
+          <div className="p-2.5 rounded-xl bg-stone-900/80 border border-stone-800 flex items-center justify-between shadow-sm">
+            <span className="text-xs text-stone-400">Trend vs Prev Reading</span>
             <div className={`flex items-center gap-1 text-xs font-mono font-bold ${isIncrease ? 'text-red-400' : 'text-emerald-400'}`}>
               {isIncrease ? <ArrowUpRight className="h-4 w-4" /> : <ArrowDownRight className="h-4 w-4" />}
               {isIncrease ? `+${diff}` : diff} pts
@@ -97,21 +97,21 @@ export const HtsiGauge = ({ htsi = 87.2, riskLevel = 'EXTREME', previousHtsi = 8
           </div>
 
           <div className="grid grid-cols-3 gap-2 text-center font-mono">
-            <div className="p-2 rounded-lg bg-slate-900/60 border border-slate-800">
-              <div className="text-[10px] text-slate-400">HEAT INDEX</div>
-              <div className="text-xs font-bold text-slate-200">{indices.heat_index != null ? `${indices.heat_index}°C` : '—'}</div>
+            <div className="p-2 rounded-xl bg-stone-900/70 border border-stone-800 shadow-sm">
+              <div className="text-[10px] text-stone-400">HEAT INDEX</div>
+              <div className="text-xs font-bold text-cream-100">{indices.heat_index != null ? `${indices.heat_index}°C` : '—'}</div>
             </div>
-            <div className="p-2 rounded-lg bg-slate-900/60 border border-slate-800">
-              <div className="text-[10px] text-slate-400">WBGT</div>
-              <div className="text-xs font-bold text-slate-200">{indices.wbgt != null ? `${indices.wbgt}°C` : '—'}</div>
+            <div className="p-2 rounded-xl bg-stone-900/70 border border-stone-800 shadow-sm">
+              <div className="text-[10px] text-stone-400">WBGT</div>
+              <div className="text-xs font-bold text-cream-100">{indices.wbgt != null ? `${indices.wbgt}°C` : '—'}</div>
             </div>
-            <div className="p-2 rounded-lg bg-slate-900/60 border border-slate-800">
-              <div className="text-[10px] text-slate-400">UTCI</div>
-              <div className="text-xs font-bold text-slate-200">{indices.utci != null ? `${indices.utci}°C` : '—'}</div>
+            <div className="p-2 rounded-xl bg-stone-900/70 border border-stone-800 shadow-sm">
+              <div className="text-[10px] text-stone-400">UTCI</div>
+              <div className="text-xs font-bold text-cream-100">{indices.utci != null ? `${indices.utci}°C` : '—'}</div>
             </div>
           </div>
 
-          <p className="text-[11px] text-slate-400 italic">
+          <p className="text-[11px] text-stone-400 italic">
             Composite index synthesized from ambient temp, humidity, solar irradiance, convective wind, and demographic vulnerability.
           </p>
         </div>

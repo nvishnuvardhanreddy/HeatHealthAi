@@ -17,12 +17,12 @@ export const ForecastChart = ({ dailyData = [] }) => {
     <div className="glass-panel p-6">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400">Multi-Day Climate Outlook</span>
-          <h3 className="text-base font-bold text-white flex items-center gap-2">
+          <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400">Multi-Day Climate Outlook</span>
+          <h3 className="text-base font-bold text-cream-50 flex items-center gap-2">
             5-Day Heat Danger & Human Impact Forecast
           </h3>
         </div>
-        <span className="text-[10px] font-mono text-slate-400">
+        <span className="text-[10px] font-mono text-stone-400">
           Source: Open-Meteo & HTSI Engine
         </span>
       </div>
@@ -43,43 +43,43 @@ export const ForecastChart = ({ dailyData = [] }) => {
           return (
             <div
               key={idx}
-              className={`p-3.5 rounded-xl border flex flex-col justify-between transition hover:border-cyan-500/40 ${
+              className={`p-3.5 rounded-2xl border flex flex-col justify-between transition hover:border-amber-500/40 shadow-sm ${
                 isExtreme
                   ? 'bg-purple-950/20 border-purple-500/30'
-                  : 'bg-slate-900/60 border-slate-800'
+                  : 'bg-stone-900/60 border-stone-800'
               }`}
             >
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-bold text-slate-200 font-mono">{dateStr}</span>
+                  <span className="text-xs font-bold text-cream-100 font-mono">{dateStr}</span>
                   {idx === 0 && (
-                    <span className="text-[9px] uppercase font-mono px-1 rounded bg-cyan-950 text-cyan-400 border border-cyan-500/30">
+                    <span className="text-[9px] uppercase font-mono px-1.5 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-500/30 font-semibold">
                       Today
                     </span>
                   )}
                 </div>
-                <p className="text-[10px] text-slate-400 mb-2 truncate" title={day.condition}>
+                <p className="text-[10px] text-stone-400 mb-2 truncate" title={day.condition}>
                   {day.condition || "Heat Warning"}
                 </p>
               </div>
 
-              <div className="my-2 text-center py-2 rounded-lg bg-dark-950/60 border border-slate-800/80">
+              <div className="my-2 text-center py-2 rounded-xl bg-dark-950/60 border border-stone-800/80">
                 <div className="flex items-baseline justify-center gap-1.5">
-                  <span className="text-xl font-extrabold font-mono text-white">
+                  <span className="text-xl font-extrabold font-mono text-cream-50">
                     {day.temp_max ? `${day.temp_max}°` : '40°'}
                   </span>
-                  <span className="text-xs font-mono text-slate-500">
+                  <span className="text-xs font-mono text-stone-500">
                     / {day.temp_min ? `${day.temp_min}°` : '29°'}
                   </span>
                 </div>
-                <div className="text-[10px] font-mono text-slate-400 mt-0.5">
+                <div className="text-[10px] font-mono text-stone-400 mt-0.5">
                   Avg RH: {day.humidity_avg ? `${day.humidity_avg}%` : '72%'}
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-slate-800 flex items-center justify-between">
+              <div className="pt-2 border-t border-stone-800 flex items-center justify-between">
                 <div>
-                  <span className="text-[9px] font-mono text-slate-400 block">PEAK HTSI</span>
+                  <span className="text-[9px] font-mono text-stone-400 block">PEAK HTSI</span>
                   <span className="text-sm font-mono font-extrabold text-purple-300">
                     {typeof htsi === 'number' ? htsi.toFixed(1) : htsi}
                   </span>
@@ -91,10 +91,10 @@ export const ForecastChart = ({ dailyData = [] }) => {
         })}
       </div>
 
-      <div className="mt-4 p-3 rounded-lg bg-slate-900/60 border border-slate-800/80 text-[11px] text-slate-400 flex items-start gap-2">
-        <AlertCircle className="h-4 w-4 text-orange-400 flex-shrink-0 mt-0.5" />
+      <div className="mt-4 p-3 rounded-xl bg-stone-900/60 border border-stone-800/80 text-[11px] text-stone-400 flex items-start gap-2 shadow-sm">
+        <AlertCircle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
         <span>
-          <strong className="text-slate-300">Decision-Support Outlook:</strong> Forecast values are derived from the selected location's weather inputs. Validate against official local advisories before operational use.
+          <strong className="text-stone-300">Decision-Support Outlook:</strong> Forecast values are derived from the selected location's weather inputs. Validate against official local advisories before operational use.
         </span>
       </div>
     </div>

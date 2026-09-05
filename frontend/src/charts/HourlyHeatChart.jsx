@@ -32,10 +32,10 @@ export const HourlyHeatChart = ({ hourlyData = [] }) => {
     <div className="glass-panel p-6">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400">Diurnal Thermal Profile</span>
-          <h3 className="text-base font-bold text-white">Next 48 Hours Heat Stress Trajectory</h3>
+          <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400">Diurnal Thermal Profile</span>
+          <h3 className="text-base font-bold text-cream-50">Next 48 Hours Heat Stress Trajectory</h3>
         </div>
-        <span className="text-xs font-mono text-cyan-400 bg-cyan-950/60 px-2.5 py-1 rounded border border-cyan-500/30">
+        <span className="text-xs font-mono text-amber-300 bg-amber-950/60 px-2.5 py-1 rounded-lg border border-amber-500/30">
           Peak Window: 12:00 – 16:00
         </span>
       </div>
@@ -53,17 +53,17 @@ export const HourlyHeatChart = ({ hourlyData = [] }) => {
                 <stop offset="95%" stopColor="#F97316" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1E293B" vertical={false} />
-            <XAxis dataKey="time" stroke="#64748B" tick={{ fontSize: 11 }} />
-            <YAxis stroke="#64748B" tick={{ fontSize: 11 }} domain={[20, 100]} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#292524" vertical={false} />
+            <XAxis dataKey="time" stroke="#78716C" tick={{ fontSize: 11 }} />
+            <YAxis stroke="#78716C" tick={{ fontSize: 11 }} domain={[20, 100]} />
             <Tooltip
               contentStyle={{
-                backgroundColor: '#0F172A',
-                border: '1px solid #334155',
-                borderRadius: '8px',
+                backgroundColor: '#1C1917',
+                border: '1px solid #44403C',
+                borderRadius: '12px',
                 fontSize: '12px',
                 fontFamily: 'monospace',
-                color: '#F8FAFC'
+                color: '#FEF3C7'
               }}
             />
             <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '8px' }} />
@@ -89,7 +89,7 @@ export const HourlyHeatChart = ({ hourlyData = [] }) => {
         </ResponsiveContainer>
       </div>
 
-      <div className="mt-3 flex items-center justify-between text-xs text-slate-400 font-mono">
+      <div className="mt-3 flex items-center justify-between text-xs text-stone-400 font-mono">
         <span>Danger Threshold: HTSI &ge; 60 (High) | &ge; 80 (Extreme)</span>
         <span className="text-purple-400 font-semibold">● Severe Radiation Peak expected midday</span>
       </div>

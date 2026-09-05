@@ -4,28 +4,28 @@
 
 @layer base {
   body {
-    background-color: #070B14;
-    color: #F1F5F9;
+    background-color: #0C0A09;
+    color: #FEF3C7;
     overflow-x: hidden;
   }
 }
 
-/* Glassmorphism Cards */
+/* Glassmorphism Cards — warm tinted */
 .glass-panel {
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(51, 65, 85, 0.5);
+  background: rgba(28, 25, 23, 0.80);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(68, 64, 60, 0.55);
   border-radius: 0.75rem;
 }
 
 .glass-panel-glow {
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(28, 25, 23, 0.88);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(6, 182, 212, 0.3);
+  border: 1px solid rgba(251, 191, 36, 0.30);
   border-radius: 0.75rem;
-  box-shadow: 0 0 25px rgba(6, 182, 212, 0.1);
+  box-shadow: 0 0 25px rgba(251, 191, 36, 0.08);
 }
 
 .glass-panel-danger {
@@ -44,42 +44,46 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0B1120;
+  background: #1C1917;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1E293B;
+  background: #44403C;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #57534E;
 }
 
 /* Leaflet Container Fixes */
 .leaflet-container {
   width: 100%;
   height: 100%;
-  background: #0B1120 !important;
+  background: #1C1917 !important;
   border-radius: 0.75rem;
   z-index: 10;
 }
 
 .leaflet-popup-content-wrapper {
-  background: #0F172A !important;
-  color: #F8FAFC !important;
-  border: 1px solid #334155 !important;
+  background: #292524 !important;
+  color: #FEF3C7 !important;
+  border: 1px solid #57534E !important;
   border-radius: 0.5rem !important;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
 }
 
 .leaflet-popup-tip {
-  background: #0F172A !important;
+  background: #292524 !important;
 }
 
-.action-button { display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 0.65rem; border: 1px solid rgba(34, 211, 238, 0.35); background: rgba(8, 47, 73, 0.75); color: #a5f3fc; padding: 0.65rem 0.9rem; font-size: 0.75rem; font-weight: 700; transition: background 160ms ease; }
-.action-button:hover { background: rgba(14, 116, 144, 0.5); }
-.icon-button { display: inline-flex; align-items: center; justify-content: center; border: 1px solid #334155; border-radius: 0.65rem; padding: 0.65rem; color: #cbd5e1; background: rgba(15, 23, 42, 0.8); }
+.action-button { display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 0.65rem; border: 1px solid rgba(251, 191, 36, 0.35); background: rgba(120, 53, 15, 0.45); color: #FDE68A; padding: 0.65rem 0.9rem; font-size: 0.75rem; font-weight: 700; transition: background 160ms ease; }
+.action-button:hover { background: rgba(180, 83, 9, 0.50); }
+.icon-button { display: inline-flex; align-items: center; justify-content: center; border: 1px solid #57534E; border-radius: 0.65rem; padding: 0.65rem; color: #D6D3D1; background: rgba(28, 25, 23, 0.8); }
 .section-heading { display: flex; align-items: center; gap: 0.55rem; margin-bottom: 1rem; }
-.section-heading h2 { color: #f8fafc; font-size: 0.95rem; font-weight: 700; }
-.field-input { display: block; width: 100%; margin-top: 0.4rem; border-radius: 0.6rem; border: 1px solid #334155; background: #0f172a; color: #e2e8f0; padding: 0.65rem 0.75rem; }
+.section-heading h2 { color: #FFFBEB; font-size: 0.95rem; font-weight: 700; }
+.field-input { display: block; width: 100%; margin-top: 0.4rem; border-radius: 0.6rem; border: 1px solid #57534E; background: #1C1917; color: #FEF3C7; padding: 0.65rem 0.75rem; }
+
+/* Hide scrollbar for horizontal scroll */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

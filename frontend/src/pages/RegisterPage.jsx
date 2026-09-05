@@ -99,11 +99,11 @@ export const RegisterPage = () => {
 
   return (
     <div className="max-w-2xl mx-auto py-8 px-4">
-      <div className="glass-panel p-8 md:p-10 border border-slate-800">
+      <div className="glass-panel p-8 md:p-10 border border-stone-800 shadow-2xl">
         <div className="text-center mb-8">
-          <span className="text-xs font-mono uppercase tracking-wider text-cyan-400">Account Onboarding</span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">Register for HeatHealthAI</h2>
-          <p className="text-xs text-slate-400 mt-2">
+          <span className="text-xs font-mono uppercase tracking-wider text-amber-400 font-semibold">Account Onboarding</span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-cream-50 mt-1">Register for HeatHealthAI</h2>
+          <p className="text-xs text-stone-400 mt-2">
             Create an account to monitor localized human thermal stress and configure early warning alerts.
           </p>
         </div>
@@ -117,7 +117,7 @@ export const RegisterPage = () => {
                 <button
                   type="button"
                   onClick={() => setShowApiConfig(true)}
-                  className="mt-1.5 text-cyan-400 hover:underline block font-semibold text-[11px]"
+                  className="mt-1.5 text-amber-400 hover:underline block font-semibold text-[11px]"
                 >
                   Configure Backend API URL
                 </button>
@@ -127,8 +127,8 @@ export const RegisterPage = () => {
         )}
 
         {showApiConfig && (
-          <div className="mb-6 p-4 rounded-xl bg-slate-900 border border-cyan-500/40 text-xs">
-            <div className="font-semibold text-cyan-300 mb-1 flex items-center justify-between">
+          <div className="mb-6 p-4 rounded-xl bg-stone-900 border border-amber-500/40 text-xs shadow-sm">
+            <div className="font-semibold text-amber-300 mb-1 flex items-center justify-between">
               <span className="flex items-center gap-1.5">
                 <Settings className="h-3.5 w-3.5" />
                 Backend API Connection
@@ -136,11 +136,11 @@ export const RegisterPage = () => {
               <button 
                 type="button" 
                 onClick={() => setShowApiConfig(false)}
-                className="text-slate-400 hover:text-white"
+                className="text-stone-400 hover:text-white"
               >✕</button>
             </div>
-            <p className="text-slate-400 text-[11px] mb-2.5">
-              If your Render backend Web Service has a unique URL (or is sleeping on the free tier), enter its URL here:
+            <p className="text-stone-400 text-[11px] mb-2.5">
+              If your Render backend Web Service has a unique URL, enter its URL here:
             </p>
             <div className="flex gap-2">
               <input
@@ -148,7 +148,7 @@ export const RegisterPage = () => {
                 value={customUrl}
                 onChange={(e) => setCustomUrl(e.target.value)}
                 placeholder="https://your-backend.onrender.com/api"
-                className="flex-1 px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white text-xs font-mono focus:border-cyan-500 outline-none"
+                className="flex-1 px-3 py-1.5 rounded-lg bg-stone-950 border border-stone-700 text-cream-100 text-xs font-mono focus:border-amber-500 outline-none"
               />
               <button
                 type="button"
@@ -157,7 +157,7 @@ export const RegisterPage = () => {
                   setError('');
                   alert(`Backend API URL updated to: ${getApiBaseUrl()}`);
                 }}
-                className="px-3.5 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold transition"
+                className="px-3.5 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-stone-950 font-bold text-xs transition"
               >
                 Connect
               </button>
@@ -168,39 +168,39 @@ export const RegisterPage = () => {
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Role Radio Switcher */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-semibold text-stone-300 uppercase tracking-wider mb-2">
               Select Account Type
             </label>
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={() => setRole('CITIZEN')}
-                className={`p-3.5 rounded-xl border text-left flex items-start gap-3 transition ${
+                className={`p-3.5 rounded-2xl border text-left flex items-start gap-3 transition ${
                   role === 'CITIZEN'
-                    ? 'bg-cyan-950/40 border-cyan-500/60 shadow-sm shadow-cyan-500/20'
-                    : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'
+                    ? 'bg-amber-950/40 border-amber-500/60 shadow-sm shadow-amber-500/20'
+                    : 'bg-stone-900/60 border-stone-800 hover:border-stone-700'
                 }`}
               >
-                <User className={`h-5 w-5 mt-0.5 ${role === 'CITIZEN' ? 'text-cyan-400' : 'text-slate-500'}`} />
+                <User className={`h-5 w-5 mt-0.5 ${role === 'CITIZEN' ? 'text-amber-400' : 'text-stone-500'}`} />
                 <div>
-                  <div className="text-xs font-bold text-white">Citizen Account</div>
-                  <div className="text-[11px] text-slate-400 mt-0.5">Personal GPS thermal alerts & forecasts</div>
+                  <div className="text-xs font-bold text-cream-50">Citizen Account</div>
+                  <div className="text-[11px] text-stone-400 mt-0.5">Personal GPS thermal alerts & forecasts</div>
                 </div>
               </button>
 
               <button
                 type="button"
                 onClick={() => setRole('GOVERNMENT_AUTHORITY')}
-                className={`p-3.5 rounded-xl border text-left flex items-start gap-3 transition ${
+                className={`p-3.5 rounded-2xl border text-left flex items-start gap-3 transition ${
                   role === 'GOVERNMENT_AUTHORITY'
-                    ? 'bg-amber-950/40 border-amber-500/60 shadow-sm shadow-amber-500/20'
-                    : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'
+                    ? 'bg-amber-950/60 border-amber-500/80 shadow-sm shadow-amber-500/20'
+                    : 'bg-stone-900/60 border-stone-800 hover:border-stone-700'
                 }`}
               >
-                <ShieldCheck className={`h-5 w-5 mt-0.5 ${role === 'GOVERNMENT_AUTHORITY' ? 'text-amber-400' : 'text-slate-500'}`} />
+                <ShieldCheck className={`h-5 w-5 mt-0.5 ${role === 'GOVERNMENT_AUTHORITY' ? 'text-amber-400' : 'text-stone-500'}`} />
                 <div>
-                  <div className="text-xs font-bold text-white">Government Authority</div>
-                  <div className="text-[11px] text-slate-400 mt-0.5">Municipal hotspots & intervention triggers</div>
+                  <div className="text-xs font-bold text-cream-50">Government Authority</div>
+                  <div className="text-[11px] text-stone-400 mt-0.5">Municipal hotspots & intervention triggers</div>
                 </div>
               </button>
             </div>
@@ -209,7 +209,7 @@ export const RegisterPage = () => {
           {/* Standard Fields */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">Full Name</label>
+              <label className="block text-xs font-medium text-stone-300 mb-1">Full Name</label>
               <input
                 type="text"
                 name="full_name"
@@ -217,12 +217,12 @@ export const RegisterPage = () => {
                 value={formData.full_name}
                 onChange={handleChange}
                 placeholder="e.g. Dr. Rajesh Naidu"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 text-xs focus:outline-none focus:border-cyan-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">Email Address</label>
+              <label className="block text-xs font-medium text-stone-300 mb-1">Email Address</label>
               <input
                 type="email"
                 name="email"
@@ -230,26 +230,26 @@ export const RegisterPage = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder={role === 'GOVERNMENT_AUTHORITY' ? 'officer@ap.gov.in' : 'user@example.com'}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 text-xs focus:outline-none focus:border-cyan-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">Phone Number (Optional)</label>
+            <label className="block text-xs font-medium text-stone-300 mb-1">Phone Number (Optional)</label>
             <input
               type="tel"
               name="phone"
               value={formData.phone}
               onChange={handleChange}
               placeholder="+91 98480 12345"
-              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 text-xs focus:outline-none focus:border-cyan-500"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
             />
           </div>
 
           {/* Government Authority Special Fields */}
           {role === 'GOVERNMENT_AUTHORITY' && (
-            <div className="p-4 rounded-xl bg-amber-950/20 border border-amber-500/30 space-y-4">
+            <div className="p-4 rounded-2xl bg-amber-950/20 border border-amber-500/30 space-y-4">
               <div className="flex items-start gap-2.5 text-xs text-amber-300">
                 <BadgeCheck className="h-4 w-4 flex-shrink-0 mt-0.5" />
                 <span>
@@ -258,7 +258,7 @@ export const RegisterPage = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">Official Government Email</label>
+                <label className="block text-xs font-medium text-stone-300 mb-1">Official Government Email</label>
                 <input
                   type="email"
                   name="official_email"
@@ -266,13 +266,13 @@ export const RegisterPage = () => {
                   value={formData.official_email}
                   onChange={handleChange}
                   placeholder="name@ap.gov.in or name@nic.in"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 text-xs focus:outline-none focus:border-amber-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">Department / Ministry</label>
+                  <label className="block text-xs font-medium text-stone-300 mb-1">Department / Ministry</label>
                   <input
                     type="text"
                     name="department"
@@ -280,12 +280,12 @@ export const RegisterPage = () => {
                     value={formData.department}
                     onChange={handleChange}
                     placeholder="e.g. GVMC Disaster Management"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 text-xs focus:outline-none focus:border-amber-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">Designation / Title</label>
+                  <label className="block text-xs font-medium text-stone-300 mb-1">Designation / Title</label>
                   <input
                     type="text"
                     name="designation"
@@ -293,20 +293,20 @@ export const RegisterPage = () => {
                     value={formData.designation}
                     onChange={handleChange}
                     placeholder="e.g. Deputy Commissioner"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 text-xs focus:outline-none focus:border-amber-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">Officer / Employee ID (Optional)</label>
+                <label className="block text-xs font-medium text-stone-300 mb-1">Officer / Employee ID (Optional)</label>
                 <input
                   type="text"
                   name="employee_id"
                   value={formData.employee_id}
                   onChange={handleChange}
                   placeholder="e.g. AP-GOV-2026-881"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 text-xs focus:outline-none focus:border-amber-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
                 />
               </div>
             </div>
@@ -315,7 +315,7 @@ export const RegisterPage = () => {
           {/* Password Fields */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">Password</label>
+              <label className="block text-xs font-medium text-stone-300 mb-1">Password</label>
               <input
                 type="password"
                 name="password"
@@ -324,12 +324,12 @@ export const RegisterPage = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Minimum 8 characters"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 text-xs focus:outline-none focus:border-cyan-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">Confirm Password</label>
+              <label className="block text-xs font-medium text-stone-300 mb-1">Confirm Password</label>
               <input
                 type="password"
                 name="confirm_password"
@@ -337,7 +337,7 @@ export const RegisterPage = () => {
                 value={formData.confirm_password}
                 onChange={handleChange}
                 placeholder="Re-enter password"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 text-xs focus:outline-none focus:border-cyan-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-cream-100 placeholder:text-stone-500 text-xs focus:outline-none focus:border-amber-500"
               />
             </div>
           </div>
@@ -345,16 +345,16 @@ export const RegisterPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-teal-400 hover:from-cyan-300 hover:to-teal-300 text-dark-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 transition disabled:opacity-50"
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-stone-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 transition disabled:opacity-50"
           >
             {loading ? 'Creating Account...' : 'Create Account & Sign In'}
             <ArrowRight className="h-4 w-4" />
           </button>
         </form>
 
-        <div className="mt-6 text-center text-xs text-slate-400">
+        <div className="mt-6 text-center text-xs text-stone-400">
           Already have an account?{' '}
-          <Link to="/login" className="text-cyan-400 font-semibold hover:underline">
+          <Link to="/login" className="text-amber-400 font-semibold hover:underline">
             Sign In
           </Link>
         </div>
