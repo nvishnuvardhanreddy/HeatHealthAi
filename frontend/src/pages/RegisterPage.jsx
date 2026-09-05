@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { authService } from '../services/api';
-import { ShieldCheck, User, Building, Briefcase, BadgeCheck, AlertTriangle, ArrowRight } from 'lucide-react';
+import { authService, getApiBaseUrl, setCustomApiBaseUrl } from '../services/api';
+import { ShieldCheck, User, Building, Briefcase, BadgeCheck, AlertTriangle, ArrowRight, Settings } from 'lucide-react';
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
@@ -20,6 +20,8 @@ export const RegisterPage = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showApiConfig, setShowApiConfig] = useState(false);
+  const [customUrl, setCustomUrl] = useState(getApiBaseUrl());
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -84,7 +86,8 @@ export const RegisterPage = () => {
           },
         });
       } else if (err.code === 'ERR_NETWORK' || err.message?.includes('Network Error')) {
-        setError('Cannot reach the server. Please check your connection or try again later.');
+        setError(`Cannot reach backend server at "${getApiBaseUrl()}". Make sure your Render backend service is deployed and active.`);
+        setShowApiConfig(true);
       } else {
         setError('Registration failed. Please try again.');
       }
@@ -107,7 +110,57 @@ export const RegisterPage = () => {
         {error && (
           <div className="mb-6 p-4 rounded-xl bg-red-950/60 border border-red-500/40 text-red-200 text-xs flex items-start gap-2.5">
             <AlertTriangle className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
-            <span>{error}</span>
+            <div className="flex-1">
+              <span>{error}</span>
+              {!showApiConfig && (
+                <button
+                  type="button"
+                  onClick={() => setShowApiConfig(true)}
+                  className="mt-1.5 text-cyan-400 hover:underline block font-semibold text-[11px]"
+                >
+                  Configure Backend API URL
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+
+        {showApiConfig && (
+          <div className="mb-6 p-4 rounded-xl bg-slate-900 border border-cyan-500/40 text-xs">
+            <div className="font-semibold text-cyan-300 mb-1 flex items-center justify-between">
+              <span className="flex items-center gap-1.5">
+                <Settings className="h-3.5 w-3.5" />
+                Backend API Connection
+              </span>
+              <button 
+                type="button" 
+                onClick={() => setShowApiConfig(false)}
+                className="text-slate-400 hover:text-white"
+              >✕</button>
+            </div>
+            <p className="text-slate-400 text-[11px] mb-2.5">
+              If your Render backend Web Service has a unique URL (or is sleeping on the free tier), enter its URL here:
+            </p>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={customUrl}
+                onChange={(e) => setCustomUrl(e.target.value)}
+                placeholder="https://your-backend.onrender.com/api"
+                className="flex-1 px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white text-xs font-mono focus:border-cyan-500 outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  setCustomApiBaseUrl(customUrl);
+                  setError('');
+                  alert(`Backend API URL updated to: ${getApiBaseUrl()}`);
+                }}
+                className="px-3.5 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold transition"
+              >
+                Connect
+              </button>
+            </div>
           </div>
         )}
 

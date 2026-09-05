@@ -1,16 +1,29 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000/api';
+export const getApiBaseUrl = () => {
+  return localStorage.getItem('heathealth_backend_url') || import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000/api';
+};
+
+export const setCustomApiBaseUrl = (url) => {
+  if (url) {
+    let clean = url.trim().replace(/\/+$/, '');
+    if (!clean.endsWith('/api')) clean += '/api';
+    localStorage.setItem('heathealth_backend_url', clean);
+  } else {
+    localStorage.removeItem('heathealth_backend_url');
+  }
+};
 
 const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: getApiBaseUrl(),
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Request interceptor to attach JWT access token
+// Request interceptor to attach JWT access token & sync baseURL
 api.interceptors.request.use((config) => {
+  config.baseURL = getApiBaseUrl();
   const token = localStorage.getItem('heathealth_access_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -28,7 +41,7 @@ api.interceptors.response.use(
       const refreshToken = localStorage.getItem('heathealth_refresh_token');
       if (refreshToken) {
         try {
-          const res = await axios.post(`${API_BASE_URL}/auth/token/refresh/`, { refresh: refreshToken });
+          const res = await axios.post(`${getApiBaseUrl()}/auth/token/refresh/`, { refresh: refreshToken });
           if (res.data?.access) {
             localStorage.setItem('heathealth_access_token', res.data.access);
             originalRequest.headers.Authorization = `Bearer ${res.data.access}`;
