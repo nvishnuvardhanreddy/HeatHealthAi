@@ -147,12 +147,14 @@ export const HomePage = () => {
 
   return (
     <div className="space-y-8">
-      {/* Hero Command Banner with Team Ground Zero Header */}
-      <section className="relative overflow-hidden rounded-3xl glass-panel p-6 sm:p-10 border border-slate-800 shadow-2xl bg-gradient-to-b from-slate-900/90 via-slate-950/90 to-dark-950">
-        <div className="absolute -right-20 -top-20 w-96 h-96 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none" />
-        <div className="absolute -left-20 -bottom-20 w-96 h-96 rounded-full bg-orange-500/10 blur-3xl pointer-events-none" />
+      <section className="relative rounded-3xl glass-panel border border-slate-800 shadow-2xl bg-gradient-to-b from-slate-900/90 via-slate-950/90 to-dark-950">
+        {/* Decorative blurs — isolated in overflow-hidden wrapper so they don't clip dropdown */}
+        <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
+          <div className="absolute -right-20 -top-20 w-96 h-96 rounded-full bg-cyan-500/10 blur-3xl" />
+          <div className="absolute -left-20 -bottom-20 w-96 h-96 rounded-full bg-orange-500/10 blur-3xl" />
+        </div>
 
-        <div className="relative z-10 space-y-5">
+        <div className="relative z-10 p-6 sm:p-10 space-y-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-cyan-500/40 text-xs font-mono text-cyan-300 shadow-sm">
               <span className="h-2 w-2 rounded-full bg-cyan-400 animate-ping" />
@@ -190,8 +192,8 @@ export const HomePage = () => {
             </p>
           </div>
 
-          {/* Location Search Bar right on the Index Page */}
-          <div className="pt-2">
+          {/* Location Search Bar — needs overflow-visible parent so dropdown isn't clipped */}
+          <div className="pt-2 relative z-20">
             <LocationSearch
               onSelectLocation={handleSelectLocation}
               selectedLocation={locationMeta}
