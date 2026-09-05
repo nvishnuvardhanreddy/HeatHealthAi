@@ -1,0 +1,67 @@
+[
+  {
+    "ward_id": "VIZ-01",
+    "name": "Gajuwaka",
+    "zone": "South Zone",
+    "total_population": 72000,
+    "elderly_population": 8400,
+    "children_under_5": 6100,
+    "outdoor_workers": 30240,
+    "informal_settlement_ratio": 0.38,
+    "cooling_access_ratio": 0.24,
+    "water_supply_stress": "High",
+    "hospital_beds_per_1000": 1.4
+  },
+  {
+    "ward_id": "VIZ-02",
+    "name": "Madhurawada",
+    "zone": "North Zone",
+    "total_population": 54000,
+    "elderly_population": 5200,
+    "children_under_5": 4100,
+    "outdoor_workers": 11880,
+    "informal_settlement_ratio": 0.14,
+    "cooling_access_ratio": 0.68,
+    "water_supply_stress": "Low",
+    "hospital_beds_per_1000": 3.8
+  },
+  {
+    "ward_id": "VIZ-03",
+    "name": "Anakapalle",
+    "zone": "West Zone",
+    "total_population": 65000,
+    "elderly_population": 9100,
+    "children_under_5": 5800,
+    "outdoor_workers": 33150,
+    "informal_settlement_ratio": 0.32,
+    "cooling_access_ratio": 0.28,
+    "water_supply_stress": "Moderate",
+    "hospital_beds_per_1000": 1.6
+  },
+  {
+    "ward_id": "VIZ-04",
+    "name": "Bheemunipatnam",
+    "zone": "Coastal East Zone",
+    "total_population": 38000,
+    "elderly_population": 4800,
+    "children_under_5": 3200,
+    "outdoor_workers": 17480,
+    "informal_settlement_ratio": 0.28,
+    "cooling_access_ratio": 0.35,
+    "water_supply_stress": "Moderate",
+    "hospital_beds_per_1000": 2.1
+  },
+  {
+    "ward_id": "VIZ-05",
+    "name": "MVP Colony",
+    "zone": "Central Urban Zone",
+    "total_population": 48000,
+    "elderly_population": 7600,
+    "children_under_5": 3100,
+    "outdoor_workers": 8640,
+    "informal_settlement_ratio": 0.06,
+    "cooling_access_ratio": 0.82,
+    "water_supply_stress": "Low",
+    "hospital_beds_per_1000": 5.4
+  }
+]

@@ -1,0 +1,42 @@
+{
+  "model_name": "RandomForest Thermal Stress Regressor",
+  "algorithm": "RandomForestRegressor",
+  "n_estimators": 120,
+  "max_depth": 14,
+  "features": [
+    "temperature",
+    "humidity",
+    "wind_speed",
+    "solar_radiation",
+    "heat_index",
+    "wbgt",
+    "utci",
+    "vulnerability_score",
+    "population_density",
+    "hour",
+    "day_of_year",
+    "heat_exposure_duration"
+  ],
+  "metrics": {
+    "mae": 0.782,
+    "rmse": 1.005,
+    "r2": 0.9926
+  },
+  "feature_importance": {
+    "wbgt": 0.7235,
+    "utci": 0.2243,
+    "temperature": 0.0269,
+    "vulnerability_score": 0.0174,
+    "wind_speed": 0.0036,
+    "solar_radiation": 0.0012,
+    "humidity": 0.0012,
+    "heat_index": 0.0008,
+    "day_of_year": 0.0006,
+    "hour": 0.0004,
+    "population_density": 0.0002,
+    "heat_exposure_duration": 0.0
+  },
+  "training_data": "Synthetic Demo / Prototype Meteorological Records (Visakhapatnam)",
+  "trained_at": "2026-09-05T06:22:47.641849+00:00",
+  "disclaimer": "Prototype model using synthetic/demo training data. Requires validation using historical local meteorological and health data before operational deployment."
+}

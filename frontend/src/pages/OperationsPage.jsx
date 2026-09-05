@@ -1,0 +1,21 @@
+import React, { useEffect, useState } from 'react';
+import { alertService, weatherService } from '../services/api';
+
+const titles = { alerts: 'Localized alerts', interventions: 'Pre-emptive interventions', priorities: 'Emergency priorities', actionPlan: 'Automated heat action plan' };
+
+export const OperationsPage = ({ kind }) => {
+  const [data, setData] = useState(null); const [error, setError] = useState('');
+  useEffect(() => { const requests = { alerts: alertService.getAlerts, interventions: alertService.getInterventions, priorities: alertService.getEmergencyPriorities, actionPlan: alertService.getActionPlan }; requests[kind]().then((response) => setData(response.data)).catch((err) => setError(err.response?.data?.detail || 'Unable to load this decision-support view.')); }, [kind]);
+  if (error) return <div className="glass-panel p-6 text-red-300">{error}</div>;
+  if (!data) return <div className="glass-panel p-6 text-slate-400">Loading {titles[kind].toLowerCase()}...</div>;
+  const rows = Array.isArray(data) ? data : [];
+  return <section className="space-y-5"><div><span className="text-xs font-mono uppercase text-cyan-400">Decision support</span><h1 className="mt-1 text-3xl font-bold text-white">{titles[kind]}</h1><p className="mt-2 text-sm text-slate-400">Backend-generated operational data. This prototype is not an official emergency directive.</p></div>{!rows.length && !Array.isArray(data) && <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">{Object.entries(data).filter(([, value]) => typeof value !== 'object').map(([label, value]) => <div className="glass-panel p-5" key={label}><div className="text-xs text-slate-400">{label.replaceAll('_', ' ')}</div><div className="mt-2 text-sm font-semibold text-white">{String(value)}</div></div>)}</div>}{rows.length > 0 && <div className="space-y-3">{rows.map((item, index) => <article className="glass-panel p-5" key={item.id || item.ward_id || index}><div className="flex flex-col md:flex-row md:items-start justify-between gap-3"><div><h2 className="font-bold text-white">{item.title || item.ward_name || item.name || item.alert_type || `Item ${index + 1}`}</h2><p className="mt-1 text-sm text-slate-400">{item.message || item.description || `${item.zone || ''} ${item.risk_level || ''}`}</p></div><span className="text-sm font-mono text-cyan-300">{item.htsi != null ? `HTSI ${item.htsi}` : item.priority_score != null ? `Priority ${item.priority_score}` : item.priority_level || ''}</span></div>{item.recommended_actions?.length > 0 && <ul className="mt-4 grid gap-2 sm:grid-cols-2 text-xs text-slate-300">{item.recommended_actions.map((action) => <li className="rounded border border-slate-800 bg-slate-900/60 p-2" key={action}>{action}</li>)}</ul>}</article>)}</div>}</section>;
+};
+
+export const ForecastPage = () => {
+  const [forecast, setForecast] = useState(null); const [error, setError] = useState('');
+  useEffect(() => { const load = (lat, lon) => weatherService.getForecast(lat, lon).then((response) => setForecast(response.data)).catch(() => setError('Unable to load the forecast.')); if (!navigator.geolocation) load(17.6868, 83.2185); else navigator.geolocation.getCurrentPosition(({ coords }) => load(coords.latitude, coords.longitude), () => load(17.6868, 83.2185)); }, []);
+  if (error) return <div className="glass-panel p-6 text-red-300">{error}</div>;
+  if (!forecast) return <div className="glass-panel p-6 text-slate-400">Loading forecast...</div>;
+  return <section className="space-y-5"><div><span className="text-xs font-mono uppercase text-cyan-400">Forecast</span><h1 className="mt-1 text-3xl font-bold text-white">5-day heat danger forecast</h1><p className="mt-2 text-sm text-slate-400">{forecast.source} · localized to your selected coordinates</p></div><div className="grid grid-cols-1 md:grid-cols-5 gap-3">{forecast.daily_5d.map((day) => <div className="glass-panel p-4" key={day.date}><div className="text-xs text-slate-400">{day.date}</div><div className="mt-3 text-xl font-bold text-white">{day.temp_max}°C</div><div className="text-xs text-slate-400">HTSI {day.peak_htsi} · {day.peak_risk}</div></div>)}</div></section>;
+};
