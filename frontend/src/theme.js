@@ -1,33 +1,33 @@
 /**
  * HeatHealthAI Central Theme Configuration
- * Nothing Tech Minimalist Gold, Yellow & Cream Intelligence System
+ * Dark Violet & Lavender Intelligence System — Team Ground Zero
  */
 
 export const THEME = {
   colors: {
-    primaryBackground: '#080808',
-    secondaryBackground: '#121110',
-    card: '#171513',
-    input: '#100E0D',
-    border: '#4F3E1B',
-    borderLight: 'rgba(212, 175, 55, 0.22)',
-    borderSubtle: 'rgba(212, 175, 55, 0.14)',
+    primaryBackground: '#0A080F',
+    secondaryBackground: '#110D1A',
+    card: '#160F22',
+    input: '#0E0918',
+    border: '#3B2D5A',
+    borderLight: 'rgba(167, 139, 250, 0.22)',
+    borderSubtle: 'rgba(167, 139, 250, 0.14)',
 
-    primaryGold: '#D4AF37',
-    primaryAmber: '#D4AF37',
-    brightYellow: '#F5C842',
-    heatOrange: '#E58E26',
+    primaryViolet: '#7C3AED',
+    primaryLavender: '#A78BFA',
+    brightLavender: '#C4B5FD',
+    accentPurple: '#9333EA',
     hotCoral: '#DC2626',
-    warmCream: '#F7F4EB',
+    softWhite: '#EDE9FF',
 
-    primaryText: '#F7F4EB',
-    secondaryText: '#A39C8E',
-    mutedText: '#6B6457',
+    primaryText: '#EDE9FF',
+    secondaryText: '#A094C0',
+    mutedText: '#6B5F8A',
   },
 
   riskColors: {
     LOW: '#22C55E',
-    MODERATE: '#F5C842',
+    MODERATE: '#A78BFA',
     HIGH: '#E58E26',
     VERY_HIGH: '#DC2626',
     'VERY HIGH': '#DC2626',
@@ -35,10 +35,10 @@ export const THEME = {
   },
 
   gradients: {
-    thermal: 'linear-gradient(90deg, #F5C842 0%, #E58E26 50%, #DC2626 100%)',
-    thermalSubtle: 'linear-gradient(135deg, rgba(245, 200, 66, 0.12) 0%, rgba(229, 142, 38, 0.12) 50%, rgba(220, 38, 38, 0.12) 100%)',
-    radialWarmGlow: 'radial-gradient(circle at 75% 20%, rgba(212, 175, 55, 0.09), transparent 35%)',
-    primaryButton: 'linear-gradient(135deg, #D4AF37 0%, #F5C842 100%)',
+    thermal: 'linear-gradient(90deg, #A78BFA 0%, #7C3AED 50%, #DC2626 100%)',
+    thermalSubtle: 'linear-gradient(135deg, rgba(167, 139, 250, 0.12) 0%, rgba(124, 58, 237, 0.12) 50%, rgba(220, 38, 38, 0.12) 100%)',
+    radialWarmGlow: 'radial-gradient(circle at 75% 20%, rgba(124, 58, 237, 0.12), transparent 35%)',
+    primaryButton: 'linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%)',
   },
 
   borderRadius: {
@@ -49,9 +49,9 @@ export const THEME = {
   },
 
   shadows: {
-    card: '0 10px 40px rgba(0, 0, 0, 0.45)',
-    dropdown: '0 25px 60px -10px rgba(0, 0, 0, 0.98), 0 0 35px rgba(212, 175, 55, 0.15)',
-    buttonGlow: '0 0 20px rgba(212, 175, 55, 0.3)',
+    card: '0 10px 40px rgba(0, 0, 0, 0.55)',
+    dropdown: '0 25px 60px -10px rgba(0, 0, 0, 0.98), 0 0 35px rgba(124, 58, 237, 0.18)',
+    buttonGlow: '0 0 20px rgba(124, 58, 237, 0.4)',
   },
 };
 
@@ -100,10 +100,10 @@ export const getRiskBadgeStyle = (risk) => {
       };
     case 'MODERATE':
       return {
-        bg: 'rgba(245, 200, 66, 0.18)',
-        border: '#F5C842',
-        text: '#FEF08A',
-        dot: '#F5C842',
+        bg: 'rgba(167, 139, 250, 0.18)',
+        border: '#A78BFA',
+        text: '#DDD6FE',
+        dot: '#A78BFA',
       };
     case 'LOW':
     default:

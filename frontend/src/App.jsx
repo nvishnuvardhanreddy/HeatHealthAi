@@ -17,7 +17,7 @@ import { OperationsPage, ForecastPage } from './pages/OperationsPage';
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-[#080808] text-[#F7F4EB] flex flex-col justify-between selection:bg-[#D4AF37] selection:text-[#080808]">
+    <div className="min-h-screen bg-[#0A080F] text-[#EDE9FF] flex flex-col justify-between selection:bg-[#7C3AED] selection:text-[#EDE9FF]">
       <div>
         <Navbar />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
