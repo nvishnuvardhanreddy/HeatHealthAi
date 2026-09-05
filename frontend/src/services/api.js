@@ -1,7 +1,13 @@
 import axios from 'axios';
 
 export const getApiBaseUrl = () => {
-  return localStorage.getItem('heathealth_backend_url') || import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000/api';
+  return (
+    localStorage.getItem('heathealth_backend_url') ||
+    import.meta.env.VITE_API_BASE_URL ||
+    (typeof window !== 'undefined' && window.location.hostname.includes('onrender.com')
+      ? 'https://heathealthai-backend-r5fu.onrender.com/api'
+      : 'http://127.0.0.1:8000/api')
+  );
 };
 
 export const setCustomApiBaseUrl = (url) => {
