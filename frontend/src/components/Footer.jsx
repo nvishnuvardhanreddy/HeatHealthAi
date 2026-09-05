@@ -58,9 +58,8 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 gap-2">
-          <p>© 2026 HeatHealthAI System. All rights reserved.</p>
-          <p className="font-mono">Visakhapatnam Meteorological & Municipal Sector Prototype</p>
+        <div className="mt-8 pt-6 border-t border-slate-800/60 flex items-center justify-center text-xs text-slate-400 font-semibold tracking-wider">
+          <p>Team Ground Zero</p>
         </div>
       </div>
     </footer>

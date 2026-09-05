@@ -14,6 +14,7 @@
         "ward_id": "VIZ-01",
         "name": "Gajuwaka",
         "zone": "South Zone",
+        "city": "Visakhapatnam",
         "population": 72000,
         "population_density": 8500,
         "vulnerability_score": 78,
@@ -42,6 +43,7 @@
         "ward_id": "VIZ-02",
         "name": "Madhurawada",
         "zone": "North Zone",
+        "city": "Visakhapatnam",
         "population": 54000,
         "population_density": 4200,
         "vulnerability_score": 45,
@@ -70,6 +72,7 @@
         "ward_id": "VIZ-03",
         "name": "Anakapalle",
         "zone": "West Zone",
+        "city": "Visakhapatnam",
         "population": 65000,
         "population_density": 4900,
         "vulnerability_score": 72,
@@ -98,6 +101,7 @@
         "ward_id": "VIZ-04",
         "name": "Bheemunipatnam",
         "zone": "Coastal East Zone",
+        "city": "Visakhapatnam",
         "population": 38000,
         "population_density": 3100,
         "vulnerability_score": 62,
@@ -126,6 +130,7 @@
         "ward_id": "VIZ-05",
         "name": "MVP Colony",
         "zone": "Central Urban Zone",
+        "city": "Visakhapatnam",
         "population": 48000,
         "population_density": 9200,
         "vulnerability_score": 38,
@@ -144,6 +149,296 @@
             [83.325, 17.765],
             [83.305, 17.740],
             [83.315, 17.725]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ward_id": "VIZ-06",
+        "name": "Jagadamba Junction",
+        "zone": "Central Urban Zone",
+        "city": "Visakhapatnam",
+        "population": 59000,
+        "population_density": 12800,
+        "vulnerability_score": 68,
+        "outdoor_worker_ratio": 0.38,
+        "healthcare_access_score": 88,
+        "green_cover_percent": 8,
+        "primary_exposure": "Dense Commercial Corridor, Asphalt Radiation, High Transit Pedestrian Flow"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [83.290, 17.705],
+            [83.315, 17.708],
+            [83.320, 17.726],
+            [83.295, 17.728],
+            [83.285, 17.712],
+            [83.290, 17.705]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ward_id": "VIZ-07",
+        "name": "Dwaraka Nagar",
+        "zone": "Central Transport Hub",
+        "city": "Visakhapatnam",
+        "population": 61000,
+        "population_density": 11500,
+        "vulnerability_score": 64,
+        "outdoor_worker_ratio": 0.34,
+        "healthcare_access_score": 85,
+        "green_cover_percent": 9,
+        "primary_exposure": "Intercity Bus Nexus, High Concrete Heat Retention, Auto-Rickshaw Operators"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [83.295, 17.722],
+            [83.325, 17.724],
+            [83.328, 17.742],
+            [83.300, 17.744],
+            [83.290, 17.730],
+            [83.295, 17.722]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ward_id": "VIZ-08",
+        "name": "Rushikonda",
+        "zone": "North Coastal IT Corridor",
+        "city": "Visakhapatnam",
+        "population": 32000,
+        "population_density": 2900,
+        "vulnerability_score": 39,
+        "outdoor_worker_ratio": 0.20,
+        "healthcare_access_score": 72,
+        "green_cover_percent": 38,
+        "primary_exposure": "IT Parks, University Campuses, Coastal Marine Humidity Coupling"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [83.365, 17.770],
+            [83.410, 17.775],
+            [83.420, 17.810],
+            [83.380, 17.815],
+            [83.355, 17.785],
+            [83.365, 17.770]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ward_id": "VIZ-09",
+        "name": "Simhachalam",
+        "zone": "North-West Valley Zone",
+        "city": "Visakhapatnam",
+        "population": 46000,
+        "population_density": 4600,
+        "vulnerability_score": 60,
+        "outdoor_worker_ratio": 0.35,
+        "healthcare_access_score": 65,
+        "green_cover_percent": 32,
+        "primary_exposure": "Valley Basin Thermal Trapping, Temple Pilgrims, Steep Terrain Heat Exertion"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [83.230, 17.755],
+            [83.275, 17.760],
+            [83.280, 17.795],
+            [83.240, 17.800],
+            [83.220, 17.775],
+            [83.230, 17.755]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ward_id": "VIZ-10",
+        "name": "Pendurthi",
+        "zone": "West Sub-Urban Belt",
+        "city": "Visakhapatnam",
+        "population": 58000,
+        "population_density": 3800,
+        "vulnerability_score": 71,
+        "outdoor_worker_ratio": 0.48,
+        "healthcare_access_score": 54,
+        "green_cover_percent": 21,
+        "primary_exposure": "Agricultural Field Laborers, Brick Kilns, Open Highway Freight Logistics"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [83.170, 17.800],
+            [83.220, 17.805],
+            [83.225, 17.845],
+            [83.180, 17.850],
+            [83.160, 17.820],
+            [83.170, 17.800]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ward_id": "VIZ-11",
+        "name": "Gopalapatnam",
+        "zone": "Airport & Transit Corridor",
+        "city": "Visakhapatnam",
+        "population": 52000,
+        "population_density": 6700,
+        "vulnerability_score": 63,
+        "outdoor_worker_ratio": 0.36,
+        "healthcare_access_score": 68,
+        "green_cover_percent": 15,
+        "primary_exposure": "Railway Junction Workers, Tarmac Heat Radiation, Transport Loading Crews"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [83.200, 17.730],
+            [83.245, 17.735],
+            [83.250, 17.765],
+            [83.210, 17.770],
+            [83.190, 17.745],
+            [83.200, 17.730]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ward_id": "VIZ-12",
+        "name": "Kurmannapalem",
+        "zone": "Steel Plant Gateway",
+        "city": "Visakhapatnam",
+        "population": 44000,
+        "population_density": 5200,
+        "vulnerability_score": 74,
+        "outdoor_worker_ratio": 0.44,
+        "healthcare_access_score": 62,
+        "green_cover_percent": 24,
+        "primary_exposure": "Heavy Steel Plant Radiant Emissions, Slag Operations, Industrial Trucking"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [83.130, 17.650],
+            [83.180, 17.655],
+            [83.185, 17.685],
+            [83.140, 17.690],
+            [83.120, 17.665],
+            [83.130, 17.650]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ward_id": "VIZ-13",
+        "name": "Maharanipeta",
+        "zone": "Coastal Administrative Hub",
+        "city": "Visakhapatnam",
+        "population": 43000,
+        "population_density": 10500,
+        "vulnerability_score": 52,
+        "outdoor_worker_ratio": 0.25,
+        "healthcare_access_score": 95,
+        "green_cover_percent": 16,
+        "primary_exposure": "King George Hospital Medical Hub, High Outpatient Vulnerability, Coastal Humidity"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [83.295, 17.695],
+            [83.325, 17.698],
+            [83.330, 17.718],
+            [83.302, 17.720],
+            [83.290, 17.705],
+            [83.295, 17.695]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ward_id": "VIZ-14",
+        "name": "Kancharapalem",
+        "zone": "Railway Workshop Belt",
+        "city": "Visakhapatnam",
+        "population": 49000,
+        "population_density": 11200,
+        "vulnerability_score": 75,
+        "outdoor_worker_ratio": 0.45,
+        "healthcare_access_score": 64,
+        "green_cover_percent": 10,
+        "primary_exposure": "Dense Informal Settlements, Corrugated Metal Roofs, Railway Yard Laborers"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [83.260, 17.720],
+            [83.292, 17.722],
+            [83.295, 17.745],
+            [83.265, 17.748],
+            [83.252, 17.730],
+            [83.260, 17.720]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ward_id": "VIZ-15",
+        "name": "Marripalem",
+        "zone": "Central Residential-Industrial Hub",
+        "city": "Visakhapatnam",
+        "population": 51000,
+        "population_density": 8900,
+        "vulnerability_score": 67,
+        "outdoor_worker_ratio": 0.37,
+        "healthcare_access_score": 70,
+        "green_cover_percent": 14,
+        "primary_exposure": "Highway Corridor, Warehousing, Medium Fabrication Units"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [83.240, 17.735],
+            [83.275, 17.738],
+            [83.278, 17.762],
+            [83.245, 17.765],
+            [83.232, 17.745],
+            [83.240, 17.735]
           ]
         ]
       }

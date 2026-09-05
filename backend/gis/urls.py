@@ -3,6 +3,7 @@ from .views import WardGeoJSONView, WardRiskListView, WardHotspotsView, Location
 
 urlpatterns = [
     path('wards/', WardGeoJSONView.as_view(), name='gis_wards_geojson'),
+    path('wards/geojson/', WardGeoJSONView.as_view(), name='gis_wards_geojson_alias'),
     path('ward-risk/', WardRiskListView.as_view(), name='gis_ward_risk_list'),
     path('hotspots/', WardHotspotsView.as_view(), name='gis_hotspots'),
     path('location/update/', LocationUpdateView.as_view(), name='location_update'),

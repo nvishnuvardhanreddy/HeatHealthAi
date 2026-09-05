@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON, Marker, Popup, Circle } from 'react-leaflet';
 import L from 'leaflet';
 import { RiskBadge } from '../components/StatusBadge';
-import { MapPin, AlertTriangle, Users, HeartPulse, Wind } from 'lucide-react';
+import { MapPin, AlertTriangle, Users, HeartPulse, Wind, Navigation, Crosshair } from 'lucide-react';
 
 // Fix Leaflet marker icon asset paths
 delete L.Icon.Default.prototype._getIconUrl;
@@ -12,27 +12,41 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 });
 
-// User GPS custom pin
-const userIcon = new L.DivIcon({
+// Custom glowing target pin
+const activeLocationIcon = new L.DivIcon({
   className: 'custom-div-icon',
-  html: `<div style="background-color: #06B6D4; width: 16px; height: 16px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 12px #06B6D4;"></div>`,
-  iconSize: [16, 16],
-  iconAnchor: [8, 8],
+  html: `
+    <div style="position: relative; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;">
+      <div style="position: absolute; width: 28px; height: 28px; border-radius: 50%; background: rgba(6, 182, 212, 0.35); animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>
+      <div style="position: absolute; width: 18px; height: 18px; border-radius: 50%; background: #06B6D4; border: 3px solid #FFFFFF; box-shadow: 0 0 14px #06B6D4;"></div>
+    </div>
+  `,
+  iconSize: [28, 28],
+  iconAnchor: [14, 14],
 });
 
-export const RiskMap = ({ geojsonData, userLocation, selectedWard, onSelectWard }) => {
+export const RiskMap = ({ geojsonData, userLocation, locationDetails, selectedWard, onSelectWard }) => {
   const [map, setMap] = useState(null);
 
   const defaultCenter = [20.5937, 78.9629]; // India center
-  const vizagCenter = [17.6868, 83.2185];
-  // If ward GeoJSON is available (Vizag data), center on Vizag zoomed in.
-  // Otherwise center on user location or India center, zoomed out.
-  const center = geojsonData
-    ? vizagCenter
-    : userLocation
-      ? [userLocation.latitude, userLocation.longitude]
-      : defaultCenter;
-  const zoom = geojsonData ? 11 : userLocation ? 10 : 5;
+  const initialCenter = userLocation
+    ? [userLocation.latitude, userLocation.longitude]
+    : [17.6868, 83.2185];
+  const initialZoom = userLocation ? 11 : 5;
+
+  // Fly to new coordinates whenever userLocation or selectedWard changes
+  useEffect(() => {
+    if (!map || !userLocation) return;
+    const targetLat = selectedWard?.centroid ? selectedWard.centroid[0] : userLocation.latitude;
+    const targetLon = selectedWard?.centroid ? selectedWard.centroid[1] : userLocation.longitude;
+    const isCloseToVizag = Math.abs(targetLat - 17.6868) < 0.6 && Math.abs(targetLon - 83.2185) < 0.6;
+    const targetZoom = selectedWard ? 13 : isCloseToVizag ? 12 : 10;
+
+    map.flyTo([targetLat, targetLon], targetZoom, {
+      duration: 1.2,
+      easeLinearity: 0.25,
+    });
+  }, [map, userLocation?.latitude, userLocation?.longitude, selectedWard?.ward_id]);
 
   const getRiskColor = (htsi, riskLevel) => {
     const risk = (riskLevel || '').toUpperCase();
@@ -40,7 +54,7 @@ export const RiskMap = ({ geojsonData, userLocation, selectedWard, onSelectWard 
     if (risk === 'VERY HIGH' || htsi >= 60) return '#EF4444'; // red
     if (risk === 'HIGH' || htsi >= 40) return '#F97316'; // orange
     if (risk === 'MODERATE' || htsi >= 20) return '#FBBF24'; // yellow
-    return '#10B981'; // green
+    return '#10B981'; // emerald green
   };
 
   const styleFeature = (feature) => {
@@ -54,7 +68,7 @@ export const RiskMap = ({ geojsonData, userLocation, selectedWard, onSelectWard 
       opacity: 1,
       color: isSelected ? '#FFFFFF' : '#0F172A',
       dashArray: isSelected ? '4' : '',
-      fillOpacity: isSelected ? 0.65 : 0.45,
+      fillOpacity: isSelected ? 0.70 : 0.45,
     };
   };
 
@@ -70,7 +84,7 @@ export const RiskMap = ({ geojsonData, userLocation, selectedWard, onSelectWard 
         target.setStyle({
           weight: 3,
           color: '#38BDF8',
-          fillOpacity: 0.6,
+          fillOpacity: 0.65,
         });
       },
       mouseout: (e) => {
@@ -80,31 +94,60 @@ export const RiskMap = ({ geojsonData, userLocation, selectedWard, onSelectWard 
     });
   };
 
+  const resetToIndia = () => {
+    if (map) {
+      map.flyTo(defaultCenter, 5, { duration: 1.0 });
+    }
+  };
+
   return (
-    <div className="glass-panel p-4 relative flex flex-col h-[520px]">
+    <div className="glass-panel p-4 relative flex flex-col h-[540px] border border-slate-800">
+      {/* Header bar */}
       <div className="flex flex-wrap items-center justify-between mb-3 gap-2">
-        <div>
-          <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400">Spatial Thermal Risk Visualizer</span>
-          <h3 className="text-base font-bold text-white flex items-center gap-2">
-            India Ward Heat Stress Map
-          </h3>
+        <div className="flex items-center gap-2.5">
+          <div className="p-1.5 rounded-lg bg-cyan-950/80 border border-cyan-500/30 text-cyan-400">
+            <Navigation className="h-4 w-4" />
+          </div>
+          <div>
+            <span className="text-[10px] font-mono uppercase tracking-wider text-cyan-400">Spatial Biometeorological Visualizer</span>
+            <h3 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+              India Heat Stress GIS Map
+              {userLocation && (
+                <span className="text-xs font-mono font-normal text-slate-400">
+                  [{userLocation.latitude.toFixed(3)}, {userLocation.longitude.toFixed(3)}]
+                </span>
+              )}
+            </h3>
+          </div>
         </div>
 
-        {/* Legend */}
-        <div className="flex items-center gap-2 text-[11px] font-mono bg-dark-900/80 px-3 py-1.5 rounded-lg border border-slate-800">
-          <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>Low</span>
-          <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-amber-400"></span>Mod</span>
-          <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-orange-500"></span>High</span>
-          <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-red-500"></span>Very High</span>
-          <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-purple-500"></span>Extreme</span>
+        {/* Legend & Controls */}
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-[10px] font-mono bg-slate-900/90 px-3 py-1.5 rounded-xl border border-slate-800">
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-500"></span>Low</span>
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-400"></span>Mod</span>
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-orange-500"></span>High</span>
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500"></span>V.High</span>
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-purple-500"></span>Extreme</span>
+          </div>
+
+          <button
+            type="button"
+            onClick={resetToIndia}
+            className="px-2.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 text-[11px] font-mono flex items-center gap-1 transition"
+            title="Zoom out to whole India view"
+          >
+            <Crosshair className="h-3 w-3" />
+            Pan India
+          </button>
         </div>
       </div>
 
       {/* Leaflet Map */}
-      <div className="flex-1 rounded-xl overflow-hidden relative border border-slate-800">
+      <div className="flex-1 rounded-2xl overflow-hidden relative border border-slate-800/80 shadow-inner">
         <MapContainer
-          center={center}
-          zoom={zoom}
+          center={initialCenter}
+          zoom={initialZoom}
           scrollWheelZoom={false}
           className="h-full w-full"
           ref={setMap}
@@ -124,69 +167,105 @@ export const RiskMap = ({ geojsonData, userLocation, selectedWard, onSelectWard 
             />
           )}
 
-          {/* User Location Marker & Circle */}
+          {/* Selected Location Target Marker & Circle */}
           {userLocation && (
             <>
-              <Marker position={[userLocation.latitude, userLocation.longitude]} icon={userIcon}>
+              <Marker position={[userLocation.latitude, userLocation.longitude]} icon={activeLocationIcon}>
                 <Popup>
-                  <div className="p-2 text-xs font-sans text-slate-200">
-                    <p className="font-bold text-cyan-400 mb-1">Your Location (GPS)</p>
-                    <p>Lat: {userLocation.latitude.toFixed(4)}</p>
-                    <p>Lon: {userLocation.longitude.toFixed(4)}</p>
-                    {userLocation.ward && <p className="mt-1 font-semibold text-white">Ward: {userLocation.ward}</p>}
+                  <div className="p-2.5 text-xs font-sans text-slate-200 min-w-[180px]">
+                    <div className="flex items-center justify-between gap-2 mb-1.5">
+                      <span className="font-extrabold text-sm text-cyan-400">
+                        {locationDetails?.city || userLocation.ward || 'Selected Place'}
+                      </span>
+                      {locationDetails?.risk_level && (
+                        <RiskBadge risk={locationDetails.risk_level} size="sm" />
+                      )}
+                    </div>
+                    <div className="text-[11px] space-y-1 text-slate-300 font-mono">
+                      <div>Lat: {userLocation.latitude.toFixed(4)}</div>
+                      <div>Lon: {userLocation.longitude.toFixed(4)}</div>
+                      {locationDetails?.htsi !== undefined && (
+                        <div className="font-bold text-white mt-1 pt-1 border-t border-slate-700">
+                          HTSI Score: <span className="text-orange-400">{Number(locationDetails.htsi).toFixed(1)} / 100</span>
+                        </div>
+                      )}
+                      {locationDetails?.temperature !== undefined && (
+                        <div>Temp: {locationDetails.temperature}°C · RH: {locationDetails.humidity}%</div>
+                      )}
+                      {locationDetails?.populationFormatted && (
+                        <div className="text-cyan-300 font-semibold pt-1 border-t border-slate-700 flex items-center justify-between gap-1">
+                          <span>Population:</span>
+                          <span className="text-white">{locationDetails.populationFormatted}</span>
+                        </div>
+                      )}
+                      {locationDetails?.density && (
+                        <div className="text-[10px] text-slate-400">
+                          Density: {locationDetails.density}
+                        </div>
+                      )}
+                      {locationDetails?.exposure && (
+                        <div className="text-[10px] text-slate-400 font-sans italic pt-0.5">
+                          {locationDetails.exposure}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </Popup>
               </Marker>
               <Circle
                 center={[userLocation.latitude, userLocation.longitude]}
-                radius={600}
-                pathOptions={{ color: '#06B6D4', fillColor: '#06B6D4', fillOpacity: 0.15, weight: 1 }}
+                radius={800}
+                pathOptions={{ color: '#06B6D4', fillColor: '#06B6D4', fillOpacity: 0.12, weight: 1.5 }}
               />
             </>
           )}
         </MapContainer>
 
-        {!geojsonData && (
-          <div className="absolute inset-x-4 top-4 z-[400] rounded-lg border border-amber-500/40 bg-slate-950/90 p-3 text-xs text-amber-200">
-            📍 Live weather & heat risk calculated for your GPS location. Ward boundary polygons are only available for Visakhapatnam. Other Indian cities show heat risk via direct meteorological data.
-          </div>
-        )}
-
         {/* Floating Selected Ward Overlay Panel */}
         {selectedWard && (
-          <div className="absolute bottom-4 left-4 z-[400] max-w-sm glass-panel p-4 bg-dark-950/90 border border-slate-700 shadow-2xl rounded-xl">
+          <div className="absolute bottom-4 left-4 z-[400] max-w-sm glass-panel p-4 bg-dark-950/95 border border-slate-700 shadow-2xl rounded-2xl backdrop-blur-xl">
             <div className="flex items-center justify-between mb-2">
-              <h4 className="font-extrabold text-sm text-white">{selectedWard.name}</h4>
+              <div>
+                <h4 className="font-extrabold text-sm text-white">{selectedWard.name}</h4>
+                <span className="text-[10px] font-mono text-cyan-400">{selectedWard.zone || 'Municipal Ward'}</span>
+              </div>
               <RiskBadge risk={selectedWard.risk_level} size="sm" />
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-[11px] font-mono mb-2.5">
-              <div className="p-1.5 rounded bg-slate-900 border border-slate-800">
+              <div className="p-1.5 rounded-lg bg-slate-900 border border-slate-800">
                 <span className="text-slate-400">HTSI Stress:</span>
                 <span className="ml-1 font-bold text-white">{selectedWard.htsi || 87.2}</span>
               </div>
-              <div className="p-1.5 rounded bg-slate-900 border border-slate-800">
+              <div className="p-1.5 rounded-lg bg-slate-900 border border-slate-800">
                 <span className="text-slate-400">Vulnerability:</span>
                 <span className="ml-1 font-bold text-white">{selectedWard.vulnerability_score || 78}/100</span>
               </div>
-              <div className="p-1.5 rounded bg-slate-900 border border-slate-800">
+              <div className="p-1.5 rounded-lg bg-slate-900 border border-slate-800">
                 <span className="text-slate-400">Population:</span>
                 <span className="ml-1 font-bold text-white">{selectedWard.population?.toLocaleString() || '72,000'}</span>
               </div>
-              <div className="p-1.5 rounded bg-slate-900 border border-slate-800">
+              <div className="p-1.5 rounded-lg bg-slate-900 border border-slate-800">
                 <span className="text-slate-400">Density:</span>
                 <span className="ml-1 font-bold text-white">{selectedWard.population_density?.toLocaleString() || '8,500'}/km²</span>
               </div>
             </div>
 
             {selectedWard.primary_exposure && (
-              <p className="text-[11px] text-slate-400 mb-2">
+              <p className="text-[11px] text-slate-400 mb-2 leading-relaxed">
                 <strong className="text-slate-300">Exposure Profile:</strong> {selectedWard.primary_exposure}
               </p>
             )}
 
-            <div className="pt-2 border-t border-slate-800 text-[10px] text-cyan-400 font-medium">
-              Click another ward polygon on map to inspect localized biometeorological profile.
+            <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-[10px] text-cyan-400 font-medium">
+              <span>Ward polygon selected</span>
+              <button
+                type="button"
+                onClick={() => onSelectWard && onSelectWard(null)}
+                className="text-slate-500 hover:text-slate-300 underline"
+              >
+                Dismiss
+              </button>
             </div>
           </div>
         )}

@@ -77,9 +77,6 @@ class RegisterView(views.APIView):
             "email_delivery_failed": not email_sent,
         }
 
-        if getattr(settings, 'DEMO_MODE', False) or not email_sent:
-            response_data["demo_otp"] = otp_code
-
         return Response(response_data, status=status.HTTP_201_CREATED)
 
 
@@ -215,14 +212,12 @@ class ResendVerificationView(views.APIView):
         email_sent = send_otp_email(user, otp_code)
 
         resp_data = {
-            "message": "A new OTP was sent to your email." if email_sent else "A new OTP was generated.",
+            "message": "A new verification code was sent to your email address." if email_sent else "A new verification code was generated.",
             "email_delivery_failed": not email_sent,
         }
-        if getattr(settings, 'DEMO_MODE', False) or not email_sent:
-            resp_data["demo_otp"] = otp_code
 
         if not email_sent and not getattr(settings, 'DEMO_MODE', False):
-            resp_data["detail"] = "The OTP email could not be delivered."
+            resp_data["detail"] = "The OTP email could not be delivered. Please check your email configuration."
             return Response(resp_data, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
         return Response(resp_data, status=status.HTTP_200_OK)

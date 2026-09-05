@@ -169,7 +169,7 @@ CORS_ALLOW_CREDENTIALS = True
 _has_smtp_credentials = bool(os.environ.get('EMAIL_HOST_PASSWORD'))
 EMAIL_BACKEND = os.environ.get(
     'EMAIL_BACKEND',
-    'django.core.mail.backends.smtp.EmailBackend' if (_has_smtp_credentials and not DEBUG)
+    'django.core.mail.backends.smtp.EmailBackend' if _has_smtp_credentials
     else 'django.core.mail.backends.console.EmailBackend'
 )
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
@@ -177,7 +177,7 @@ EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() in ('true', '1')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'HeatHealthAI <noreply@heathealthai.org>')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'HeatHealthAI <heathealthai96@gmail.com>')
 EMAIL_TIMEOUT = int(os.environ.get("EMAIL_TIMEOUT", "10"))
 
 # Celery Configuration

@@ -63,7 +63,6 @@ export const RegisterPage = () => {
           email: formData.email,
           role: role,
           emailDeliveryFailed: res.data?.email_delivery_failed === true,
-          demoOtp: res.data?.demo_otp,
         },
       });
     } catch (err) {
