@@ -137,12 +137,17 @@ export const LocationSearch = ({ onSelectLocation, selectedLocation, className =
       (item.subtext && item.subtext.toLowerCase().includes(q)) ||
       (item.exposure && item.exposure.toLowerCase().includes(q))
     );
-  }).slice(0, 12);
+  }).slice(0, 20);
+
+  // Show dropdown if: explicitly opened OR a non-default category is selected
+  const showDropdown = isOpen || (category !== 'all');
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (containerRef.current && !containerRef.current.contains(event.target)) {
         setIsOpen(false);
+        // Also reset category to 'all' when clicking outside so dropdown fully collapses
+        setCategory('all');
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -235,7 +240,8 @@ export const LocationSearch = ({ onSelectLocation, selectedLocation, className =
               key={id}
               type="button"
               onClick={() => {
-                setCategory(id);
+                const next = id;
+                setCategory(next);
                 setIsOpen(true);
                 setHighlightIndex(0);
               }}
@@ -276,7 +282,7 @@ export const LocationSearch = ({ onSelectLocation, selectedLocation, className =
       </div>
 
       {/* Autocomplete Dropdown List with Population Metrics */}
-      {isOpen && filteredLocations.length > 0 && (
+      {showDropdown && filteredLocations.length > 0 && (
         <div className="absolute top-full left-0 right-0 mt-2 rounded-2xl bg-dark-950/95 border border-slate-800/90 shadow-2xl backdrop-blur-2xl overflow-hidden z-50 max-h-96 overflow-y-auto">
           <div className="p-2 space-y-1.5">
             {filteredLocations.map((loc, idx) => (
