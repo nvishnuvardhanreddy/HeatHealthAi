@@ -138,19 +138,19 @@ export function DashboardPage({ authority = false }) {
   const isCloseToVizag = Math.abs(location.latitude - 17.6868) < 1.0 && Math.abs(location.longitude - 83.2185) < 1.0;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-12">
       {/* Header Bar */}
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1.5">
-            <span className="text-xs font-mono uppercase tracking-wider text-amber-400 font-semibold">
+            <span className="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold">
               {authority ? 'Verified Authority Portal' : 'Citizen Climate Command Center'}
             </span>
-            <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-stone-900 text-stone-300 border border-stone-800">
+            <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-[#1C1714] text-stone-300 border border-stone-800">
               {activeLocationMeta.name}, {activeLocationMeta.state}
             </span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-cream-50">Localized Thermal Intelligence</h1>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#FFFBEB]">Localized Thermal Intelligence</h1>
           <p className="mt-1 text-sm text-stone-400 font-mono">
             GPS: {location.latitude.toFixed(4)}, {location.longitude.toFixed(4)}{' '}
             <span className="text-amber-400 font-semibold">· {weather.is_live ? 'LIVE WEATHER SYNC' : 'DEMO DATA'}</span>
@@ -173,7 +173,7 @@ export function DashboardPage({ authority = false }) {
       </header>
 
       {/* Interactive Location Search Component */}
-      <section className="relative z-40">
+      <section className="relative z-30">
         <LocationSearch
           onSelectLocation={handleSelectLocation}
           selectedLocation={activeLocationMeta}
@@ -182,21 +182,21 @@ export function DashboardPage({ authority = false }) {
 
       {/* Demographic & Population Metrics Card */}
       {activeLocationMeta.populationFormatted && (
-        <div className="p-3.5 px-4 rounded-2xl bg-stone-950/90 border border-stone-800/90 flex flex-wrap items-center justify-between gap-3 text-xs shadow-lg">
+        <div className="p-4 px-5 rounded-2xl bg-[#161311] border border-amber-500/20 flex flex-wrap items-center justify-between gap-3 text-xs shadow-lg">
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 text-amber-300 font-mono font-semibold">
+            <div className="flex items-center gap-2 text-amber-300 font-mono font-semibold">
               <Users className="h-4 w-4 text-amber-400" />
-              <span>Target Population: <strong className="text-cream-100">{activeLocationMeta.populationFormatted}</strong></span>
+              <span>Target Population: <strong className="text-[#FFFBEB]">{activeLocationMeta.populationFormatted}</strong></span>
             </div>
             {activeLocationMeta.density && (
               <span className="text-[11px] font-mono text-stone-400 border-l border-stone-800 pl-3">
-                Density: <strong className="text-cream-200">{activeLocationMeta.density}</strong>
+                Density: <strong className="text-amber-200">{activeLocationMeta.density}</strong>
               </span>
             )}
           </div>
           {activeLocationMeta.exposure && (
             <div className="text-[11px] text-stone-400">
-              <span className="text-amber-400/80 font-semibold uppercase font-mono mr-1">Exposure:</span>
+              <span className="text-amber-400 font-bold uppercase font-mono mr-1">Exposure:</span>
               <span className="text-stone-300">{activeLocationMeta.exposure}</span>
             </div>
           )}
@@ -270,7 +270,7 @@ export function DashboardPage({ authority = false }) {
             <section className="glass-panel p-5">
               <div className="section-heading mb-4">
                 <Activity size={17} className="text-orange-400" />
-                <h2 className="text-base font-bold text-cream-50">5-Day Heat Danger & Outlook Forecast</h2>
+                <h2 className="text-base font-bold text-[#FFFBEB]">5-Day Heat Danger & Outlook Forecast</h2>
               </div>
               <ForecastChart dailyData={daily} />
             </section>
@@ -278,7 +278,7 @@ export function DashboardPage({ authority = false }) {
             <section className="glass-panel p-5">
               <div className="section-heading mb-4">
                 <ShieldAlert size={17} className="text-red-400" />
-                <h2 className="text-base font-bold text-cream-50">Next 48 Hours Diurnal Trajectory</h2>
+                <h2 className="text-base font-bold text-[#FFFBEB]">Next 48 Hours Diurnal Trajectory</h2>
               </div>
               <HourlyHeatChart hourlyData={hourly} />
             </section>
