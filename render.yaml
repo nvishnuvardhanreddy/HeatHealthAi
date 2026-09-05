@@ -53,7 +53,7 @@ services:
         value: "587"
 
       - key: EMAIL_HOST_USER
-        sync: false
+        value: "heathealthai96@gmail.com"
 
       - key: EMAIL_HOST_PASSWORD
         sync: false
@@ -62,7 +62,7 @@ services:
         value: "True"
 
       - key: DEFAULT_FROM_EMAIL
-        sync: false
+        value: "HeatHealthAI <heathealthai96@gmail.com>"
 
   # React frontend static site
   - type: web
