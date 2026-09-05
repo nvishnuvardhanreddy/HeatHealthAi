@@ -53,18 +53,40 @@ export const RegisterPage = () => {
         payload.employee_id = formData.employee_id;
       }
 
-      await authService.register(payload);
-      navigate('/verify-email', { state: { email: formData.email, role: role } });
+      const res = await authService.register(payload);
+      // Always navigate to verify-email on success (201), even if email failed.
+      // The verify-email page has a resend OTP button for that case.
+      navigate('/verify-email', {
+        state: {
+          email: formData.email,
+          role: role,
+          emailDeliveryFailed: res.data?.email_delivery_failed === true,
+          demoOtp: res.data?.demo_otp,
+        },
+      });
     } catch (err) {
       const resp = err.response?.data;
       if (resp?.errors) {
+        // Extract the first field-level validation error message
         const firstKey = Object.keys(resp.errors)[0];
         const firstVal = resp.errors[firstKey];
-        setError(Array.isArray(firstVal) ? firstVal[0] : String(firstVal));
+        const msg = Array.isArray(firstVal) ? firstVal[0] : String(firstVal);
+        setError(`${firstKey.replace(/_/g, ' ')}: ${msg}`);
       } else if (resp?.detail) {
         setError(resp.detail);
+      } else if (resp?.email_delivery_failed) {
+        // Email failed but account was created — redirect so user can resend OTP
+        navigate('/verify-email', {
+          state: {
+            email: formData.email,
+            role: role,
+            emailDeliveryFailed: true,
+          },
+        });
+      } else if (err.code === 'ERR_NETWORK' || err.message?.includes('Network Error')) {
+        setError('Cannot reach the server. Please check your connection or try again later.');
       } else {
-        setError('Registration failed. Please check your credentials and try again.');
+        setError('Registration failed. Please try again.');
       }
     } finally {
       setLoading(false);

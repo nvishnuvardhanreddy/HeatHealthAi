@@ -39,7 +39,7 @@ def load_wards_from_geojson(file_path=None):
             defaults={
                 'name': name,
                 'zone': props.get('zone', 'Central Zone'),
-                'city': 'Visakhapatnam',
+                'city': props.get('city', 'Visakhapatnam'),
                 'population': props.get('population', 50000),
                 'population_density': props.get('population_density', 5000),
                 'vulnerability_score': props.get('vulnerability_score', 50.0),

@@ -11,6 +11,7 @@ export const VerifyEmailPage = () => {
 
   const [email, setEmail] = useState(location.state?.email || '');
   const [otp, setOtp] = useState('');
+  const [demoOtp, setDemoOtp] = useState(location.state?.demoOtp || '');
   const [loading, setLoading] = useState(false);
   const [resending, setResending] = useState(false);
   const [cooldown, setCooldown] = useState(0);
@@ -71,8 +72,11 @@ export const VerifyEmailPage = () => {
     setMessage('');
 
     try {
-      await authService.resendVerification({ email: email.trim().toLowerCase() });
-      setMessage('A new 6-digit OTP has been dispatched to your email.');
+      const res = await authService.resendVerification({ email: email.trim().toLowerCase() });
+      setMessage(res.data?.message || 'A new 6-digit OTP has been dispatched to your email.');
+      if (res.data?.demo_otp) {
+        setDemoOtp(res.data.demo_otp);
+      }
       setCooldown(60);
     } catch (err) {
       setError(err.response?.data?.detail || 'Could not resend OTP. Please wait and try again.');
@@ -94,6 +98,32 @@ export const VerifyEmailPage = () => {
           Enter the 6-digit numeric verification code dispatched to <br />
           <strong className="text-slate-200">{email || 'your email'}</strong>
         </p>
+
+        {demoOtp && (
+          <div className="mb-5 p-3.5 rounded-xl bg-cyan-950/60 border border-cyan-500/40 text-cyan-200 text-xs text-left flex items-center justify-between gap-2">
+            <div>
+              <span className="font-mono uppercase text-[10px] text-cyan-400 block font-semibold">Demo / Fast-Track Code</span>
+              <span>Verification OTP: <strong className="font-mono text-sm tracking-widest text-white ml-1">{demoOtp}</strong></span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setOtp(demoOtp)}
+              className="px-2.5 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 text-[11px] font-semibold transition"
+            >
+              Fill Code
+            </button>
+          </div>
+        )}
+
+        {location.state?.emailDeliveryFailed && !demoOtp && (
+          <div className="mb-5 p-3 rounded-xl bg-amber-950/60 border border-amber-500/40 text-amber-300 text-xs text-left flex items-start gap-2">
+            <AlertTriangle className="h-4 w-4 flex-shrink-0 mt-0.5" />
+            <span>
+              Your account was created, but the OTP email could not be delivered.
+              Please click <strong>Resend OTP</strong> below to receive your verification code.
+            </span>
+          </div>
+        )}
 
         {error && (
           <div className="mb-5 p-3 rounded-xl bg-red-950/60 border border-red-500/40 text-red-300 text-xs text-left flex items-center gap-2">

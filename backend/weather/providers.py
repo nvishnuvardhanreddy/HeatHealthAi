@@ -186,9 +186,12 @@ class DemoWeatherProvider(BaseWeatherProvider):
 
 
 def get_weather_provider() -> BaseWeatherProvider:
-    """Factory returning weather provider based on DEMO_MODE setting."""
-    if getattr(settings, 'INDIA_WIDE_MODE', False):
+    """Factory returning weather provider based on settings.
+    INDIA_WIDE_MODE=True (default) always uses live Open-Meteo.
+    DEMO_MODE=True with INDIA_WIDE_MODE=False uses demo data.
+    """
+    if getattr(settings, 'INDIA_WIDE_MODE', True):
         return OpenMeteoProvider()
-    if getattr(settings, 'DEMO_MODE', True) is False:
+    if not getattr(settings, 'DEMO_MODE', True):
         return OpenMeteoProvider()
     return DemoWeatherProvider()

@@ -37,6 +37,6 @@
     "heat_exposure_duration": 0.0
   },
   "training_data": "Synthetic Demo / Prototype Meteorological Records (Visakhapatnam)",
-  "trained_at": "2026-09-05T06:22:47.641849+00:00",
+  "trained_at": "2026-09-05T10:11:49.068492+00:00",
   "disclaimer": "Prototype model using synthetic/demo training data. Requires validation using historical local meteorological and health data before operational deployment."
 }

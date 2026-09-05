@@ -5,7 +5,7 @@ class Ward(models.Model):
     ward_id = models.CharField(max_length=50, unique=True, db_index=True)
     name = models.CharField(max_length=100, db_index=True)
     zone = models.CharField(max_length=100, default='Central Zone')
-    city = models.CharField(max_length=100, default='Visakhapatnam')
+    city = models.CharField(max_length=100, default='India')
 
     population = models.PositiveIntegerField(default=50000)
     population_density = models.PositiveIntegerField(default=5000, help_text='People per sq km')
@@ -41,7 +41,7 @@ class Location(models.Model):
     longitude = models.FloatField()
     accuracy = models.FloatField(null=True, blank=True)
     detected_ward = models.ForeignKey(Ward, null=True, blank=True, on_delete=models.SET_NULL)
-    city = models.CharField(max_length=100, default='Visakhapatnam')
+    city = models.CharField(max_length=100, default='India')
     timestamp = models.DateTimeField(auto_now_add=True, db_index=True)
 
     class Meta:

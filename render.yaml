@@ -3,7 +3,7 @@ services:
   - type: web
     name: heathealthai-backend
     runtime: python
-    buildCommand: "./backend/build.sh"
+    buildCommand: "bash backend/build.sh"
     startCommand: "cd backend && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --timeout 120"
     plan: free
     healthCheckPath: /api/health/
@@ -21,7 +21,7 @@ services:
           property: connectionString
 
       - key: CORS_ALLOWED_ORIGINS
-        value: "https://heathealthai-frontend.onrender.com"
+        value: "https://heathealthai-frontend.onrender.com,http://localhost:5173,http://127.0.0.1:5173"
 
       - key: DEMO_MODE
         value: "True"
@@ -35,12 +35,12 @@ services:
       - key: GOVERNMENT_EMAIL_DOMAINS
         value: "gov.in,nic.in,ap.gov.in"
 
-      # Web Push
+      # Web Push (default demo keys provided)
       - key: VAPID_PUBLIC_KEY
-        sync: false
+        value: "BEl62iUYgUivxIkv69yViEuiBIa-Ib9-SkvMeAtA3LFgDzkrxZJjSgSnfckjZJuHLSatflLRnvOncsvzsPpuw1U"
 
       - key: VAPID_PRIVATE_KEY
-        sync: false
+        value: "yK36zWfXv0m9L7W9v3Z_8W_8Y8V0nL8_3n_W7v0L3Z8"
 
       - key: VAPID_EMAIL
         value: "mailto:heathealthai96@gmail.com"

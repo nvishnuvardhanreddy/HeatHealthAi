@@ -2,6 +2,13 @@ from rest_framework import status, views, permissions
 from rest_framework.response import Response
 from .providers import get_weather_provider
 from thermal.services import calculate_htsi
+from dashboard.views import _get_nearest_city
+
+def _get_city_label(lat: float, lon: float) -> str:
+    """Return nearest Indian city name for the given coordinates."""
+    city, state = _get_nearest_city(lat, lon)
+    return f"{city}, {state}"
+
 
 class CurrentWeatherView(views.APIView):
     permission_classes = [permissions.AllowAny]
@@ -22,8 +29,9 @@ class CurrentWeatherView(views.APIView):
             vulnerability_score=50.0
         )
 
+        city_name = _get_city_label(lat, lon)
         return Response({
-            "city": "Visakhapatnam",
+            "city": city_name,
             "coordinates": {"latitude": lat, "longitude": lon},
             "weather": weather,
             "thermal_indices": {

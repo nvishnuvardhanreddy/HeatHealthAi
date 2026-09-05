@@ -1,7 +1,46 @@
-from django.db import connection
 from django.conf import settings
+from django.db import connection
 from rest_framework import status, views, permissions
 from rest_framework.response import Response
+
+INDIA_CITIES = [
+    # (lat, lon, city_name, state)
+    (28.6139, 77.2090, 'New Delhi', 'Delhi'),
+    (19.0760, 72.8777, 'Mumbai', 'Maharashtra'),
+    (12.9716, 77.5946, 'Bengaluru', 'Karnataka'),
+    (22.5726, 88.3639, 'Kolkata', 'West Bengal'),
+    (17.3850, 78.4867, 'Hyderabad', 'Telangana'),
+    (13.0827, 80.2707, 'Chennai', 'Tamil Nadu'),
+    (23.0225, 72.5714, 'Ahmedabad', 'Gujarat'),
+    (18.5204, 73.8567, 'Pune', 'Maharashtra'),
+    (26.8467, 80.9462, 'Lucknow', 'Uttar Pradesh'),
+    (21.1702, 72.8311, 'Surat', 'Gujarat'),
+    (26.9124, 75.7873, 'Jaipur', 'Rajasthan'),
+    (17.6868, 83.2185, 'Visakhapatnam', 'Andhra Pradesh'),
+    (16.5062, 80.6480, 'Vijayawada', 'Andhra Pradesh'),
+    (11.0168, 76.9558, 'Coimbatore', 'Tamil Nadu'),
+    (22.7196, 75.8577, 'Indore', 'Madhya Pradesh'),
+    (23.2599, 77.4126, 'Bhopal', 'Madhya Pradesh'),
+    (25.5941, 85.1376, 'Patna', 'Bihar'),
+    (10.8505, 76.2711, 'Thrissur', 'Kerala'),
+    (8.5241, 76.9366, 'Thiruvananthapuram', 'Kerala'),
+    (30.7333, 76.7794, 'Chandigarh', 'Chandigarh'),
+    (27.1767, 78.0081, 'Agra', 'Uttar Pradesh'),
+    (21.2514, 81.6296, 'Raipur', 'Chhattisgarh'),
+    (20.2961, 85.8245, 'Bhubaneswar', 'Odisha'),
+    (15.3173, 75.7139, 'Hubballi', 'Karnataka'),
+    (9.9312, 76.2673, 'Kochi', 'Kerala'),
+]
+
+def _get_nearest_city(lat: float, lon: float) -> tuple[str, str]:
+    """Return (city_name, state) for the nearest major Indian city."""
+    best, best_dist = INDIA_CITIES[0], float('inf')
+    for entry in INDIA_CITIES:
+        d = (lat - entry[0]) ** 2 + (lon - entry[1]) ** 2
+        if d < best_dist:
+            best_dist = d
+            best = entry
+    return best[2], best[3]
 
 from users.permissions import IsVerifiedAuthority, IsAdmin
 from gis.models import Ward
@@ -102,9 +141,13 @@ class CitizenDashboardView(views.APIView):
                     "created_at": alert.created_at.isoformat()
                 }
 
+        city_name, state_name = _get_nearest_city(lat, lon)
         return Response({
+            "city": city_name,
+            "state": state_name,
+            "coordinates": {"latitude": lat, "longitude": lon},
+            "scope": "India-wide coordinate weather",
             "current_weather": weather,
-            "location": {"latitude": lat, "longitude": lon, "scope": "India-wide coordinate weather"},
             "thermal_stress": thermal,
             "hotspots": hotspots,
             "hourly_48h": forecast.get("hourly", [])[:24],
@@ -169,5 +212,5 @@ class AdminSystemStatsView(views.APIView):
             "verified_authorities": verified_authorities,
             "total_wards": total_wards,
             "ml_status": get_model_status(),
-            "demo_mode": getattr(connection, 'demo_mode', True)
+            "demo_mode": getattr(settings, 'DEMO_MODE', True)
         }, status=status.HTTP_200_OK)

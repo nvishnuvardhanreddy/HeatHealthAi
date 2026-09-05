@@ -23,8 +23,16 @@ const userIcon = new L.DivIcon({
 export const RiskMap = ({ geojsonData, userLocation, selectedWard, onSelectWard }) => {
   const [map, setMap] = useState(null);
 
-  const defaultCenter = [17.6868, 83.2185]; // Visakhapatnam center
-  const center = userLocation ? [userLocation.latitude, userLocation.longitude] : defaultCenter;
+  const defaultCenter = [20.5937, 78.9629]; // India center
+  const vizagCenter = [17.6868, 83.2185];
+  // If ward GeoJSON is available (Vizag data), center on Vizag zoomed in.
+  // Otherwise center on user location or India center, zoomed out.
+  const center = geojsonData
+    ? vizagCenter
+    : userLocation
+      ? [userLocation.latitude, userLocation.longitude]
+      : defaultCenter;
+  const zoom = geojsonData ? 11 : userLocation ? 10 : 5;
 
   const getRiskColor = (htsi, riskLevel) => {
     const risk = (riskLevel || '').toUpperCase();
@@ -96,7 +104,7 @@ export const RiskMap = ({ geojsonData, userLocation, selectedWard, onSelectWard 
       <div className="flex-1 rounded-xl overflow-hidden relative border border-slate-800">
         <MapContainer
           center={center}
-          zoom={11}
+          zoom={zoom}
           scrollWheelZoom={false}
           className="h-full w-full"
           ref={setMap}
@@ -140,7 +148,7 @@ export const RiskMap = ({ geojsonData, userLocation, selectedWard, onSelectWard 
 
         {!geojsonData && (
           <div className="absolute inset-x-4 top-4 z-[400] rounded-lg border border-amber-500/40 bg-slate-950/90 p-3 text-xs text-amber-200">
-            Live weather and risk are available for this location. Ward boundaries are not loaded for this area yet.
+            📍 Live weather & heat risk calculated for your GPS location. Ward boundary polygons are only available for Visakhapatnam. Other Indian cities show heat risk via direct meteorological data.
           </div>
         )}
 

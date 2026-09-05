@@ -66,11 +66,11 @@ export const HomePage = () => {
       <section className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="glass-panel p-5">
           <div className="flex items-center justify-between text-slate-400 mb-2">
-            <span className="text-xs font-mono uppercase">Primary Focus Area</span>
+            <span className="text-xs font-mono uppercase">Coverage</span>
             <MapPin className="h-4 w-4 text-cyan-400" />
           </div>
-          <div className="text-xl font-bold text-white">Visakhapatnam</div>
-          <div className="text-xs text-slate-400 font-mono mt-1">Andhra Pradesh, India</div>
+          <div className="text-xl font-bold text-white">Pan-India</div>
+          <div className="text-xs text-slate-400 font-mono mt-1">Live weather for all Indian cities</div>
         </div>
 
         <div className="glass-panel p-5">

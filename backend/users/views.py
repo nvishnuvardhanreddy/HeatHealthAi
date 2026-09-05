@@ -1,4 +1,4 @@
-from django.db import transaction
+from django.conf import settings
 from django.utils import timezone
 
 from rest_framework import permissions, status, views
@@ -45,46 +45,42 @@ class RegisterView(views.APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        try:
-            with transaction.atomic():
-                user = serializer.save()
-                _, otp_code = EmailOTP.generate_for_user(user)
+        # Create the user first (always committed — email failure is recoverable)
+        user = serializer.save()
+        _, otp_code = EmailOTP.generate_for_user(user)
 
-                if not send_otp_email(user, otp_code):
-                    raise RuntimeError("OTP email delivery failed")
+        email_sent = send_otp_email(user, otp_code)
 
-                if (
-                    user.role == User.Role.GOVERNMENT_AUTHORITY
-                    and hasattr(user, "government_verification")
-                ):
-                    send_gov_verification_submitted_email(
-                        user,
-                        user.government_verification,
-                    )
-
-        except RuntimeError:
-            return Response(
-                {
-                    "detail": (
-                        "The verification email could not be sent. "
-                        "Please check the email configuration and try again."
-                    ),
-                    "email_delivery_failed": True,
-                },
-                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+        if (
+            user.role == User.Role.GOVERNMENT_AUTHORITY
+            and hasattr(user, "government_verification")
+        ):
+            send_gov_verification_submitted_email(
+                user,
+                user.government_verification,
             )
 
-        return Response(
-            {
-                "message": "Registration successful. Check your email for the OTP.",
-                "email": user.email,
-                "role": user.role,
-                "requires_government_verification": (
-                    user.role == User.Role.GOVERNMENT_AUTHORITY
-                ),
-            },
-            status=status.HTTP_201_CREATED,
-        )
+        response_data = {
+            "message": (
+                "Registration successful. Check your email for the OTP."
+                if email_sent
+                else (
+                    "Account created, but the verification email could not be "
+                    "sent. Please use the \"Resend OTP\" option on the next page."
+                )
+            ),
+            "email": user.email,
+            "role": user.role,
+            "requires_government_verification": (
+                user.role == User.Role.GOVERNMENT_AUTHORITY
+            ),
+            "email_delivery_failed": not email_sent,
+        }
+
+        if getattr(settings, 'DEMO_MODE', False) or not email_sent:
+            response_data["demo_otp"] = otp_code
+
+        return Response(response_data, status=status.HTTP_201_CREATED)
 
 
 class VerifyEmailView(views.APIView):
@@ -216,19 +212,20 @@ class ResendVerificationView(views.APIView):
 
         _, otp_code = EmailOTP.generate_for_user(user)
 
-        if not send_otp_email(user, otp_code):
-            return Response(
-                {
-                    "detail": "The OTP email could not be delivered.",
-                    "email_delivery_failed": True,
-                },
-                status=status.HTTP_503_SERVICE_UNAVAILABLE,
-            )
+        email_sent = send_otp_email(user, otp_code)
 
-        return Response(
-            {"message": "A new OTP was sent to your email."},
-            status=status.HTTP_200_OK,
-        )
+        resp_data = {
+            "message": "A new OTP was sent to your email." if email_sent else "A new OTP was generated.",
+            "email_delivery_failed": not email_sent,
+        }
+        if getattr(settings, 'DEMO_MODE', False) or not email_sent:
+            resp_data["demo_otp"] = otp_code
+
+        if not email_sent and not getattr(settings, 'DEMO_MODE', False):
+            resp_data["detail"] = "The OTP email could not be delivered."
+            return Response(resp_data, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+
+        return Response(resp_data, status=status.HTTP_200_OK)
 
 
 class LoginView(views.APIView):
