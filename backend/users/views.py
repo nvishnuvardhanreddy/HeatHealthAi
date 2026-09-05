@@ -45,11 +45,10 @@ class RegisterView(views.APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # Create the user first (always committed — email failure is recoverable)
+        # Create and auto-verify the user (no OTP needed)
         user = serializer.save()
-        _, otp_code = EmailOTP.generate_for_user(user)
-
-        email_sent = send_otp_email(user, otp_code)
+        user.email_status = User.EmailStatus.ACTIVE
+        user.save(update_fields=["email_status"])
 
         if (
             user.role == User.Role.GOVERNMENT_AUTHORITY
@@ -60,24 +59,25 @@ class RegisterView(views.APIView):
                 user.government_verification,
             )
 
-        response_data = {
-            "message": (
-                "Registration successful. Check your email for the OTP."
-                if email_sent
-                else (
-                    "Account created, but the verification email could not be "
-                    "sent. Please use the \"Resend OTP\" option on the next page."
-                )
-            ),
-            "email": user.email,
-            "role": user.role,
-            "requires_government_verification": (
-                user.role == User.Role.GOVERNMENT_AUTHORITY
-            ),
-            "email_delivery_failed": not email_sent,
-        }
+        # Issue JWT tokens immediately
+        refresh = RefreshToken.for_user(user)
 
-        return Response(response_data, status=status.HTTP_201_CREATED)
+        return Response(
+            {
+                "message": "Registration successful. You are now logged in.",
+                "email": user.email,
+                "role": user.role,
+                "requires_government_verification": (
+                    user.role == User.Role.GOVERNMENT_AUTHORITY
+                ),
+                "tokens": {
+                    "access": str(refresh.access_token),
+                    "refresh": str(refresh),
+                },
+                "user": UserProfileSerializer(user).data,
+            },
+            status=status.HTTP_201_CREATED,
+        )
 
 
 class VerifyEmailView(views.APIView):
@@ -237,18 +237,7 @@ class LoginView(views.APIView):
 
         user = serializer.validated_data["user"]
 
-        if not user.is_email_verified:
-            return Response(
-                {
-                    "detail": (
-                        "Email is not verified. "
-                        "Please verify your email first."
-                    ),
-                    "requires_email_verification": True,
-                    "email": user.email,
-                },
-                status=status.HTTP_403_FORBIDDEN,
-            )
+        # Email verification is disabled — all registered users can log in directly
 
         refresh = RefreshToken.for_user(user)
 

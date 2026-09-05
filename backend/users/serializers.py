@@ -126,7 +126,7 @@ class UserRegistrationSerializer(serializers.Serializer):
             last_name=last_name,
             phone=validated_data.get('phone', ''),
             role=validated_data['role'],
-            email_status=User.EmailStatus.EMAIL_UNVERIFIED
+            email_status=User.EmailStatus.ACTIVE
         )
 
         if validated_data['role'] == 'GOVERNMENT_AUTHORITY':

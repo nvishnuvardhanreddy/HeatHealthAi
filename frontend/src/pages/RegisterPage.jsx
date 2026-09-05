@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { authService, getApiBaseUrl, setCustomApiBaseUrl } from '../services/api';
+import { useAuth } from '../auth/AuthContext';
 import { ShieldCheck, User, Building, Briefcase, BadgeCheck, AlertTriangle, ArrowRight, Settings } from 'lucide-react';
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
   const [role, setRole] = useState('CITIZEN'); // 'CITIZEN' | 'GOVERNMENT_AUTHORITY'
   const [formData, setFormData] = useState({
     full_name: '',
@@ -56,15 +58,24 @@ export const RegisterPage = () => {
       }
 
       const res = await authService.register(payload);
-      // Always navigate to verify-email on success (201), even if email failed.
-      // The verify-email page has a resend OTP button for that case.
-      navigate('/verify-email', {
-        state: {
-          email: formData.email,
-          role: role,
-          emailDeliveryFailed: res.data?.email_delivery_failed === true,
-        },
-      });
+      const { tokens, user: userData } = res.data;
+
+      // Store auth tokens and user — no OTP verification needed
+      if (tokens) {
+        localStorage.setItem('heathealth_access_token', tokens.access);
+        localStorage.setItem('heathealth_refresh_token', tokens.refresh);
+      }
+      if (userData) {
+        localStorage.setItem('heathealth_user', JSON.stringify(userData));
+        setUser(userData);
+      }
+
+      // Route based on role
+      if (role === 'GOVERNMENT_AUTHORITY') {
+        navigate('/profile', { state: { pendingNotice: true } });
+      } else {
+        navigate('/dashboard');
+      }
     } catch (err) {
       const resp = err.response?.data;
       if (resp?.errors) {
@@ -75,15 +86,6 @@ export const RegisterPage = () => {
         setError(`${firstKey.replace(/_/g, ' ')}: ${msg}`);
       } else if (resp?.detail) {
         setError(resp.detail);
-      } else if (resp?.email_delivery_failed) {
-        // Email failed but account was created — redirect so user can resend OTP
-        navigate('/verify-email', {
-          state: {
-            email: formData.email,
-            role: role,
-            emailDeliveryFailed: true,
-          },
-        });
       } else if (err.code === 'ERR_NETWORK' || err.message?.includes('Network Error')) {
         setError(`Cannot reach backend server at "${getApiBaseUrl()}". Make sure your Render backend service is deployed and active.`);
         setShowApiConfig(true);
@@ -345,7 +347,7 @@ export const RegisterPage = () => {
             disabled={loading}
             className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-teal-400 hover:from-cyan-300 hover:to-teal-300 text-dark-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 transition disabled:opacity-50"
           >
-            {loading ? 'Creating Account & Dispatching OTP...' : 'Register & Receive OTP'}
+            {loading ? 'Creating Account...' : 'Create Account & Sign In'}
             <ArrowRight className="h-4 w-4" />
           </button>
         </form>

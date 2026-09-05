@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Activity, LocateFixed, RefreshCw, ShieldAlert, MapPin, Compass, Flame } from 'lucide-react';
+import { Activity, LocateFixed, RefreshCw, ShieldAlert, MapPin, Compass, Flame, Users } from 'lucide-react';
 import { gisService, mlService, systemService } from '../services/api';
 import { RiskMap } from '../maps/RiskMap';
 import { WeatherCard } from '../components/WeatherCard';
