@@ -1,42 +1,44 @@
 /**
  * HeatHealthAI Central Theme Configuration
- * Mission-Control Dark Thermal Intelligence System
+ * Nothing Tech Minimalist Gold, Yellow & Cream Intelligence System
  */
 
 export const THEME = {
   colors: {
-    primaryBackground: '#0C0A09',
-    secondaryBackground: '#161311',
-    card: '#14110F',
+    primaryBackground: '#080808',
+    secondaryBackground: '#121110',
+    card: '#171513',
     input: '#100E0D',
-    border: '#4F3100',
-    borderLight: 'rgba(245, 169, 0, 0.18)',
-    borderSubtle: 'rgba(245, 169, 0, 0.12)',
+    border: '#4F3E1B',
+    borderLight: 'rgba(212, 175, 55, 0.22)',
+    borderSubtle: 'rgba(212, 175, 55, 0.14)',
 
-    primaryAmber: '#F5A900',
-    brightYellow: '#FFD34D',
-    heatOrange: '#FF9F3D',
-    hotCoral: '#FF7568',
+    primaryGold: '#D4AF37',
+    primaryAmber: '#D4AF37',
+    brightYellow: '#F5C842',
+    heatOrange: '#E58E26',
+    hotCoral: '#DC2626',
+    warmCream: '#F7F4EB',
 
-    primaryText: '#F5F0E8',
-    secondaryText: '#A59F95',
-    mutedText: '#706A62',
+    primaryText: '#F7F4EB',
+    secondaryText: '#A39C8E',
+    mutedText: '#6B6457',
   },
 
   riskColors: {
-    LOW: '#16C784',
-    MODERATE: '#F0B400',
-    HIGH: '#FF7518',
-    VERY_HIGH: '#EF4444',
-    'VERY HIGH': '#EF4444',
-    EXTREME: '#7C3AED',
+    LOW: '#22C55E',
+    MODERATE: '#F5C842',
+    HIGH: '#E58E26',
+    VERY_HIGH: '#DC2626',
+    'VERY HIGH': '#DC2626',
+    EXTREME: '#9333EA',
   },
 
   gradients: {
-    thermal: 'linear-gradient(90deg, #FFD34D 0%, #FF9F3D 50%, #FF7568 100%)',
-    thermalSubtle: 'linear-gradient(135deg, rgba(255, 211, 77, 0.12) 0%, rgba(255, 159, 61, 0.12) 50%, rgba(255, 117, 104, 0.12) 100%)',
-    radialWarmGlow: 'radial-gradient(circle at 75% 20%, rgba(245, 169, 0, 0.08), transparent 35%)',
-    primaryButton: 'linear-gradient(135deg, #F5A900 0%, #FFB300 100%)',
+    thermal: 'linear-gradient(90deg, #F5C842 0%, #E58E26 50%, #DC2626 100%)',
+    thermalSubtle: 'linear-gradient(135deg, rgba(245, 200, 66, 0.12) 0%, rgba(229, 142, 38, 0.12) 50%, rgba(220, 38, 38, 0.12) 100%)',
+    radialWarmGlow: 'radial-gradient(circle at 75% 20%, rgba(212, 175, 55, 0.09), transparent 35%)',
+    primaryButton: 'linear-gradient(135deg, #D4AF37 0%, #F5C842 100%)',
   },
 
   borderRadius: {
@@ -47,9 +49,9 @@ export const THEME = {
   },
 
   shadows: {
-    card: '0 10px 40px rgba(0, 0, 0, 0.25)',
-    dropdown: '0 25px 60px -10px rgba(0, 0, 0, 0.95), 0 0 35px rgba(245, 169, 0, 0.1)',
-    buttonGlow: '0 0 20px rgba(245, 169, 0, 0.3)',
+    card: '0 10px 40px rgba(0, 0, 0, 0.45)',
+    dropdown: '0 25px 60px -10px rgba(0, 0, 0, 0.98), 0 0 35px rgba(212, 175, 55, 0.15)',
+    buttonGlow: '0 0 20px rgba(212, 175, 55, 0.3)',
   },
 };
 
@@ -77,39 +79,39 @@ export const getRiskBadgeStyle = (risk) => {
   switch (norm) {
     case 'EXTREME':
       return {
-        bg: 'rgba(124, 58, 237, 0.18)',
-        border: '#7C3AED',
-        text: '#DDD6FE',
-        dot: '#7C3AED',
+        bg: 'rgba(147, 51, 234, 0.18)',
+        border: '#9333EA',
+        text: '#E9D5FF',
+        dot: '#9333EA',
       };
     case 'VERY HIGH':
       return {
-        bg: 'rgba(239, 68, 68, 0.18)',
-        border: '#EF4444',
-        text: '#FECACA',
-        dot: '#EF4444',
+        bg: 'rgba(220, 38, 38, 0.18)',
+        border: '#DC2626',
+        text: '#FCA5A5',
+        dot: '#DC2626',
       };
     case 'HIGH':
       return {
-        bg: 'rgba(255, 117, 24, 0.18)',
-        border: '#FF7518',
+        bg: 'rgba(229, 142, 38, 0.18)',
+        border: '#E58E26',
         text: '#FFEDD5',
-        dot: '#FF7518',
+        dot: '#E58E26',
       };
     case 'MODERATE':
       return {
-        bg: 'rgba(240, 180, 0, 0.18)',
-        border: '#F0B400',
+        bg: 'rgba(245, 200, 66, 0.18)',
+        border: '#F5C842',
         text: '#FEF08A',
-        dot: '#F0B400',
+        dot: '#F5C842',
       };
     case 'LOW':
     default:
       return {
-        bg: 'rgba(22, 199, 132, 0.18)',
-        border: '#16C784',
-        text: '#A7F3D0',
-        dot: '#16C784',
+        bg: 'rgba(34, 197, 94, 0.18)',
+        border: '#22C55E',
+        text: '#BBF7D0',
+        dot: '#22C55E',
       };
   }
 };

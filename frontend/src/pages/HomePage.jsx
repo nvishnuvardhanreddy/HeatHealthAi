@@ -152,13 +152,13 @@ export const HomePage = () => {
       <section className="hero-card relative z-30 p-6 sm:p-10 space-y-6">
         {/* Subtle radial ambient warmth */}
         <div className="absolute inset-0 rounded-[20px] overflow-hidden pointer-events-none">
-          <div className="absolute -right-20 -top-20 w-96 h-96 rounded-full bg-[rgba(245,169,0,0.06)] blur-3xl" />
+          <div className="absolute -right-20 -top-20 w-96 h-96 rounded-full bg-[rgba(212,175,55,0.08)] blur-3xl" />
         </div>
 
         <div className="relative z-10 space-y-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#161311] border border-[#4F3100] text-xs font-mono text-[#FFD34D] shadow-sm">
-              <span className="h-2 w-2 rounded-full bg-[#F5A900] animate-ping" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#121110] border border-[#4F3E1B] text-xs font-mono text-[#F5C842] shadow-sm">
+              <span className="h-2 w-2 rounded-full bg-[#D4AF37] animate-ping" />
               <span>TEAM GROUND ZERO • CLIMATE RESILIENCE INITIATIVE</span>
             </div>
 
@@ -167,7 +167,7 @@ export const HomePage = () => {
                 onClick={detectLocation}
                 className="btn-secondary text-xs py-1.5 px-3 flex items-center gap-1.5"
               >
-                <LocateFixed className="h-3.5 w-3.5 text-[#F5A900]" />
+                <LocateFixed className="h-3.5 w-3.5 text-[#D4AF37]" />
                 GPS Detect
               </button>
               <button
@@ -176,20 +176,20 @@ export const HomePage = () => {
                 title="Refresh Live Data"
                 aria-label="Refresh Live Data"
               >
-                <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin text-[#F5A900]' : ''}`} />
+                <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin text-[#D4AF37]' : ''}`} />
               </button>
             </div>
           </div>
 
           <div className="max-w-4xl space-y-3">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
-              <span className="text-[#F5F0E8] block sm:inline">Human Thermal Stress Early Warning & </span>
+              <span className="text-[#F7F4EB] block sm:inline">Human Thermal Stress Early Warning & </span>
               <span className="thermal-gradient-text block sm:inline">
                 GIS Live Forecast Dashboard
               </span>
             </h1>
-            <p className="text-sm sm:text-base text-[#A59F95] leading-relaxed max-w-3xl">
-              Integrating real-time ambient temperature, relative humidity, solar radiant flux, and wind convection into the multi-factor <strong className="text-[#F5F0E8] font-bold">Human Thermal Stress Index (HTSI)</strong> with ward-level GIS resolution across India.
+            <p className="text-sm sm:text-base text-[#A39C8E] leading-relaxed max-w-3xl">
+              Integrating real-time ambient temperature, relative humidity, solar radiant flux, and wind convection into the multi-factor <strong className="text-[#F7F4EB] font-bold">Human Thermal Stress Index (HTSI)</strong> with ward-level GIS resolution across India.
             </p>
           </div>
 
@@ -204,27 +204,27 @@ export const HomePage = () => {
       </section>
 
       {/* 9. LOCATION SUMMARY CARD */}
-      <section className="mission-card p-5 sm:p-6 border border-[#4F3100] space-y-4">
+      <section className="mission-card p-5 sm:p-6 border border-[#4F3E1B] space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
-            <div className="p-3 rounded-xl bg-[#161311] border border-[#4F3100] text-[#F5A900] shadow-sm">
+            <div className="p-3 rounded-xl bg-[#121110] border border-[#4F3E1B] text-[#D4AF37] shadow-sm">
               <MapPin className="h-5 w-5" />
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <h2 className="text-lg sm:text-xl font-extrabold text-[#F5F0E8] tracking-wide">{locationMeta.name}</h2>
-                <span className="text-xs font-mono px-2.5 py-0.5 rounded bg-[#161311] text-[#A59F95] border border-[#4F3100]">
+                <h2 className="text-lg sm:text-xl font-extrabold text-[#F7F4EB] tracking-wide">{locationMeta.name}</h2>
+                <span className="text-xs font-mono px-2.5 py-0.5 rounded bg-[#121110] text-[#A39C8E] border border-[#4F3E1B]">
                   {locationMeta.state}
                 </span>
                 {locationMeta.isWard && (
-                  <span className="text-[10px] font-mono px-2.5 py-0.5 rounded bg-[rgba(245,169,0,0.12)] text-[#FFD34D] border border-[#4F3100] font-bold">
+                  <span className="text-[10px] font-mono px-2.5 py-0.5 rounded bg-[rgba(212,175,55,0.14)] text-[#F5C842] border border-[#4F3E1B] font-bold">
                     MUNICIPAL WARD
                   </span>
                 )}
               </div>
-              <p className="text-xs text-[#A59F95] font-mono mt-1">
+              <p className="text-xs text-[#A39C8E] font-mono mt-1">
                 Coordinates: {location.latitude.toFixed(4)}° N, {location.longitude.toFixed(4)}° E ·{' '}
-                <span className="text-[#F5A900] font-bold">
+                <span className="text-[#D4AF37] font-bold">
                   {weather.is_live ? 'LIVE SATELLITE • METEO SYNC' : 'DEMO VALIDATION MODE'}
                 </span>
               </p>
@@ -234,33 +234,33 @@ export const HomePage = () => {
           <div className="flex flex-wrap items-center gap-2.5 font-mono text-xs">
             {/* Population Metric Card */}
             {locationMeta.populationFormatted && (
-              <div className="p-2.5 px-3.5 rounded-xl bg-[#161311] border border-[#4F3100] flex items-center gap-2 shadow-sm">
-                <Users className="h-4 w-4 text-[#F5A900]" />
-                <span className="text-[#A59F95]">Population:</span>
-                <span className="font-bold text-[#F5F0E8]">{locationMeta.populationFormatted}</span>
+              <div className="p-2.5 px-3.5 rounded-xl bg-[#121110] border border-[#4F3E1B] flex items-center gap-2 shadow-sm">
+                <Users className="h-4 w-4 text-[#D4AF37]" />
+                <span className="text-[#A39C8E]">Population:</span>
+                <span className="font-bold text-[#F7F4EB]">{locationMeta.populationFormatted}</span>
                 {locationMeta.density && (
-                  <span className="text-[11px] text-[#FFD34D] border-l border-[#4F3100] pl-2">
+                  <span className="text-[11px] text-[#F5C842] border-l border-[#4F3E1B] pl-2">
                     {locationMeta.density}
                   </span>
                 )}
               </div>
             )}
 
-            <div className="p-2.5 px-3.5 rounded-xl bg-[#161311] border border-[#4F3100] flex items-center gap-2 shadow-sm">
-              <ThermometerSun className="h-4 w-4 text-[#FF9F3D]" />
-              <span className="text-[#A59F95]">Temp:</span>
-              <span className="font-bold text-[#F5F0E8]">{weather.temperature ?? '—'}°C</span>
+            <div className="p-2.5 px-3.5 rounded-xl bg-[#121110] border border-[#4F3E1B] flex items-center gap-2 shadow-sm">
+              <ThermometerSun className="h-4 w-4 text-[#E58E26]" />
+              <span className="text-[#A39C8E]">Temp:</span>
+              <span className="font-bold text-[#F7F4EB]">{weather.temperature ?? '—'}°C</span>
             </div>
 
-            <div className="p-2.5 px-3.5 rounded-xl bg-[#161311] border border-[#4F3100] flex items-center gap-2 shadow-sm">
-              <Droplets className="h-4 w-4 text-[#FFD34D]" />
-              <span className="text-[#A59F95]">Humidity:</span>
-              <span className="font-bold text-[#F5F0E8]">{weather.humidity ?? '—'}%</span>
+            <div className="p-2.5 px-3.5 rounded-xl bg-[#121110] border border-[#4F3E1B] flex items-center gap-2 shadow-sm">
+              <Droplets className="h-4 w-4 text-[#F5C842]" />
+              <span className="text-[#A39C8E]">Humidity:</span>
+              <span className="font-bold text-[#F7F4EB]">{weather.humidity ?? '—'}%</span>
             </div>
 
-            <div className="p-2.5 px-3.5 rounded-xl bg-[#161311] border border-[#4F3100] flex items-center gap-2 shadow-sm">
-              <Flame className="h-4 w-4 text-[#7C3AED]" />
-              <span className="text-[#A59F95]">HTSI:</span>
+            <div className="p-2.5 px-3.5 rounded-xl bg-[#121110] border border-[#4F3E1B] flex items-center gap-2 shadow-sm">
+              <Flame className="h-4 w-4 text-[#9333EA]" />
+              <span className="text-[#A39C8E]">HTSI:</span>
               <span className="font-bold text-purple-300">{Number(thermal.htsi ?? 0).toFixed(1)}/100</span>
             </div>
 
@@ -270,16 +270,16 @@ export const HomePage = () => {
 
         {/* Demographic Exposure Profile Bar */}
         {locationMeta.exposure && (
-          <div className="pt-3 border-t border-[#4F3100] flex flex-wrap items-center justify-between gap-2 text-xs">
+          <div className="pt-3 border-t border-[#4F3E1B] flex flex-wrap items-center justify-between gap-2 text-xs">
             <div className="flex items-center gap-2">
-              <span className="font-mono uppercase text-[10px] px-2.5 py-0.5 rounded bg-[#161311] border border-[#4F3100] text-[#FFD34D] font-bold">
+              <span className="font-mono uppercase text-[10px] px-2.5 py-0.5 rounded bg-[#121110] border border-[#4F3E1B] text-[#F5C842] font-bold">
                 Demographic Exposure
               </span>
-              <span className="text-[#F5F0E8]">{locationMeta.exposure}</span>
+              <span className="text-[#F7F4EB]">{locationMeta.exposure}</span>
             </div>
             {locationMeta.density && (
-              <span className="text-[11px] font-mono text-[#A59F95]">
-                Spatial Density: <strong className="text-[#FFD34D]">{locationMeta.density}</strong>
+              <span className="text-[11px] font-mono text-[#A39C8E]">
+                Spatial Density: <strong className="text-[#F5C842]">{locationMeta.density}</strong>
               </span>
             )}
           </div>
@@ -287,14 +287,14 @@ export const HomePage = () => {
       </section>
 
       {error && (
-        <div className="mission-card border-[#EF4444] p-4 text-sm text-[#FECACA]">
+        <div className="mission-card border-[#DC2626] p-4 text-sm text-[#FCA5A5]">
           {error}
         </div>
       )}
 
       {loading && (
-        <div className="mission-card p-8 text-center text-sm text-[#A59F95] flex items-center justify-center gap-3">
-          <RefreshCw className="h-5 w-5 animate-spin text-[#F5A900]" />
+        <div className="mission-card p-8 text-center text-sm text-[#A39C8E] flex items-center justify-center gap-3">
+          <RefreshCw className="h-5 w-5 animate-spin text-[#D4AF37]" />
           <span>Computing localized biometeorological indices and multi-day projections...</span>
         </div>
       )}
@@ -352,23 +352,23 @@ export const HomePage = () => {
 
           {/* 14. 5-Day Forecast & 48h Hourly Chart */}
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-            <section className="mission-card p-6">
+            <section className="mission-card p-6 border border-[#4F3E1B]">
               <div className="flex items-center gap-2 mb-4">
-                <Activity className="h-5 w-5 text-[#FF9F3D]" />
+                <Activity className="h-5 w-5 text-[#E58E26]" />
                 <div>
-                  <h2 className="text-base font-bold text-[#F5F0E8]">5-Day Heat Danger & Human Impact Forecast</h2>
-                  <span className="text-[11px] font-mono text-[#A59F95]">Open-Meteo Multi-Model Ensemble</span>
+                  <h2 className="text-base font-bold text-[#F7F4EB]">5-Day Heat Danger & Human Impact Forecast</h2>
+                  <span className="text-[11px] font-mono text-[#A39C8E]">Open-Meteo Multi-Model Ensemble</span>
                 </div>
               </div>
               <ForecastChart dailyData={daily} />
             </section>
 
-            <section className="mission-card p-6">
+            <section className="mission-card p-6 border border-[#4F3E1B]">
               <div className="flex items-center gap-2 mb-4">
-                <ShieldAlert className="h-5 w-5 text-[#EF4444]" />
+                <ShieldAlert className="h-5 w-5 text-[#DC2626]" />
                 <div>
-                  <h2 className="text-base font-bold text-[#F5F0E8]">Next 48 Hours Diurnal Thermal Curve</h2>
-                  <span className="text-[11px] font-mono text-[#A59F95]">Hourly Solar-Humidity Coupled Trajectory</span>
+                  <h2 className="text-base font-bold text-[#F7F4EB]">Next 48 Hours Diurnal Thermal Curve</h2>
+                  <span className="text-[11px] font-mono text-[#A39C8E]">Hourly Solar-Humidity Coupled Trajectory</span>
                 </div>
               </div>
               <HourlyHeatChart hourlyData={hourly} />
@@ -376,15 +376,15 @@ export const HomePage = () => {
           </div>
 
           {/* Hotspots & Wards Reference Grid */}
-          <section className="mission-card p-6 space-y-4">
+          <section className="mission-card p-6 border border-[#4F3E1B] space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
-                <span className="text-xs font-mono uppercase tracking-wider text-[#F5A900] font-bold">
+                <span className="text-xs font-mono uppercase tracking-wider text-[#D4AF37] font-bold">
                   High-Vulnerability Monitoring
                 </span>
-                <h3 className="text-lg font-bold text-[#F5F0E8]">National Heat Hotspots & Visakhapatnam Wards</h3>
+                <h3 className="text-lg font-bold text-[#F7F4EB]">National Heat Hotspots & Visakhapatnam Wards</h3>
               </div>
-              <span className="text-xs text-[#A59F95] font-mono">Click any location card to zoom map & load metrics</span>
+              <span className="text-xs text-[#A39C8E] font-mono">Click any location card to zoom map & load metrics</span>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3.5">
@@ -404,16 +404,16 @@ export const HomePage = () => {
                   key={spot.name}
                   type="button"
                   onClick={() => handleSelectLocation({ name: spot.name, state: spot.sub, latitude: spot.lat, longitude: spot.lon, isWard: spot.isWard, wardId: spot.wardId })}
-                  className="p-3.5 rounded-xl bg-[#161311] hover:bg-[#1E1915] border border-[#4F3100] hover:border-[#F5A900] text-left transition group flex flex-col justify-between shadow-sm"
+                  className="p-3.5 rounded-xl bg-[#121110] hover:bg-[#1C1A17] border border-[#4F3E1B] hover:border-[#D4AF37] text-left transition group flex flex-col justify-between shadow-sm"
                 >
                   <div>
                     <div className="flex items-center justify-between gap-1 mb-1">
-                      <span className="font-bold text-xs text-[#F5F0E8] group-hover:text-[#FFD34D] truncate">{spot.name}</span>
+                      <span className="font-bold text-xs text-[#F7F4EB] group-hover:text-[#F5C842] truncate">{spot.name}</span>
                       <RiskBadge risk={spot.risk} size="xs" />
                     </div>
-                    <p className="text-[10px] text-[#A59F95] font-mono truncate">{spot.sub}</p>
+                    <p className="text-[10px] text-[#A39C8E] font-mono truncate">{spot.sub}</p>
                   </div>
-                  <div className="mt-2.5 flex items-center gap-1 text-[10px] text-[#F5A900] font-semibold opacity-80 group-hover:opacity-100 font-mono">
+                  <div className="mt-2.5 flex items-center gap-1 text-[10px] text-[#D4AF37] font-semibold opacity-80 group-hover:opacity-100 font-mono">
                     <Crosshair className="h-3 w-3" />
                     Zoom & Inspect
                   </div>
@@ -427,32 +427,32 @@ export const HomePage = () => {
 
           {/* Core Science & Architecture Pillars */}
           <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="mission-card p-6 space-y-3">
-              <div className="h-10 w-10 rounded-xl bg-[#161311] border border-[#FF9F3D] flex items-center justify-center text-[#FF9F3D] shadow-sm">
+            <div className="mission-card p-6 border border-[#4F3E1B] space-y-3">
+              <div className="h-10 w-10 rounded-xl bg-[#121110] border border-[#E58E26] flex items-center justify-center text-[#E58E26] shadow-sm">
                 <Flame className="h-5 w-5" />
               </div>
-              <h3 className="text-base font-bold text-[#F5F0E8]">Biometeorological Physics</h3>
-              <p className="text-xs text-[#A59F95] leading-relaxed">
+              <h3 className="text-base font-bold text-[#F7F4EB]">Biometeorological Physics</h3>
+              <p className="text-xs text-[#A39C8E] leading-relaxed">
                 Computes Rothfusz Heat Index, Liljegren/Stull Wet Bulb Globe Temperature (WBGT), and Universal Thermal Climate Index (UTCI) to account for humidity and radiation coupling.
               </p>
             </div>
 
-            <div className="mission-card p-6 space-y-3">
-              <div className="h-10 w-10 rounded-xl bg-[#161311] border border-[#F5A900] flex items-center justify-center text-[#F5A900] shadow-sm">
+            <div className="mission-card p-6 border border-[#4F3E1B] space-y-3">
+              <div className="h-10 w-10 rounded-xl bg-[#121110] border border-[#D4AF37] flex items-center justify-center text-[#D4AF37] shadow-sm">
                 <Compass className="h-5 w-5" />
               </div>
-              <h3 className="text-base font-bold text-[#F5F0E8]">GeoJSON Ward Precision</h3>
-              <p className="text-xs text-[#A59F95] leading-relaxed">
+              <h3 className="text-base font-bold text-[#F7F4EB]">GeoJSON Ward Precision</h3>
+              <p className="text-xs text-[#A39C8E] leading-relaxed">
                 High-resolution polygon boundary mapping with Shapely point-in-polygon queries. Maps heat stress directly to 15 GVMC municipal zones like Gajuwaka, Madhurawada, and MVP Colony.
               </p>
             </div>
 
-            <div className="mission-card p-6 space-y-3">
-              <div className="h-10 w-10 rounded-xl bg-[#161311] border border-[#7C3AED] flex items-center justify-center text-purple-400 shadow-sm">
+            <div className="mission-card p-6 border border-[#4F3E1B] space-y-3">
+              <div className="h-10 w-10 rounded-xl bg-[#121110] border border-[#9333EA] flex items-center justify-center text-purple-400 shadow-sm">
                 <ShieldCheck className="h-5 w-5" />
               </div>
-              <h3 className="text-base font-bold text-[#F5F0E8]">Government Authority Protection</h3>
-              <p className="text-xs text-[#A59F95] leading-relaxed">
+              <h3 className="text-base font-bold text-[#F7F4EB]">Government Authority Protection</h3>
+              <p className="text-xs text-[#A39C8E] leading-relaxed">
                 Restricted municipal intervention portal with two-stage domain verification (.gov.in, .nic.in, .ap.gov.in) and automated civil defense action triggers.
               </p>
             </div>
