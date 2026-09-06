@@ -133,11 +133,39 @@ class ReverseGeocodeView(views.APIView):
         except (ValueError, TypeError):
             return Response({"found": False, "detail": "Valid latitude and longitude required."}, status=status.HTTP_400_BAD_REQUEST)
 
+        # Check nearest city in local catalog
         city, state = _get_nearest_city(lat, lon)
+        best_entry = min(INDIA_CITIES, key=lambda entry: (lat - entry[0]) ** 2 + (lon - entry[1]) ** 2)
+        dist_sq = (lat - best_entry[0]) ** 2 + (lon - best_entry[1]) ** 2
+
+        if dist_sq < 9.0:
+            return Response({
+                "found": True,
+                "name": city,
+                "display_name": f"{city}, {state}, India"
+            }, status=status.HTTP_200_OK)
+
+        # Reverse geocode for distant / global coordinates
+        try:
+            url = "https://api.bigdatacloud.net/data/reverse-geocode-client"
+            resp = requests.get(url, params={"latitude": lat, "longitude": lon, "localityLanguage": "en"}, timeout=3)
+            if resp.ok:
+                data = resp.json()
+                name = data.get("city") or data.get("locality") or data.get("principalSubdivision") or f"Location ({lat:.4f}, {lon:.4f})"
+                country = data.get("countryName", "")
+                display = f"{name}, {country}".strip(", ")
+                return Response({
+                    "found": True,
+                    "name": name,
+                    "display_name": display
+                }, status=status.HTTP_200_OK)
+        except Exception:
+            pass
+
         return Response({
             "found": True,
-            "name": city,
-            "display_name": f"{city}, {state}, India"
+            "name": f"Sector ({lat:.4f}, {lon:.4f})",
+            "display_name": f"Coordinates ({lat:.4f}, {lon:.4f})"
         }, status=status.HTTP_200_OK)
 
 

@@ -12,8 +12,7 @@ INDIA_LONGITUDE_RANGE = (68.0, 98.0)
 
 
 def _validate_india_coordinates(lat, lon):
-    return (INDIA_LATITUDE_RANGE[0] <= lat <= INDIA_LATITUDE_RANGE[1]
-            and INDIA_LONGITUDE_RANGE[0] <= lon <= INDIA_LONGITUDE_RANGE[1])
+    return -90.0 <= lat <= 90.0 and -180.0 <= lon <= 180.0
 
 class WardGeoJSONView(views.APIView):
     permission_classes = [permissions.AllowAny]
